@@ -50,7 +50,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="wound_button">
     <property name="geometry">
      <rect>
       <x>360</x>
@@ -70,7 +70,7 @@
      <string>WOUND</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="cut_button">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -90,7 +90,7 @@
      <string>CUT</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="burn_button">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -110,7 +110,7 @@
      <string>BURN</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="puncture_button">
     <property name="geometry">
      <rect>
       <x>700</x>
@@ -130,7 +130,7 @@
      <string>PUNCTURE</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QPushButton" name="others_button">
     <property name="geometry">
      <rect>
       <x>360</x>
@@ -150,7 +150,7 @@
      <string>OTHERS</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_7">
+   <widget class="QPushButton" name="go_back_button">
     <property name="geometry">
      <rect>
       <x>700</x>

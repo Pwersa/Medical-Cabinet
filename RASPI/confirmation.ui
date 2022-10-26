@@ -50,7 +50,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="no_button">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -65,10 +65,10 @@
      </font>
     </property>
     <property name="text">
-     <string>No</string>
+     <string>Reset Procedure</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="yes_button">
     <property name="geometry">
      <rect>
       <x>560</x>

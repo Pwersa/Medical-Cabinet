@@ -1,6 +1,6 @@
 
 #most importantly for this code to run is to import OpenCV
-import cv2
+import cv2, time, datetime
 
 # set up camera object called Cap which we will use to find OpenCV
 cap = cv2.VideoCapture(0)
@@ -29,6 +29,7 @@ while True:
         #You can also add content to before the pass. Say the system reads red it'll activate a Red LED and the same for Green.
         if data:
             print("data found: ", data)
+            print(datetime.datetime.now())
             if data == 'red':
                 pass
             if data == 'green':

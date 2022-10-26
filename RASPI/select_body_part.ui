@@ -67,7 +67,7 @@
      <pixmap>../test/body_part.png</pixmap>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="hand_button">
     <property name="geometry">
      <rect>
       <x>761</x>

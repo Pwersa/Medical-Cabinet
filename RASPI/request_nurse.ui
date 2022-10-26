@@ -51,7 +51,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="end_procedure_button">
     <property name="geometry">
      <rect>
       <x>330</x>

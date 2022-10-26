@@ -121,7 +121,7 @@
  C) Don't wrap the bandage so tight that it interferes with blood flow to healthy tissue.</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="next_step_button">
     <property name="geometry">
      <rect>
       <x>780</x>
@@ -139,7 +139,7 @@
      <string>Next Step</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="go_back_procedure">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -154,7 +154,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Go back</string>
+     <string>Go Back</string>
     </property>
    </widget>
   </widget>
