@@ -15,7 +15,7 @@ lkey=int(4)
 if key_index < 0:
     print("not valid tupc student ID")
 else:
-    identifier= sample_data[key_index:key_index+lkey]
+    identifier = sample_data[key_index:key_index+lkey]
     print("key index is:" + str(key_index))
     print("identifier is: " + identifier)
     print("valid TUPC student ID")

@@ -1,0 +1,9 @@
+data_qr = []
+                    data_qr.append(str(parsed_text[0]))
+                    data_qr.append(str(parsed_text[1]+ " " + parsed_text[2]))
+                    data_qr.append(str(parsed_text[3]))
+                    data_qr.append(datetime.datetime.now())
+
+                    with open('record_session.csv', 'w', encoding='UTF8', newline='') as f:
+                        writer = csv.writer(f)
+                        writer.writerow(data_qr)

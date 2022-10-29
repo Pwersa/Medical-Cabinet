@@ -3,11 +3,8 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import QtWidgets
 from PyQt5.uic import loadUi
 
-responder = []
-patient = []
-date_time_session = []
-body_part = []
-injury_type = []
+session = []
+gender_types = ["Male", "Female", "N/A"]
 
 class Ui_scan_qr_code(QMainWindow):
     def __init__(self):
@@ -30,10 +27,72 @@ class Ui_scan_qr_code(QMainWindow):
 
 
             cv2.imshow("Scan QR CODE", img)
+            key_index = data.find(key)
+            
+            # CHECK FOR COET STUDENT ID ONLY
+            key=["TUPC", "BET"]
+
+            if data:
+                if key_index < 0:
+                    for i in range(len(bbox)):
+                        cv2.line(img, tuple(bbox[i][0]), tuple(bbox[(i+1) % len(bbox)][0]), color=(255, 0, 0), thickness=2)
+                        cv2.putText(img, data, (int(bbox[0][0][0]), int(bbox[0][0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 250, 120), 2)
+
+                else:
+                    
+                    regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
+                    parsed_text = regexp.findall(data)
+                    fullname = str(parsed_text[1]+" "+ parsed_text[2])
+                    
+                    for student_info in data:
+                        for keyword in key:
+                            if keyword in student_info:
+                                
+                                # 1st QR CODE RESPONDER of COET
+                                session.append(datetime.datetime.now())
+                                # ID
+                                session.append(student_info[0])
+                                # NAME
+                                session.append(fullname)
+                                # COURSE
+                                session.append(student_info[1])
+                                # CHECK IF ADDED DATA IN LIST IS CORRECT
+                                print(session)
+                                
+                                time.sleep(0.5)
+                                break
+                       
+            if (cv2.waitKey(1) == ord("q")):
+                time.sleep(0.5)
+                break
+
+        cap.release()
+        cv2.destroyAllWindows()
+        window.setCurrentIndex(1)
+
+class Ui_scan_qr_patient(QMainWindow):
+    def __init__(self):
+        super(Ui_scan_qr_patient, self).__init__()
+        loadUi("scan_qr_code_again.ui", self)
+        self.scan_qr_patient.clicked.connect(self.qr_camera)
+
+    def qr_camera(self):
+        cap = cv2.VideoCapture(0)
+        detector = cv2.QRCodeDetector()
+
+        while True:
+            _, img = cap.read()
+            data, bbox, _ = detector.detectAndDecode(img)
+    
+            if(bbox is not None):
+                for i in range(len(bbox)):
+                    cv2.line(img, tuple(bbox[i][0]), tuple(bbox[(i+1) % len(bbox)][0]), color=(255, 0, 0), thickness=2)
+                    cv2.putText(img, data, (int(bbox[0][0][0]), int(bbox[0][0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 250, 120), 2)
+
+            cv2.imshow("Scan QR CODE", img)
 
             key="TUPC"
             key_index = data.find(key)
-            lkey=int(4)
 
             if data:
                 if key_index < 0:
@@ -43,55 +102,48 @@ class Ui_scan_qr_code(QMainWindow):
                         cv2.putText(img, error_text, (int(bbox[0][0][0]), int(bbox[0][0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 250, 120), 2)
 
                 else:
-                    #identifier= data[key_index:key_index+lkey]
-
                     regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
                     parsed_text = regexp.findall(data)
+                    
+                    # PATIENT QR CODE
                     fullname = str(parsed_text[1]+" "+ parsed_text[2])
-                    print(parsed_text)
-
-                    print("student id is: " + parsed_text[0])
-                    print("full name is: " + fullname)
-                    responder.append(fullname + ' - ' + parsed_text[0] + ' - ' + parsed_text[3])
-                    date_time_session.append(str(datetime.datetime.now()))
-
-                    print("responder: " + responder[0])
-                    print("Date and Time: " + date_time_session[0])
+                    # ID
+                    session.append(parsed_text[0])
+                    # NAME
+                    session.append(fullname)
+                    # COURSE
+                    session.append(parsed_text[3])
+                    # GENDER
+                    session.append("NOT YET FIXED")
+                    # INJURY
+                    session.append(str(self.cut_button.text()))
                     
-                    data_qr = []
-                    data_qr.append(str(parsed_text[0]))
-                    data_qr.append(str(parsed_text[1]+ " " + parsed_text[2]))
-                    data_qr.append(str(parsed_text[3]))
-                    data_qr.append(datetime.datetime.now())
-
-                    with open('student_id.csv', 'w', encoding='UTF8', newline='') as f:
+                    with open('recorded_session.csv', 'w', encoding='UTF8', newline='') as f:
                         writer = csv.writer(f)
-                        writer.writerow(data_qr)
+                        writer.writerow(session)
                         
-                    time.sleep(1)
-                    
-                    #self.send_to_companion()
+                    time.sleep(0.5)
+                    self.send_to_companion()
                     break
             
             if (cv2.waitKey(1) == ord("q")):
+                time.sleep(0.5)
                 break
 
         cap.release()
         cv2.destroyAllWindows()
-        #window.setCurrentIndex(window.currentIndex()-1)
-        window.setCurrentIndex(1)
-
+        window.setCurrentIndex(11)
+        
     def send_to_companion(self):
-
         SEPARATOR = "<SEPARATOR>"
         BUFFER_SIZE = 4096 # send 4096 bytes each time step
 
         # the ip address or hostname of the server, the receiver
-        host = "192.168.254.104"
+        host = "26.98.239.158"
         # the port, let's use 5001
-        port = 5001
+        port = 4899
         # the name of file we want to send, make sure it exists
-        filename = "student_id.csv"
+        filename = "recorded_session.csv"
         # get the file size
         filesize = os.path.getsize(filename)
 
@@ -126,71 +178,6 @@ class Ui_scan_qr_code(QMainWindow):
         # close the socket
         s.close()
 
-class Ui_scan_qr_patient(QMainWindow):
-    def __init__(self):
-        super(Ui_scan_qr_patient, self).__init__()
-        loadUi("scan_qr_code_again.ui", self)
-        self.scan_qr_patient.clicked.connect(self.qr_camera)
-
-    def qr_camera(self):
-        cap = cv2.VideoCapture(0)
-        detector = cv2.QRCodeDetector()
-
-        while True:
-            _, img = cap.read()
-            data, bbox, _ = detector.detectAndDecode(img)
-    
-            if(bbox is not None):
-                for i in range(len(bbox)):
-                    cv2.line(img, tuple(bbox[i][0]), tuple(bbox[(i+1) % len(bbox)][0]), color=(255, 0, 0), thickness=2)
-                    cv2.putText(img, data, (int(bbox[0][0][0]), int(bbox[0][0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 250, 120), 2)
-
-
-            cv2.imshow("Scan QR CODE", img)
-
-            key="TUPC"
-            key_index = data.find(key)
-            lkey=int(4)
-
-            if data:
-                if key_index < 0:
-                    error_text = "NOT A VALID ID from TUPC"
-                    for i in range(len(bbox)):
-                        cv2.line(img, tuple(bbox[i][0]), tuple(bbox[(i+1) % len(bbox)][0]), color=(255, 0, 0), thickness=2)
-                        cv2.putText(img, error_text, (int(bbox[0][0][0]), int(bbox[0][0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 250, 120), 2)
-
-                else:
-                    #identifier= data[key_index:key_index+lkey]
-
-                    regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
-                    parsed_text = regexp.findall(data)
-                    fullname = str(parsed_text[1]+" "+ parsed_text[2])
-
-                    patient.append(fullname + ' - ' + parsed_text[0] + ' - ' + parsed_text[3])
-                    print(patient[0])
-
-                    data_qr = []
-                    data_qr.append(str(parsed_text[0]))
-                    data_qr.append(str(parsed_text[1]+ " " + parsed_text[2]))
-                    data_qr.append(str(parsed_text[3]+ " " + parsed_text[4]))
-                    data_qr.append(datetime.datetime.now())
-
-                    with open('student_id.csv', 'w', encoding='UTF8', newline='') as f:
-                        writer = csv.writer(f)
-                        writer.writerow(data_qr)
-                        
-                    time.sleep(1)
-                    
-                    #self.send_to_companion()
-                    break
-            
-            if (cv2.waitKey(1) == ord("q")):
-                break
-
-        cap.release()
-        cv2.destroyAllWindows()
-        window.setCurrentIndex(11)
-
 # OPEN select_body_part.ui file
 class Ui_select_body_part(QMainWindow):
     def __init__(self):
@@ -201,7 +188,6 @@ class Ui_select_body_part(QMainWindow):
         
     def open_close_window(self):
         print("Selected Body Part: " + str(self.hand_button.text()))
-        body_part.append(str(self.hand_button.text()))
         window.setCurrentIndex(2)
 
 
@@ -216,7 +202,7 @@ class Ui_select_injury_type(QMainWindow):
 
     # OPEN CUT PROCEDURE
     def cut_procedure(self):
-        injury_type.append(str(self.cut_button.text()))
+        session.append(str(self.cut_button.text()))
         window.setCurrentIndex(5)
 
     def others(self):
@@ -313,6 +299,27 @@ class Ui_confirmation_again(QMainWindow):
     # GOING TO SCAN QR CODE AGAIN BUT FOR THE PATIENT
     def done_procedure(self):
         window.setCurrentIndex(10)
+        
+class Ui_gender_patient_window(QMainWindow):
+    def __init__(self):
+        super(Ui_gender_patient_window, self).__init__()
+        loadUi("patient_gender.ui", self)
+        self.male_button.clicked.connect(lambda: self.gender_submit(gender_types[0]))
+        self.female_button.clicked.connect(lambda: self.gender_submit(gender_types[1]))
+        self.not_say.clicked.connect(lambda: self.gender_submit(gender_types[2]))
+            
+    def gender_submit(self, gender_types):
+        if gender_types == "Male":
+            session.append("MALE")
+            window.setCurrentIndex(12)
+        
+        elif gender_types == "Female":
+            session.append("FEMALE")
+            window.setCurrentIndex(12)
+            
+        elif gender_types == "N/A":
+            session.append("Not Said")
+            window.setCurrentIndex(12)
 
 class Ui_session_record(QMainWindow):
     def __init__(self):
@@ -321,27 +328,14 @@ class Ui_session_record(QMainWindow):
         self.fiinish_session.clicked.connect(self.end_session)
 
     def end_session(self):
-        scan_qr_code.qr_responder_name.setText(str(responder[0]))
-        self.qr_patient_name.setText(str(patient[0]))
-        self.date_session.setText(str(date_time_session[0]))
-        self.body_injured.setText(str(body_part[0]))
-        self.type_of_injury.setText(str(injury_type[0]))
-
-        print("Responder Name: " + responder[0] + "\n" + "Patient Name: " + patient[0] + "\n" + "Date and Time: " + date_time_session[0] + "\n" +
-                "Selected Body Part: " + body_part + "\n" + "Injury Type: " + injury_type)
-
-        responder.clear()
-        patient.clear()
-        date_time_session.clear()
-        body_part.clear()
-        injury_type.clear()
-      
+        print(session)
+        session.clear()
         window.setCurrentIndex(0)
 
 app = QApplication(sys.argv)
 window = QtWidgets.QStackedWidget()
 
-############################ ADD CLASS HERE ######################
+############################ ADD CLASS HERE ############################
 
 main_window = Ui_scan_qr_code() 
 window_select_body_part = Ui_select_body_part()
@@ -354,6 +348,7 @@ window_step_3 = Ui_step_3()
 window_confirmation = Ui_confirmation()
 window_confirmation_again = Ui_confirmation_again()
 window_qr_patient = Ui_scan_qr_patient()
+window_patient_gender = Ui_gender_patient_window()
 window_session_record = Ui_session_record()
 
 window.addWidget(main_window) # INDEX 0
@@ -367,9 +362,10 @@ window.addWidget(window_step_3) # INDEX 7
 window.addWidget(window_confirmation) # INDEX 8
 window.addWidget(window_confirmation_again) # INDEX 9
 window.addWidget(window_qr_patient) # INDEX 10
-window.addWidget(window_session_record) # INDEX 11
+window.addWidget(window_patient_gender) # INDEX 11
+window.addWidget(window_session_record) # INDEX 12
 
-####################### PARAMETERS FOR THE WINDOW ################
+####################### PARAMETERS FOR THE WINDOW (EXACT FOR THE TOUCH SCREEN) #######################
 
 window.setMaximumHeight(600)
 window.setMaximumWidth(1024)
