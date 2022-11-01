@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>step_2_window</class>
+ <widget class="QMainWindow" name="step_2_window">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,38 +23,16 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Step 2 Procedure</string>
+   <string>Step 1 Procedure</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="TITLE">
+   <widget class="QLabel" name="title_step_2">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>0</y>
-      <width>1021</width>
+      <width>1011</width>
       <height>71</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Unispace</family>
-      <pointsize>24</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Bandaging a Wound</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="TITLE_2">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>70</y>
-      <width>381</width>
-      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -66,20 +44,50 @@
      </font>
     </property>
     <property name="text">
-     <string>Step 2: Cover the Bandage</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Injury Type&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="TITLE_3">
+   <widget class="QLabel" name="text_steps_2">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>130</y>
-      <width>201</width>
-      <height>141</height>
+      <x>20</x>
+      <y>330</y>
+      <width>981</width>
+      <height>121</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="gif_player_label_2">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>80</y>
+      <width>360</width>
+      <height>240</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>360</width>
+      <height>240</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>360</width>
+      <height>240</height>
+     </size>
     </property>
     <property name="font">
      <font>
@@ -89,45 +97,44 @@
       <bold>true</bold>
      </font>
     </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>../2nd step bandagign a wound.jpg</pixmap>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QPushButton" name="next_step_button_2">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>280</y>
-      <width>801</width>
-      <height>171</height>
+      <x>760</x>
+      <y>460</y>
+      <width>251</width>
+      <height>131</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>18</pointsize>
      </font>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="text">
-     <string> A) Wrap roller gauze or cloth strips over the dressing and around the wound several times.
-
- B) Extend the bandage at least an inch beyond both sides of the dressing.
-
- C) Don't wrap the bandage so tight that it interferes with blood flow to healthy tissue.</string>
+     <string>NEXT STEP</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="next_step_button">
+   <widget class="QPushButton" name="go_back_injury_type_2">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>470</y>
-      <width>221</width>
-      <height>111</height>
+      <x>10</x>
+      <y>460</y>
+      <width>251</width>
+      <height>131</height>
      </rect>
     </property>
     <property name="font">
@@ -136,25 +143,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Next Step</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="go_back_procedure">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>470</y>
-      <width>221</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>18</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Go Back</string>
+     <string>GO BACK</string>
     </property>
    </widget>
   </widget>

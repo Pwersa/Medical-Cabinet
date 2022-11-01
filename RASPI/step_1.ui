@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>procedure_window</class>
+ <widget class="QMainWindow" name="procedure_window">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -26,35 +26,13 @@
    <string>Step 1 Procedure</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="TITLE">
+   <widget class="QLabel" name="title_step">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>0</y>
-      <width>1021</width>
+      <width>1011</width>
       <height>71</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Unispace</family>
-      <pointsize>24</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Bandaging a Wound</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="TITLE_2">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>60</y>
-      <width>361</width>
-      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -66,19 +44,19 @@
      </font>
     </property>
     <property name="text">
-     <string>Step 1: Clean the Wound</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Injury Type&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="text_steps">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>350</y>
+      <y>330</y>
       <width>981</width>
-      <height>91</height>
+      <height>121</height>
      </rect>
     </property>
     <property name="font">
@@ -87,14 +65,14 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;A) Put on gloves or use other protection to avoid contact with the victim's blood&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="TITLE_3">
+   <widget class="QLabel" name="gif_player_label">
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>100</y>
+      <y>80</y>
       <width>360</width>
       <height>240</height>
      </rect>
@@ -125,9 +103,6 @@
     <property name="text">
      <string/>
     </property>
-    <property name="pixmap">
-     <pixmap>../1st step bandagign a wound.jpg</pixmap>
-    </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
@@ -136,9 +111,9 @@
     <property name="geometry">
      <rect>
       <x>760</x>
-      <y>480</y>
+      <y>460</y>
       <width>251</width>
-      <height>111</height>
+      <height>131</height>
      </rect>
     </property>
     <property name="font">
@@ -157,9 +132,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>470</y>
+      <y>460</y>
       <width>251</width>
-      <height>121</height>
+      <height>131</height>
      </rect>
     </property>
     <property name="font">
@@ -169,7 +144,7 @@
     </property>
     <property name="text">
      <string>GO BACK TO 
- INJURY TYPE</string>
+ BODY PARTS</string>
     </property>
    </widget>
   </widget>

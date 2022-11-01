@@ -34,7 +34,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         
-        self.gif_step1 = QMovie("GIF/step_1_burn.gif")
+        self.gif_step1 = QMovie("GIFs/cuts-1.gif")
         self.label_gif_player.setMovie(self.gif_step1)
         self.gif_step1.start()
 
