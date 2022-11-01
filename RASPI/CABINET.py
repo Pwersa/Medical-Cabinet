@@ -4,13 +4,14 @@ from PyQt5 import QtWidgets, QtCore
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QMovie
 from record_session import Ui_record_session
+import threading
 
 # DATE AND TIME, RESPONDER ID, NAME, COURSE, PATIENT ID, NAME, COURSE, GENDER, INJURY TYPE
 session = []
 body_parts_selected = []
 injury_types_selected = []
 
-injury_type_selection = ["Cut", "Wound", "Puncture", "Burn", "Others", "Go back to window"]
+injury_type_selection = ["Cut", "Poison", "Puncture", "Burn", "Others", "Go back to window"]
 body_parts_list = ["Hand", "Head", "Face", "Knee"]
 gender_types = ["Male", "Female", "N/A"]
 
@@ -150,32 +151,26 @@ class Ui_select_injury_type(QMainWindow):
         super(Ui_select_injury_type, self).__init__()
         loadUi("select_injury_type.ui", self)
         self.cut_button.clicked.connect(lambda: self.injuries(injury_type_selection[0]))
-<<<<<<< HEAD
+        self.poison_button.clicked.connect(lambda: self.injuries(injury_type_selection[1]))
         self.puncture_button.clicked.connect(lambda: self.injuries(injury_type_selection[2]))
         self.burn_button.clicked.connect(lambda: self.injuries(injury_type_selection[3]))
-=======
->>>>>>> 2e24d83b648a542ce1ef9fb1ad0ab48b01b65a30
         self.others_button.clicked.connect(lambda: self.injuries(injury_type_selection[4]))
         self.go_back_button.clicked.connect(self.go_back)
     
     def injuries(self, injury_type_selection):
         if injury_type_selection == "Cut":
-<<<<<<< HEAD
             injury_types_selected.append("CUT") 
             print(injury_types_selected[-1])
             window.setCurrentIndex(9)
             self.debug_csv_send_responder()
-=======
-            injury_types_selected.append(str(self.cut_button.text())) 
-            print(injury_types_selected[-1])
-            window.setCurrentIndex(9)
->>>>>>> 2e24d83b648a542ce1ef9fb1ad0ab48b01b65a30
             
-        elif injury_type_selection == "Wound":
-            pass
+        elif injury_type_selection == "Poison":
+            injury_types_selected.append("POISON") 
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(22)
+            self.debug_csv_send_responder()
         
         elif injury_type_selection == "Puncture":
-<<<<<<< HEAD
             injury_types_selected.append("PUNCTURE") 
             print(injury_types_selected[-1])
             window.setCurrentIndex(13)
@@ -185,28 +180,17 @@ class Ui_select_injury_type(QMainWindow):
             injury_types_selected.append("BURN") 
             print(injury_types_selected[-1])
             window.setCurrentIndex(17)
-            self.debug_csdebug_csv_send_responderv_send()
-=======
-            pass
-        
-        elif injury_type_selection == "Burn":
-            pass
->>>>>>> 2e24d83b648a542ce1ef9fb1ad0ab48b01b65a30
+            self.debug_csv_send_responder()
         
         elif injury_type_selection == "Others":
             window.setCurrentIndex(3)
             
         elif injury_type_selection == "Go back to window":
-<<<<<<< HEAD
             window.setCurrentIndex(window.currentIndex()-1)
-=======
-            window.setCurrentIndex(window.currentIndex()-1)  
->>>>>>> 2e24d83b648a542ce1ef9fb1ad0ab48b01b65a30
             
     def go_back(self):
         print(session)
         window.setCurrentIndex(window.currentIndex()-1)
-<<<<<<< HEAD
         
     def debug_csv_send_responder(self):
         dt = datetime.datetime.now()
@@ -224,8 +208,6 @@ class Ui_select_injury_type(QMainWindow):
             writer.writerow(data_qr)
 
         data_qr.clear()
-=======
->>>>>>> 2e24d83b648a542ce1ef9fb1ad0ab48b01b65a30
 
 class Ui_enter_injury(QMainWindow):
     def __init__(self):
@@ -263,7 +245,10 @@ class Ui_confirmation(QMainWindow):
         if injury_types_selected[-1] == "CUT":
             print("CUT IS LAST")
             window.setCurrentIndex(9)
-<<<<<<< HEAD
+            
+        elif injury_types_selected[-1] == "POISON":
+            print("POISON IS LAST")
+            window.setCurrentIndex(22)
             
         elif injury_types_selected[-1] == "PUNCTURE":
             print("PUNCTURE IS LAST")
@@ -272,8 +257,6 @@ class Ui_confirmation(QMainWindow):
         elif injury_types_selected[-1] == "BURN":
             print("BURN IS LAST")
             window.setCurrentIndex(17)
-=======
->>>>>>> 2e24d83b648a542ce1ef9fb1ad0ab48b01b65a30
         
     def yes_confirmation(self):
         window.setCurrentIndex(6)
@@ -293,11 +276,6 @@ class Ui_confirmation_again(QMainWindow):
     def done_procedure(self):
         window.setCurrentIndex(7)
         
-<<<<<<< HEAD
-=======
-
-        
->>>>>>> 2e24d83b648a542ce1ef9fb1ad0ab48b01b65a30
 class Ui_gender_patient_window(QMainWindow):
     def __init__(self):
         super(Ui_gender_patient_window, self).__init__()
@@ -368,18 +346,19 @@ class Ui_gender_patient_window(QMainWindow):
         data_qr.append("BET COET")        
         data_qr.append("MALE")
         
-<<<<<<< HEAD
         with open('cabinet-history/session/recorded_session.csv', 'w', encoding='UTF8', newline='') as f:
-=======
-        with open('history/recorded_session.csv', 'w', encoding='UTF8', newline='') as f:
->>>>>>> 2e24d83b648a542ce1ef9fb1ad0ab48b01b65a30
             writer = csv.writer(f)
             writer.writerow(data_qr)
 
         data_qr.clear()
 
         # SEND TO COMPANION APP AFTER SAVING LOCALLY
-        #self.send_to_companion()
+        self.start_threading()
+        
+    def start_threading(self):
+        x = threading.Thread(target=self.send_to_companion)
+        x.start()
+        print(threading.activeCount())
         
     def send_to_companion(self):
         SEPARATOR = "<SEPARATOR>"
@@ -428,11 +407,7 @@ class Ui_gender_patient_window(QMainWindow):
         
 ####################### STEPS UI FOR EVERY INJURIES  #######################
 
-<<<<<<< HEAD
 ######################  CUT PROCEDURES STEPS (4 windows TOTAL)  ###################### 
-=======
-######################  WINDOWS FOR CUT STEPS (4 windows TOTAL)  ###################### 
->>>>>>> 2e24d83b648a542ce1ef9fb1ad0ab48b01b65a30
 class Ui_step_1_cut(QMainWindow):
     def __init__(self):
         super(Ui_step_1_cut, self).__init__()
@@ -453,7 +428,6 @@ class Ui_step_1_cut(QMainWindow):
     
     def go_back(self):
         window.setCurrentIndex(2)
-<<<<<<< HEAD
         
 class Ui_step_2_cut(QMainWindow):
     def __init__(self):
@@ -702,79 +676,102 @@ class Ui_step_3_burn(QMainWindow):
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)
         
-=======
         
-class Ui_step_2_cut(QMainWindow):
+        
+######################  POISON PROCEDURES STEPS (6 windows TOTAL)  ###################### 
+        
+class Ui_posion_types(QMainWindow):
     def __init__(self):
-        super(Ui_step_2_cut, self).__init__()
-        loadUi("injuries/cut_step_2.ui", self)
-        self.next_step_button_2.clicked.connect(self.next_step)
-        self.go_back_injury_type_2.clicked.connect(self.go_back)
-
-        self.gif_player_label_2 = self.findChild(QLabel, "gif_player_label_2")
-   
-        self.cut_step2 = QMovie("GIFs/cuts-2.gif")
-        self.gif_player_label_2.setMovie(self.cut_step2)
-        self.cut_step2.start()
+        super(Ui_posion_types, self).__init__()
+        loadUi("injuries/poison_types.ui", self)
+        
+        self.next_step_button.clicked.connect(self.next_step)
+        self.go_back_injury_type.clicked.connect(self.go_back)
         
     def next_step(self):
-        window.setCurrentIndex(11)
+        window.setCurrentIndex(23)
     
     def go_back(self):
-        # GO BACK A WINDOW WHICH IS STEP 1
-        window.setCurrentIndex(window.currentIndex()-1)
-
-class Ui_step_3_cut(QMainWindow):
+        
+        window.setCurrentIndex(2)
+        
+class Ui_step_1_poison(QMainWindow):
     def __init__(self):
-        super(Ui_step_3_cut, self).__init__()
-        loadUi("injuries/cut_step_3.ui", self)
+        super(Ui_step_1_poison, self).__init__()
+        loadUi("injuries/poison_step_1.ui", self)
+        
+        self.next_step_button.clicked.connect(self.next_step)
+        self.go_back_injury_type.clicked.connect(self.go_back)
+        
+    def next_step(self):
+        window.setCurrentIndex(24)
+    
+    def go_back(self):
+        window.setCurrentIndex(window.currentIndex()-1)
+        
+class Ui_step_2_poison(QMainWindow):
+    def __init__(self):
+        super(Ui_step_2_poison, self).__init__()
+        loadUi("injuries/poison_step_2.ui", self)
+        
+        self.next_step_button_2.clicked.connect(self.next_step)
+        self.go_back_injury_type_2.clicked.connect(self.go_back)
+        
+    def next_step(self):
+        window.setCurrentIndex(25)
+    
+    def go_back(self):
+        window.setCurrentIndex(window.currentIndex()-1)
+        
+class Ui_step_3_poison(QMainWindow):
+    def __init__(self):
+        super(Ui_step_3_poison, self).__init__()
+        loadUi("injuries/poison_step_3.ui", self)
+        
         self.next_step_button_3.clicked.connect(self.next_step)
         self.go_back_injury_type_3.clicked.connect(self.go_back)
         
-        self.gif_player_label_3 = self.findChild(QLabel, "gif_player_label_3")
-   
-        self.cut_step3 = QMovie("GIFs/cuts-2.gif")
-        self.gif_player_label_3.setMovie(self.cut_step3)
-        self.cut_step3.start()
-        
     def next_step(self):
-        window.setCurrentIndex(12)
+        window.setCurrentIndex(26)
     
     def go_back(self):
-        # GO BACK A WINDOW WHICH IS STEP 2
         window.setCurrentIndex(window.currentIndex()-1)
         
-class Ui_step_4_cut(QMainWindow):
+class Ui_step_poison_inhalation(QMainWindow):
     def __init__(self):
-        super(Ui_step_4_cut, self).__init__()
-        loadUi("injuries/cut_step_4.ui", self)
-        self.next_step_button_4.clicked.connect(self.finish_step)
+        super(Ui_step_poison_inhalation, self).__init__()
+        loadUi("injuries/poison_inhalation.ui", self)
+        
+        self.next_step_button_4.clicked.connect(self.next_step)
         self.go_back_injury_type_4.clicked.connect(self.go_back)
         
-        self.gif_player_label_4 = self.findChild(QLabel, "gif_player_label_4")
-   
-        self.cut_step4 = QMovie("GIFs/cuts-2.gif")
-        self.gif_player_label_4.setMovie(self.cut_step4)
-        self.cut_step4.start()
+    def next_step(self):
+        window.setCurrentIndex(27)
+    
+    def go_back(self):
+        window.setCurrentIndex(window.currentIndex()-1)
         
-    def finish_step(self):
+class Ui_step_poison_skin_eyes(QMainWindow):
+    def __init__(self):
+        super(Ui_step_poison_skin_eyes, self).__init__()
+        loadUi("injuries/poison_skin_eye.ui", self)
+        
+        self.next_step_button.clicked.connect(self.next_step)
+        self.go_back_injury_type.clicked.connect(self.go_back)
+        
+    def next_step(self):
         window.setCurrentIndex(5)
     
     def go_back(self):
-        # GO BACK A WINDOW WHICH IS STEP 2
         window.setCurrentIndex(window.currentIndex()-1)
 
 
 
-
-
->>>>>>> 2e24d83b648a542ce1ef9fb1ad0ab48b01b65a30
 
         
 app = QApplication(sys.argv)
 window = QtWidgets.QStackedWidget()
 
-<<<<<<< HEAD
 
 
 
@@ -805,42 +802,13 @@ window.addWidget(Ui_before_steps_burns()) # INDEX 18
 window.addWidget(Ui_step_1_burn()) # INDEX 19
 window.addWidget(Ui_step_2_burn()) # INDEX 20
 window.addWidget(Ui_step_3_burn()) # INDEX 21
-=======
-############################  ADD CLASS HERE  ############################
 
-# MAINWINDOW
-main_window = Ui_scan_qr_code() 
-window_select_body_part = Ui_select_body_part()
-window_select_injury_type = Ui_select_injury_type()
-window_enter_injury = Ui_enter_injury()
-window_request_nurse = Ui_request_nurse()
-window_confirmation = Ui_confirmation()
-window_confirmation_again = Ui_confirmation_again()
-window_qr_patient = Ui_scan_qr_patient()
-window_patient_gender = Ui_gender_patient_window()
-
-# STEPS WINDOW
-window_cut_step_1 = Ui_step_1_cut()
-window_cut_step_2 = Ui_step_2_cut()
-window_cut_step_3 = Ui_step_3_cut()
-window_cut_step_4 = Ui_step_4_cut()
-
-#############################  ADDING THE WINDOWS IN THE WIDGETS FOR INDEXING  #############################
-window.addWidget(main_window) # INDEX 0
-window.addWidget(window_select_body_part) # INDEX 1
-window.addWidget(window_select_injury_type) # INDEX 2
-window.addWidget(window_enter_injury)  # INDEX 3
-window.addWidget(window_request_nurse)  # INDEX 4
-window.addWidget(window_confirmation) # INDEX 5
-window.addWidget(window_confirmation_again) # INDEX 6
-window.addWidget(window_qr_patient) # INDEX 7
-window.addWidget(window_patient_gender) # INDEX 8
-
-window.addWidget(window_cut_step_1) # INDEX 9
-window.addWidget(window_cut_step_2) # INDEX 10
-window.addWidget(window_cut_step_3) # INDEX 11
-window.addWidget(window_cut_step_4) # INDEX 12
->>>>>>> 2e24d83b648a542ce1ef9fb1ad0ab48b01b65a30
+window.addWidget(Ui_posion_types()) # INDEX 22
+window.addWidget(Ui_step_1_poison()) # INDEX 23
+window.addWidget(Ui_step_2_poison()) # INDEX 24
+window.addWidget(Ui_step_3_poison()) # INDEX 25
+window.addWidget(Ui_step_poison_inhalation()) # INDEX 26
+window.addWidget(Ui_step_poison_skin_eyes()) # INDEX 27
 
 
 #######################  PARAMETERS FOR THE WINDOW (EXACT FOR THE TOUCH SCREEN)  #######################

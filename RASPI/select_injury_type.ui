@@ -50,7 +50,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="wound_button">
+   <widget class="QPushButton" name="poison_button">
     <property name="geometry">
      <rect>
       <x>360</x>
@@ -67,7 +67,7 @@
      </font>
     </property>
     <property name="text">
-     <string>WOUND</string>
+     <string>POISONING</string>
     </property>
    </widget>
    <widget class="QPushButton" name="cut_button">

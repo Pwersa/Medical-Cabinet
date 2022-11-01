@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>cut_step_window3</class>
- <widget class="QMainWindow" name="cut_step_window3">
+ <class>step_2_window</class>
+ <widget class="QMainWindow" name="step_2_window">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,10 +23,10 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>STEP 3 Procedure</string>
+   <string>Step 1 Procedure</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="title_step_3">
+   <widget class="QLabel" name="title_step_2">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -44,16 +44,16 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;STEP 3: Apply Antibiotic&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;STEP 2: Determine the cause of Poisoning&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="text_steps_3">
+   <widget class="QLabel" name="text_steps_2">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>20</x>
       <y>330</y>
       <width>981</width>
       <height>121</height>
@@ -65,10 +65,10 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;Apply a thin layer of an antibiotic ointment.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;Determine and note the type of toxic product that &lt;br/&gt;caused the poisoning.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="gif_player_label_3">
+   <widget class="QLabel" name="gif_player_label_2">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -107,7 +107,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="next_step_button_3">
+   <widget class="QPushButton" name="next_step_button_2">
     <property name="geometry">
      <rect>
       <x>760</x>
@@ -128,7 +128,7 @@
      <string>NEXT STEP</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="go_back_injury_type_3">
+   <widget class="QPushButton" name="go_back_injury_type_2">
     <property name="geometry">
      <rect>
       <x>10</x>
