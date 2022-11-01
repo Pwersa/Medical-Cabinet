@@ -30,7 +30,11 @@
     <property name="geometry">
      <rect>
       <x>10</x>
+<<<<<<< HEAD
       <y>10</y>
+=======
+      <y>0</y>
+>>>>>>> 2e24d83b648a542ce1ef9fb1ad0ab48b01b65a30
       <width>1011</width>
       <height>71</height>
      </rect>
@@ -44,7 +48,11 @@
      </font>
     </property>
     <property name="text">
+<<<<<<< HEAD
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;STEP 3: Apply Antibiotic&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+=======
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;STEP 3: Apply Antibiotic&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+>>>>>>> 2e24d83b648a542ce1ef9fb1ad0ab48b01b65a30
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -65,7 +73,11 @@
      </font>
     </property>
     <property name="text">
+<<<<<<< HEAD
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;Apply a thin layer of an antibiotic ointment.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+=======
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:20pt; color:#000000;&quot;&gt;Apply a thin layer of an antibiotic ointment.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+>>>>>>> 2e24d83b648a542ce1ef9fb1ad0ab48b01b65a30
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label_3">
