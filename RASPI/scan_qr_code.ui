@@ -149,22 +149,22 @@
    <widget class="QPushButton" name="scan_button">
     <property name="geometry">
      <rect>
-      <x>331</x>
-      <y>187</y>
-      <width>351</width>
-      <height>151</height>
+      <x>327</x>
+      <y>167</y>
+      <width>371</width>
+      <height>181</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>20</pointsize>
+      <pointsize>36</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>SCAN</string>
+     <string>SCAN NOW</string>
     </property>
    </widget>
   </widget>

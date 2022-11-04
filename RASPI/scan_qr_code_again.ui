@@ -12,8 +12,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
-    <height>0</height>
+    <width>1024</width>
+    <height>600</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -36,7 +36,7 @@
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
@@ -72,7 +72,7 @@
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
@@ -149,22 +149,44 @@
    <widget class="QPushButton" name="scan_qr_patient">
     <property name="geometry">
      <rect>
-      <x>331</x>
-      <y>187</y>
-      <width>351</width>
-      <height>151</height>
+      <x>130</x>
+      <y>160</y>
+      <width>371</width>
+      <height>181</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>20</pointsize>
+      <pointsize>36</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>SCAN</string>
+     <string>SCAN NOW</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="guest_patient_window">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>160</y>
+      <width>371</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>36</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>GUEST 
+PATIENT</string>
     </property>
    </widget>
   </widget>

@@ -38,7 +38,7 @@
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>36</pointsize>
+      <pointsize>48</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -73,7 +73,7 @@
      <rect>
       <x>560</x>
       <y>250</y>
-      <width>271</width>
+      <width>291</width>
       <height>161</height>
      </rect>
     </property>

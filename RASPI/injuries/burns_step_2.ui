@@ -54,7 +54,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>330</y>
+      <y>320</y>
       <width>981</width>
       <height>121</height>
      </rect>
@@ -110,10 +110,10 @@
    <widget class="QPushButton" name="next_step_button_2">
     <property name="geometry">
      <rect>
-      <x>760</x>
-      <y>460</y>
-      <width>251</width>
-      <height>131</height>
+      <x>730</x>
+      <y>450</y>
+      <width>281</width>
+      <height>141</height>
      </rect>
     </property>
     <property name="font">
@@ -132,9 +132,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>460</y>
-      <width>251</width>
-      <height>131</height>
+      <y>450</y>
+      <width>281</width>
+      <height>141</height>
      </rect>
     </property>
     <property name="font">
@@ -146,6 +146,11 @@
      <string>GO BACK</string>
     </property>
    </widget>
+   <zorder>text_steps_2</zorder>
+   <zorder>title_step_2</zorder>
+   <zorder>gif_player_label_2</zorder>
+   <zorder>next_step_button_2</zorder>
+   <zorder>go_back_injury_type_2</zorder>
   </widget>
  </widget>
  <resources/>

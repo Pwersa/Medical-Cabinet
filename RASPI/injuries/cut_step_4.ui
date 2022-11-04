@@ -54,7 +54,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>330</y>
+      <y>320</y>
       <width>981</width>
       <height>121</height>
      </rect>
@@ -65,7 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;Apply a thin bandage or rolled gauze directly over the wound.&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;Secure with micropore tape on the sides of the wound dressing.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;Apply a thin bandage or rolled gauze directly over the wound.&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;Secure with micropore tape on the sides of the wound dressing.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label_4">
@@ -110,10 +110,10 @@
    <widget class="QPushButton" name="next_step_button_4">
     <property name="geometry">
      <rect>
-      <x>760</x>
-      <y>470</y>
-      <width>251</width>
-      <height>121</height>
+      <x>730</x>
+      <y>440</y>
+      <width>281</width>
+      <height>151</height>
      </rect>
     </property>
     <property name="font">
@@ -132,9 +132,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>470</y>
-      <width>251</width>
-      <height>121</height>
+      <y>440</y>
+      <width>281</width>
+      <height>151</height>
      </rect>
     </property>
     <property name="font">
@@ -146,6 +146,11 @@
      <string>GO BACK</string>
     </property>
    </widget>
+   <zorder>text_steps_4</zorder>
+   <zorder>title_step_4</zorder>
+   <zorder>gif_player_label_4</zorder>
+   <zorder>next_step_button_4</zorder>
+   <zorder>go_back_injury_type_4</zorder>
   </widget>
  </widget>
  <resources/>

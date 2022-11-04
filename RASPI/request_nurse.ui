@@ -38,14 +38,15 @@
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>48</pointsize>
+      <pointsize>72</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>Please wait for a 
- Clinic Staff to arrive.</string>
+     <string>Please wait for 
+ a Clinic Staff  
+ to arrive.</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -55,9 +56,9 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>420</y>
+      <y>400</y>
       <width>361</width>
-      <height>131</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="font">

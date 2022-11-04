@@ -42,7 +42,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Select body Part</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;Which Body Part was &lt;/span&gt;&lt;span style=&quot; font-size:36pt; text-decoration: underline;&quot;&gt;Injured&lt;/span&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -52,7 +52,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>60</y>
+      <y>65</y>
       <width>1001</width>
       <height>521</height>
      </rect>
@@ -70,10 +70,10 @@
    <widget class="QPushButton" name="hand_button">
     <property name="geometry">
      <rect>
-      <x>761</x>
-      <y>308</y>
-      <width>171</width>
-      <height>71</height>
+      <x>750</x>
+      <y>302</y>
+      <width>191</width>
+      <height>91</height>
      </rect>
     </property>
     <property name="font">

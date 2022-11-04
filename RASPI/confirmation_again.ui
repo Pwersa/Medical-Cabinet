@@ -55,7 +55,7 @@
    <widget class="QPushButton" name="new_injury_button">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>110</x>
       <y>350</y>
       <width>331</width>
       <height>181</height>
@@ -75,7 +75,7 @@
      <rect>
       <x>590</x>
       <y>350</y>
-      <width>311</width>
+      <width>331</width>
       <height>181</height>
      </rect>
     </property>

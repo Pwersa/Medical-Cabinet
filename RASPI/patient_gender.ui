@@ -30,79 +30,157 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>40</y>
+      <y>20</y>
       <width>1021</width>
-      <height>91</height>
+      <height>101</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>36</pointsize>
+      <pointsize>48</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>Gender of Patient</string>
+     <string>Gender and Age of Patient</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="male_button">
+   <widget class="QLabel" name="gender_label">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>230</y>
-      <width>291</width>
-      <height>201</height>
+      <x>200</x>
+      <y>120</y>
+      <width>151</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
      <font>
+      <family>Unispace</family>
       <pointsize>24</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>MALE</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;GENDER:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="female_button">
+   <widget class="QLabel" name="age_label">
     <property name="geometry">
      <rect>
-      <x>365</x>
-      <y>230</y>
-      <width>291</width>
-      <height>201</height>
+      <x>660</x>
+      <y>120</y>
+      <width>151</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
      <font>
+      <family>Unispace</family>
       <pointsize>24</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>FEMALE</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;AGE:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="not_say_button">
+   <widget class="QCheckBox" name="male_checkbox">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>230</y>
-      <width>291</width>
-      <height>201</height>
+      <x>200</x>
+      <y>190</y>
+      <width>201</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>24</pointsize>
+      <pointsize>28</pointsize>
      </font>
     </property>
     <property name="text">
-     <string>PREFER NOT 
- TO SAY</string>
+     <string> MALE</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>90</width>
+      <height>90</height>
+     </size>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="tristate">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="female_checkbox">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>280</y>
+      <width>221</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>28</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string> FEMALE</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="confirm_guest">
+    <property name="geometry">
+     <rect>
+      <x>335</x>
+      <y>380</y>
+      <width>351</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>CONFIRM</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="age_box">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>190</y>
+      <width>191</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>48</pointsize>
+      <underline>false</underline>
+     </font>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
+    <property name="value">
+     <number>1</number>
     </property>
    </widget>
   </widget>
