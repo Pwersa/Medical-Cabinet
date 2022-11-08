@@ -11,7 +11,7 @@ session = []
 body_parts_selected = []
 injury_types_selected = ["Placeholder"]
 
-injury_type_selection = ["Cut", "Poison", "Puncture", "Burn", "Others"]
+injury_type_selection = ["Cut", "Poison", "Puncture", "Burn", "Electric", "Bruises", "Laceration", "Others"]
 body_parts_list = ["Hand", "Head", "Face", "Knee"]
 gender_types = ["Male", "Female", "N/A"]
 
@@ -68,7 +68,7 @@ class Ui_scan_qr_code(QMainWindow):
                        
             if (cv2.waitKey(1) == ord("r")):
                 time.sleep(0.5)
-                session.append("2222-22-22 23:23:59")
+                session.append("4444-22-22 23:23:59")
                 # ID
                 session.append("TUPC-RESPONDER")
                 # NAME
@@ -159,7 +159,10 @@ class Ui_select_injury_type(QMainWindow):
         self.poison_button.clicked.connect(lambda: self.injuries(injury_type_selection[1]))
         self.puncture_button.clicked.connect(lambda: self.injuries(injury_type_selection[2]))
         self.burn_button.clicked.connect(lambda: self.injuries(injury_type_selection[3]))
-        self.others_button.clicked.connect(lambda: self.injuries(injury_type_selection[4]))
+        self.electric_shock_button.clicked.connect(lambda: self.injuries(injury_type_selection[4]))
+        self.bruises_button.clicked.connect(lambda: self.injuries(injury_type_selection[5]))
+        self.laceration_button.clicked.connect(lambda: self.injuries(injury_type_selection[6]))
+        self.others_button.clicked.connect(lambda: self.injuries(injury_type_selection[7]))
     
     def injuries(self, injury_type_selection):
         if injury_type_selection == "Cut":
@@ -185,7 +188,25 @@ class Ui_select_injury_type(QMainWindow):
             #session.append("BURN")
             print(injury_types_selected[-1])
             window.setCurrentIndex(1)
-        
+            
+        elif injury_type_selection == "Electric":
+            injury_types_selected.append("ELECTRIC") 
+            #session.append("BURN")
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(1)
+            
+        elif injury_type_selection == "Bruises":
+            injury_types_selected.append("BRUISES") 
+            #session.append("BURN")
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(1)
+            
+        elif injury_type_selection == "Laceration":
+            injury_types_selected.append("LACERATION") 
+            #session.append("BURN")
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(1)
+            
         elif injury_type_selection == "Others":
             window.setCurrentIndex(3)
             
@@ -223,6 +244,21 @@ class Ui_select_body_part(QMainWindow):
             window.setCurrentIndex(28)
             self.responder_csv_file()
         
+        elif injury_types_selected[-1] == "ELECTRIC":
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(28)
+            self.responder_csv_file()
+            
+        elif injury_types_selected[-1] == "BRUISES":
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(28)
+            self.responder_csv_file()
+            
+        elif injury_types_selected[-1] == "LACERATION":
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(28)
+            self.responder_csv_file()
+            
         elif injury_type_selection == "Others":
             window.setCurrentIndex(3)
             
@@ -336,6 +372,18 @@ class Ui_confirmation(QMainWindow):
             print("PUNCTURE IS LAST")
             window.setCurrentIndex(28)
             
+        elif injury_types_selected[-1] == "ELECTRIC":
+            print("ELECTRIC IS LAST")
+            window.setCurrentIndex(28)
+            
+        elif injury_types_selected[-1] == "BRUISES":
+            print("BRUISES IS LAST")
+            window.setCurrentIndex(28)
+            
+        elif injury_types_selected[-1] == "LACERATION":
+            print("BRUISES IS LAST")
+            window.setCurrentIndex(28)
+            
         elif injury_types_selected[-1] == "BURN":
             print("BURN IS LAST")
             window.setCurrentIndex(28)
@@ -367,8 +415,8 @@ class Ui_guest_patient_window(QMainWindow):
         self.section_info = self.findChild(QTextEdit, "section_info")
         
     def guest_info(self):
-        session.append(self.name_info.toPlainText())
-        session.append(self.section_info.toPlainText())
+        session.insert(5, self.name_info.toPlainText())
+        session.insert(6, self.section_info.toPlainText())
         window.setCurrentIndex(8)
         
 class Ui_gender_patient_window(QMainWindow):
@@ -444,7 +492,7 @@ class Ui_gender_patient_window(QMainWindow):
             # the ip address or hostname of the server, the receiver
             host = "26.98.239.158"
             # the port, let's use 5001
-            port = 4899
+            port = 4799
             # the name of file we want to send, make sure it exists
             filename = "cabinet-history/session/recorded_session.csv"
             # get the file size
@@ -497,10 +545,6 @@ class Ui_before_procedures(QMainWindow):
         if injury_types_selected[-1] == "CUT":
             print(injury_types_selected[-1])
             window.setCurrentIndex(9)
-            
-        elif injury_types_selected[-1] == "POISON":
-            print(injury_types_selected[-1])
-            window.setCurrentIndex(22)
         
         elif injury_types_selected[-1] == "PUNCTURE":
             print(injury_types_selected[-1])
@@ -510,9 +554,23 @@ class Ui_before_procedures(QMainWindow):
             print(injury_types_selected[-1])
             window.setCurrentIndex(17)
             
+        elif injury_types_selected[-1] == "ELECTRIC":
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(30)
+            
+        elif injury_types_selected[-1] == "BRUISES":
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(34)
+            
+        elif injury_types_selected[-1] == "LACERATION":
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(35)
+            
     def go_back(self):
         # GO BACK A WINDOW WHICH IS STEP 2
         window.setCurrentIndex(2)
+        
+        
 
 ######################  CUT PROCEDURES STEPS (4 windows TOTAL)  ###################### 
 class Ui_step_1_cut(QMainWindow):
@@ -865,7 +923,131 @@ class Ui_step_poison_skin_eyes(QMainWindow):
 
 
 
+######################  ELECTRIC SHOCK PROCEDURES STEPS (4 windows TOTAL)  ###################### 
 
+class Ui_step_electric_shock_caution(QMainWindow):
+    def __init__(self):
+        super(Ui_step_electric_shock_caution, self).__init__()
+        loadUi("injuries/electric_shock_caution.ui", self)
+        
+        self.next_step_button.clicked.connect(self.next_step)
+        self.go_back_button.clicked.connect(self.go_back)
+        
+    def next_step(self):
+        window.setCurrentIndex(31)
+    
+    def go_back(self):
+        window.setCurrentIndex(28)
+        
+class Ui_step_electric_seek_emergency(QMainWindow):
+    def __init__(self):
+        super(Ui_step_electric_seek_emergency, self).__init__()
+        loadUi("injuries/electric_shock_seek_emergency.ui", self)
+        
+        self.next_step_button.clicked.connect(self.next_step)
+        self.go_back_button.clicked.connect(self.go_back)
+        
+    def next_step(self):
+        window.setCurrentIndex(32)
+    
+    def go_back(self):
+        window.setCurrentIndex(window.currentIndex()-1)
+
+class Ui_step_1_electric(QMainWindow):
+    def __init__(self):
+        super(Ui_step_1_electric, self).__init__()
+        loadUi("injuries/electric_shock_step_1.ui", self)
+        self.next_step_button.clicked.connect(self.next_step)
+        self.go_back_button.clicked.connect(self.go_back)
+        
+    def next_step(self):
+        window.setCurrentIndex(33)
+    
+    def go_back(self):
+        window.setCurrentIndex(window.currentIndex()-1)
+        
+class Ui_step_2_electric(QMainWindow):
+    def __init__(self):
+        super(Ui_step_2_electric, self).__init__()
+        loadUi("injuries/electric_shock_step_2.ui", self)
+        self.next_step_button.clicked.connect(self.next_step)
+        self.go_back_button.clicked.connect(self.go_back)
+        
+    def next_step(self):
+        window.setCurrentIndex(5)
+    
+    def go_back(self):
+        window.setCurrentIndex(window.currentIndex()-1)
+
+
+
+######################  BRUISES PROCEDURES STEPS (1 window TOTAL)  ###################### 
+
+class Ui_step_1_bruises(QMainWindow):
+    def __init__(self):
+        super(Ui_step_1_bruises, self).__init__()
+        loadUi("injuries/bruises_step_1.ui", self)
+
+        self.next_step_button.clicked.connect(self.next_step)
+        self.go_back_button.clicked.connect(self.go_back)
+        
+    def next_step(self):
+        window.setCurrentIndex(5)
+    
+    def go_back(self):
+        window.setCurrentIndex(28)
+        
+        
+        
+######################  BRUISES PROCEDURES STEPS (1 window TOTAL)  ###################### 
+
+class Ui_step_1_laceration(QMainWindow):
+    def __init__(self):
+        super(Ui_step_1_laceration, self).__init__()
+        loadUi("injuries/laceration_step_1.ui", self)
+        
+        self.next_step_button.clicked.connect(self.next_step)
+        self.go_back_button.clicked.connect(self.go_back)
+        
+    def next_step(self):
+        window.setCurrentIndex(36)
+    
+    def go_back(self):
+        window.setCurrentIndex(28)
+        
+        
+class Ui_step_2_laceration(QMainWindow):
+    def __init__(self):
+        super(Ui_step_2_laceration, self).__init__()
+        loadUi("injuries/laceration_step_2.ui", self)
+        
+        self.next_step_button.clicked.connect(self.next_step)
+        self.go_back_button.clicked.connect(self.go_back)
+        
+    def next_step(self):
+        window.setCurrentIndex(37)
+    
+    def go_back(self):
+        window.setCurrentIndex(window.currentIndex()-1)
+        
+class Ui_step_3_laceration(QMainWindow):
+    def __init__(self):
+        super(Ui_step_3_laceration, self).__init__()
+        loadUi("injuries/laceration_step_3.ui", self)
+
+        self.next_step_button.clicked.connect(self.next_step)
+        self.go_back_button.clicked.connect(self.go_back)
+        
+    def next_step(self):
+        window.setCurrentIndex(5)
+    
+    def go_back(self):
+        window.setCurrentIndex(window.currentIndex()-1)
+        
+
+        
+        
+        
         
 app = QApplication(sys.argv)
 window = QtWidgets.QStackedWidget()
@@ -910,6 +1092,19 @@ window.addWidget(Ui_step_poison_skin_eyes()) # INDEX 27
 
 window.addWidget(Ui_before_procedures()) # INDEX 28
 window.addWidget(Ui_guest_patient_window()) # INDEX 29
+
+window.addWidget(Ui_step_electric_shock_caution()) # INDEX 30
+window.addWidget(Ui_step_electric_seek_emergency()) # INDEX 31
+window.addWidget(Ui_step_1_electric()) # INDEX 32
+window.addWidget(Ui_step_2_electric()) # INDEX 33
+
+window.addWidget(Ui_step_1_bruises()) # INDEX 34
+
+window.addWidget(Ui_step_1_laceration()) # INDEX 35
+window.addWidget(Ui_step_2_laceration()) # INDEX 36
+window.addWidget(Ui_step_3_laceration()) # INDEX 37
+
+
 
 
 #######################  PARAMETERS FOR THE WINDOW (EXACT FOR THE TOUCH SCREEN)  #######################

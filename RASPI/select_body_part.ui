@@ -64,7 +64,7 @@
      <enum>Qt::PlainText</enum>
     </property>
     <property name="pixmap">
-     <pixmap>../test/body_part.png</pixmap>
+     <pixmap>pictures/program_pictures/body_part.png</pixmap>
     </property>
    </widget>
    <widget class="QPushButton" name="hand_button">

@@ -66,8 +66,8 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>0</y>
-       <width>982</width>
+       <y>-29</y>
+       <width>986</width>
        <height>600</height>
       </rect>
      </property>
@@ -272,6 +272,33 @@
         </property>
         <property name="text">
          <string>OTHERS</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="breathing_button">
+        <property name="minimumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>36</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>DIFFUCULT 
+ BREATHING</string>
         </property>
        </widget>
       </item>
