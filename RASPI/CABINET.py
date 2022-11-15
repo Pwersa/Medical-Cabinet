@@ -1,6 +1,6 @@
 import sys, cv2, datetime, time, re, csv, socket, tqdm, os
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QMessageBox, QSpinBox
-from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QSpinBox, QMessageBox, QScrollArea, QScroller, QScrollerProperties
+from PyQt5 import QtWidgets
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QMovie
 from record_session import Ui_record_session
@@ -68,7 +68,7 @@ class Ui_scan_qr_code(QMainWindow):
                        
             if (cv2.waitKey(1) == ord("r")):
                 time.sleep(0.5)
-                session.append("4444-22-22 23:23:59")
+                session.append("67897-22-22 23:23:59")
                 # ID
                 session.append("TUPC-RESPONDER")
                 # NAME
@@ -164,6 +164,16 @@ class Ui_select_injury_type(QMainWindow):
         self.laceration_button.clicked.connect(lambda: self.injuries(injury_type_selection[6]))
         self.others_button.clicked.connect(lambda: self.injuries(injury_type_selection[7]))
     
+        self.scroll_area = self.findChild(QScrollArea, "scrollArea")
+        
+        self.scroll = QScroller.scroller(self.scroll_area.viewport())
+        self.scroll.grabGesture(self.scrollArea.viewport(), QScroller.LeftMouseButtonGesture)
+        #self.scroll.scrollerPropertiesChanged.connect(self.PropsChanged)
+        self.props = self.scroll.scrollerProperties()
+        self.props.setScrollMetric(QScrollerProperties.VerticalOvershootPolicy, QScrollerProperties.OvershootAlwaysOff)
+        
+        self.scroll.setScrollerProperties(self.props)
+        
     def injuries(self, injury_type_selection):
         if injury_type_selection == "Cut":
             injury_types_selected.append("CUT") 
@@ -1042,18 +1052,10 @@ class Ui_step_3_laceration(QMainWindow):
         window.setCurrentIndex(5)
     
     def go_back(self):
-        window.setCurrentIndex(window.currentIndex()-1)
-        
-
-        
-        
-        
+        window.setCurrentIndex(window.currentIndex()-1)   
         
 app = QApplication(sys.argv)
 window = QtWidgets.QStackedWidget()
-
-
-
 
 #############################  ADD CLASS HERE  /  ADDING THE WINDOWS IN THE WIDGETS FOR INDEXING  #############################
 
@@ -1105,9 +1107,7 @@ window.addWidget(Ui_step_2_laceration()) # INDEX 36
 window.addWidget(Ui_step_3_laceration()) # INDEX 37
 
 
-
-
-#######################  PARAMETERS FOR THE WINDOW (EXACT FOR THE TOUCH SCREEN)  #######################
+#######################  PARAMETERS FOR THE WINDOW (EXACT FOR THE TOUCH SCREEN DISPLAY)  #######################
 
 window.setMaximumHeight(600)
 window.setMaximumWidth(1024)
