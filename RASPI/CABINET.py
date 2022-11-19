@@ -68,7 +68,7 @@ class Ui_scan_qr_code(QMainWindow):
                        
             if (cv2.waitKey(1) == ord("r")):
                 time.sleep(0.5)
-                session.append("67897-22-22 23:23:59")
+                session.append("34543-22-22 23:23:59")
                 # ID
                 session.append("TUPC-RESPONDER")
                 # NAME
@@ -287,55 +287,63 @@ class Ui_select_body_part(QMainWindow):
         self.responder_threading()
         
     def responder_threading(self):
+        global dead
+        dead = False
+        
         x = threading.Thread(target=self.send_to_companion_responder)
         x.start()
         
     def send_to_companion_responder(self):
-        try:
-            SEPARATOR = "<SEPARATOR>"
-            BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
+        global dead
+        while not dead:
+            
+            try:
+                SEPARATOR = "<SEPARATOR>"
+                BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
 
-            # the ip address or hostname of the server, the receiver
-            host = "26.98.239.158"
-            # the port, let's use 5001
-            port = 4899
-            # the name of file we want to send, make sure it exists
-            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
-            # get the file size
-            filesize = os.path.getsize(filename)
+                # the ip address or hostname of the server, the receiver
+                host = "ENTER IP HERE"
+                # the port, let's use 5001
+                port = 4899
+                # the name of file we want to send, make sure it exists
+                filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+                # get the file size
+                filesize = os.path.getsize(filename)
 
-            # create the client socket
-            s = socket.socket()
+                # create the client socket
+                s = socket.socket()
 
-            print(f"[+] Connecting to {host}:{port}")
-            s.connect((host, port))
-            print("[+] Connected.")
+                print(f"[+] Connecting to {host}:{port}")
+                s.connect((host, port))
+                print("[+] Connected.")
 
-            # send the filename and filesize
-            s.send(f"{filename}{SEPARATOR}{filesize}".encode())
+                # send the filename and filesize
+                s.send(f"{filename}{SEPARATOR}{filesize}".encode())
 
-            # start sending the file
-            progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
-            with open(filename, "rb") as f:
-                while True:
+                # start sending the file
+                progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
+                with open(filename, "rb") as f:
+                    while True:
+                        
+                        # read the bytes from the file
+                        bytes_read = f.read(BUFFER_SIZE)
+                        if not bytes_read:
+                            # file transmitting is done
+                            break
+
+                        # we use sendall to assure transimission in 
+                        # busy networks
+                        s.sendall(bytes_read)
                     
-                    # read the bytes from the file
-                    bytes_read = f.read(BUFFER_SIZE)
-                    if not bytes_read:
-                        # file transmitting is done
-                        break
+                        # update the progress bar
+                        progress.update(len(bytes_read))
 
-                    # we use sendall to assure transimission in 
-                    # busy networks
-                    s.sendall(bytes_read)
+                # close the socket
+                s.close()
+                dead = True
                 
-                    # update the progress bar
-                    progress.update(len(bytes_read))
-
-            # close the socket
-            s.close()
-        except:
-            self.send_to_companion_responder()
+            except:
+                self.send_to_companion_responder()
 
 class Ui_enter_injury(QMainWindow):
     def __init__(self):
@@ -490,56 +498,62 @@ class Ui_gender_patient_window(QMainWindow):
         self.session_threading()
         
     def session_threading(self):
+        global dead
+        dead = False
+        
         x = threading.Thread(target=self.send_to_companion)
         x.start()
         print(threading.activeCount())
         
     def send_to_companion(self):
-        try:
-            SEPARATOR = "<SEPARATOR>"
-            BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
+        global dead
+        while not dead:
+            try:
+                SEPARATOR = "<SEPARATOR>"
+                BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
 
-            # the ip address or hostname of the server, the receiver
-            host = "26.98.239.158"
-            # the port, let's use 5001
-            port = 4799
-            # the name of file we want to send, make sure it exists
-            filename = "cabinet-history/session/recorded_session.csv"
-            # get the file size
-            filesize = os.path.getsize(filename)
+                # the ip address or hostname of the server, the receiver
+                host = "ENTER IP HERE"
+                # the port, let's use 5001
+                port = 4799
+                # the name of file we want to send, make sure it exists
+                filename = "cabinet-history/session/recorded_session.csv"
+                # get the file size
+                filesize = os.path.getsize(filename)
 
-            # create the client socket
-            s = socket.socket()
+                # create the client socket
+                s = socket.socket()
 
-            print(f"[+] Connecting to {host}:{port}")
-            s.connect((host, port))
-            print("[+] Connected.")
+                print(f"[+] Connecting to {host}:{port}")
+                s.connect((host, port))
+                print("[+] Connected.")
 
-            # send the filename and filesize
-            s.send(f"{filename}{SEPARATOR}{filesize}".encode())
+                # send the filename and filesize
+                s.send(f"{filename}{SEPARATOR}{filesize}".encode())
 
-            # start sending the file
-            progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
-            with open(filename, "rb") as f:
-                while True:
+                # start sending the file
+                progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
+                with open(filename, "rb") as f:
+                    while True:
+                        
+                        # read the bytes from the file
+                        bytes_read = f.read(BUFFER_SIZE)
+                        if not bytes_read:
+                            # file transmitting is done
+                            break
+
+                        # we use sendall to assure transimission in 
+                        # busy networks
+                        s.sendall(bytes_read)
                     
-                    # read the bytes from the file
-                    bytes_read = f.read(BUFFER_SIZE)
-                    if not bytes_read:
-                        # file transmitting is done
-                        break
+                        # update the progress bar
+                        progress.update(len(bytes_read))
 
-                    # we use sendall to assure transimission in 
-                    # busy networks
-                    s.sendall(bytes_read)
-                
-                    # update the progress bar
-                    progress.update(len(bytes_read))
-
-            # close the socket
-            s.close()
-        except:
-            self.send_to_companion()
+                # close the socket
+                s.close()
+                dead = True
+            except:
+                self.send_to_companion()
         
         
 ####################### STEPS UI FOR EVERY INJURIES  #######################
@@ -564,6 +578,10 @@ class Ui_before_procedures(QMainWindow):
             print(injury_types_selected[-1])
             window.setCurrentIndex(17)
             
+        elif injury_types_selected[-1] == "POISON":
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(22)
+                
         elif injury_types_selected[-1] == "ELECTRIC":
             print(injury_types_selected[-1])
             window.setCurrentIndex(30)

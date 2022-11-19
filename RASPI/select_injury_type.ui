@@ -78,8 +78,8 @@
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="1" column="0">
-       <widget class="QPushButton" name="burn_button">
+      <item row="1" column="2">
+       <widget class="QPushButton" name="puncture_button">
         <property name="minimumSize">
          <size>
           <width>310</width>
@@ -100,7 +100,60 @@
          </font>
         </property>
         <property name="text">
-         <string>BURN</string>
+         <string>PUNCTURE</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="cut_button">
+        <property name="minimumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>36</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>CUT</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="breathing_button">
+        <property name="minimumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>36</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>DIFFUCULT 
+ BREATHING</string>
         </property>
        </widget>
       </item>
@@ -153,32 +206,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="cut_button">
-        <property name="minimumSize">
-         <size>
-          <width>310</width>
-          <height>190</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>310</width>
-          <height>190</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>36</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>CUT</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="2">
        <widget class="QPushButton" name="poison_button">
         <property name="minimumSize">
@@ -205,8 +232,8 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="puncture_button">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="others_button">
         <property name="minimumSize">
          <size>
           <width>310</width>
@@ -227,7 +254,35 @@
          </font>
         </property>
         <property name="text">
-         <string>PUNCTURE</string>
+         <string>OTHERS 
+ (MANUAL 
+ TYPE)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="burn_button">
+        <property name="minimumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>36</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>BURN</string>
         </property>
        </widget>
       </item>
@@ -252,59 +307,6 @@
         </property>
         <property name="text">
          <string>BRUISES</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="others_button">
-        <property name="minimumSize">
-         <size>
-          <width>310</width>
-          <height>190</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>310</width>
-          <height>190</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>36</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>OTHERS</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QPushButton" name="breathing_button">
-        <property name="minimumSize">
-         <size>
-          <width>310</width>
-          <height>190</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>310</width>
-          <height>190</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>36</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>DIFFUCULT 
- BREATHING</string>
         </property>
        </widget>
       </item>

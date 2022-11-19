@@ -65,7 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;Before proceeding,&lt;br/&gt;place the patient in a secure position.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;Before proceeding,&lt;br/&gt;place the patient in a comfortable position.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label">
@@ -110,11 +110,23 @@
    <widget class="QPushButton" name="goto_steps_button">
     <property name="geometry">
      <rect>
-      <x>760</x>
+      <x>715</x>
       <y>440</y>
-      <width>251</width>
-      <height>151</height>
+      <width>280</width>
+      <height>140</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>280</width>
+      <height>140</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>280</width>
+      <height>140</height>
+     </size>
     </property>
     <property name="font">
      <font>
@@ -131,11 +143,23 @@
    <widget class="QPushButton" name="go_back_button">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>28</x>
       <y>440</y>
-      <width>251</width>
-      <height>151</height>
+      <width>280</width>
+      <height>140</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>280</width>
+      <height>140</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>280</width>
+      <height>140</height>
+     </size>
     </property>
     <property name="font">
      <font>

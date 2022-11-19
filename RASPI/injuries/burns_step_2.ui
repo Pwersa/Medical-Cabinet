@@ -110,11 +110,23 @@
    <widget class="QPushButton" name="next_step_button_2">
     <property name="geometry">
      <rect>
-      <x>730</x>
+      <x>715</x>
       <y>450</y>
-      <width>281</width>
-      <height>141</height>
+      <width>280</width>
+      <height>140</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>280</width>
+      <height>140</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>280</width>
+      <height>140</height>
+     </size>
     </property>
     <property name="font">
      <font>
@@ -131,11 +143,23 @@
    <widget class="QPushButton" name="go_back_injury_type_2">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>28</x>
       <y>450</y>
-      <width>281</width>
-      <height>141</height>
+      <width>280</width>
+      <height>140</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>280</width>
+      <height>140</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>280</width>
+      <height>140</height>
+     </size>
     </property>
     <property name="font">
      <font>
