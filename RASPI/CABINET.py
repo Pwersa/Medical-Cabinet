@@ -470,12 +470,17 @@ class Ui_gender_patient_window(QMainWindow):
         #self.ui.type_of_injury.setText(', ' .join(injury_types_selected))
         
         # DEBUG DISPLAY ITEMS
-        self.ui.qr_responder_name.setText("INDAYA JR - COET")
-        self.ui.qr_patient_name.setText("DURAN ROGIE - BET-COET")
-        self.ui.date_session.setText("JANUARY 2022")
-
-        self.ui.body_injured.setText("HAND")
-        self.ui.type_of_injury.setText("CUT")
+        self.respond = "JR ANGELO IGNACIO INDAYA  -  COET-4A"
+        self.patient = "ROGIE PRINZ DURAN  -  BET-COET-4A"
+        self.date = "1234-44-44"
+        self.body = ["HAND", "HAND"]
+        self.injury = ["CUT", "PUNCTURE"]
+        
+        self.ui.qr_responder_name.setText(f"<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600;\">{self.respond}</span></p></body><html>")
+        self.ui.qr_patient_name.setText(f"<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600;\">{self.patient}</span></p></body><html>")
+        self.ui.date_session.setText(f"<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{self.date}</span></p></body></html>")
+        self.ui.body_injured.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{}</span></p></body></html>".format(", ".join(self.body)))
+        self.ui.type_of_injury.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{}</span></p></body></html>".format(", ".join(self.injury)))
         
         print("SESSION:")
         print(session)
@@ -1127,9 +1132,9 @@ window.addWidget(Ui_step_3_laceration()) # INDEX 37
 
 #######################  PARAMETERS FOR THE WINDOW (EXACT FOR THE TOUCH SCREEN DISPLAY)  #######################
 
-window.setMaximumHeight(600)
-window.setMaximumWidth(1024)
-window.setWindowTitle("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
-
-window.show()
-sys.exit(app.exec_())
+if __name__ == "__main__":
+    window.setWindowTitle("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
+    window.setMaximumHeight(600)
+    window.setMaximumWidth(1024)
+    window.show()
+    sys.exit(app.exec_())
