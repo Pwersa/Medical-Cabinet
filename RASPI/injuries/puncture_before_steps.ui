@@ -29,8 +29,8 @@
    <widget class="QLabel" name="title_step_4">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
+      <x>6</x>
+      <y>0</y>
       <width>1011</width>
       <height>71</height>
      </rect>
@@ -54,7 +54,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>320</y>
+      <y>310</y>
       <width>981</width>
       <height>121</height>
      </rect>
@@ -72,7 +72,7 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>80</y>
+      <y>70</y>
       <width>360</width>
       <height>240</height>
      </rect>
@@ -136,6 +136,22 @@
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
     <property name="text">
      <string>NEXT STEP</string>
     </property>
@@ -166,10 +182,55 @@
       <pointsize>18</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
     <property name="text">
      <string>GO BACK</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1024</width>
+      <height>600</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../pictures/program_pictures/main_wallpaper.png</pixmap>
+    </property>
+   </widget>
+   <zorder>label</zorder>
    <zorder>text_steps_4</zorder>
    <zorder>title_step_4</zorder>
    <zorder>gif_player_label_4</zorder>

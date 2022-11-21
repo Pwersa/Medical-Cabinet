@@ -54,7 +54,7 @@
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>120</y>
+      <y>100</y>
       <width>151</width>
       <height>61</height>
      </rect>
@@ -92,67 +92,38 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;AGE:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="male_checkbox">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>190</y>
-      <width>201</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>28</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string> MALE</string>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>90</width>
-      <height>90</height>
-     </size>
-    </property>
-    <property name="checked">
-     <bool>false</bool>
-    </property>
-    <property name="tristate">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="female_checkbox">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>280</y>
-      <width>221</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>28</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string> FEMALE</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="confirm_guest">
     <property name="geometry">
      <rect>
       <x>335</x>
-      <y>380</y>
+      <y>390</y>
       <width>351</width>
       <height>171</height>
      </rect>
     </property>
     <property name="font">
      <font>
+      <family>Unispace</family>
       <pointsize>36</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
     </property>
     <property name="text">
      <string>CONFIRM</string>
@@ -162,9 +133,9 @@
     <property name="geometry">
      <rect>
       <x>640</x>
-      <y>190</y>
+      <y>180</y>
       <width>191</width>
-      <height>161</height>
+      <height>171</height>
      </rect>
     </property>
     <property name="font">
@@ -183,6 +154,78 @@
      <number>1</number>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1024</width>
+      <height>600</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>pictures/program_pictures/main_wallpaper.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="male_checkbox">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>140</y>
+      <width>321</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>   MALE</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="female_checkbox">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>260</y>
+      <width>361</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>   FEMALE</string>
+    </property>
+   </widget>
+   <zorder>label</zorder>
+   <zorder>TITLE</zorder>
+   <zorder>gender_label</zorder>
+   <zorder>age_label</zorder>
+   <zorder>male_checkbox</zorder>
+   <zorder>female_checkbox</zorder>
+   <zorder>age_box</zorder>
+   <zorder>confirm_guest</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

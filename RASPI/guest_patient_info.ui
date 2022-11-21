@@ -106,6 +106,17 @@
       <pointsize>24</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QTextEdit
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 2px;
+border-radius:20px;
+border-color: black;
+}</string>
+    </property>
     <property name="html">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -128,6 +139,18 @@ p, li { white-space: pre-wrap; }
       <pointsize>24</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QTextEdit
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 2px;
+border-radius:20px;
+border-color: black;
+}
+</string>
+    </property>
     <property name="html">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -147,13 +170,68 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="font">
      <font>
+      <family>Unispace</family>
       <pointsize>36</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}
+</string>
     </property>
     <property name="text">
      <string>CONFIRM</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1024</width>
+      <height>600</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>pictures/program_pictures/main_wallpaper.png</pixmap>
+    </property>
+   </widget>
+   <zorder>label</zorder>
+   <zorder>TITLE</zorder>
+   <zorder>label_for_name</zorder>
+   <zorder>label_for_section</zorder>
+   <zorder>name_info</zorder>
+   <zorder>section_info</zorder>
+   <zorder>confirm_guest</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

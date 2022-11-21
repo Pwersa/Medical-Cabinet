@@ -30,7 +30,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>10</y>
       <width>1021</width>
       <height>71</height>
      </rect>
@@ -38,7 +38,9 @@
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>24</pointsize>
+      <pointsize>36</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="text">
@@ -105,7 +107,7 @@
      <rect>
       <x>60</x>
       <y>301</y>
-      <width>141</width>
+      <width>161</width>
       <height>41</height>
      </rect>
     </property>
@@ -192,10 +194,67 @@
       <pointsize>24</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
     <property name="text">
      <string>CONFIRM</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1024</width>
+      <height>600</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>pictures/program_pictures/main_wallpaper.png</pixmap>
+    </property>
+   </widget>
+   <zorder>label</zorder>
+   <zorder>TITLE</zorder>
+   <zorder>label_responder</zorder>
+   <zorder>qr_responder_name</zorder>
+   <zorder>label_responder_3</zorder>
+   <zorder>qr_patient_name</zorder>
+   <zorder>label_responder_5</zorder>
+   <zorder>date_session</zorder>
+   <zorder>label_responder_6</zorder>
+   <zorder>label_responder_8</zorder>
+   <zorder>body_injured</zorder>
+   <zorder>type_of_injury</zorder>
+   <zorder>fiinish_session</zorder>
   </widget>
  </widget>
  <resources/>

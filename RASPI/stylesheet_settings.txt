@@ -1,0 +1,25 @@
+QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}
+
+
+QTextEdit
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 2px;
+border-radius:20px;
+border-color: black;
+}

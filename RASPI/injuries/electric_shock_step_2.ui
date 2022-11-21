@@ -30,7 +30,7 @@
     <property name="geometry">
      <rect>
       <x>5</x>
-      <y>10</y>
+      <y>0</y>
       <width>1011</width>
       <height>71</height>
      </rect>
@@ -97,6 +97,9 @@
       <bold>true</bold>
      </font>
     </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
     <property name="lineWidth">
      <number>1</number>
     </property>
@@ -136,6 +139,22 @@
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
     <property name="text">
      <string>NEXT STEP</string>
     </property>
@@ -166,10 +185,60 @@
       <pointsize>18</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
     <property name="text">
      <string>GO BACK</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1024</width>
+      <height>600</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../pictures/program_pictures/main_wallpaper.png</pixmap>
+    </property>
+   </widget>
+   <zorder>label</zorder>
+   <zorder>title_step</zorder>
+   <zorder>text_steps</zorder>
+   <zorder>gif_player_label</zorder>
+   <zorder>next_step_button</zorder>
+   <zorder>go_back_button</zorder>
   </widget>
  </widget>
  <resources/>

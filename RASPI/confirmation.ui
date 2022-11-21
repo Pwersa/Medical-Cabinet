@@ -38,7 +38,7 @@
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>48</pointsize>
+      <pointsize>72</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -61,11 +61,32 @@
     </property>
     <property name="font">
      <font>
+      <family>Unispace</family>
       <pointsize>24</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}
+</string>
+    </property>
     <property name="text">
-     <string>Reset Procedure</string>
+     <string>Reset
+Procedure</string>
     </property>
    </widget>
    <widget class="QPushButton" name="yes_button">
@@ -79,13 +100,65 @@
     </property>
     <property name="font">
      <font>
+      <family>Unispace</family>
       <pointsize>24</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}
+</string>
     </property>
     <property name="text">
      <string>Yes</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1024</width>
+      <height>600</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>pictures/program_pictures/main_wallpaper.png</pixmap>
+    </property>
+   </widget>
+   <zorder>label</zorder>
+   <zorder>TITLE</zorder>
+   <zorder>no_button</zorder>
+   <zorder>yes_button</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

@@ -1,0 +1,16 @@
+TESTING:
+
+*ENTER_INJURY.py
+- KEYBOARD HEIGHT
+- LINE EDIT IF BETTER
+
+* patient_gender.py
+- RADIO BUTTON SIZE
+
+*RECORD_SESSION.py
+- display correctly the data
+
+*General
+- change window name every window change
+- icons
+- remove unecessary syntax/code

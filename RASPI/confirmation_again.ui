@@ -30,15 +30,15 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>40</y>
+      <y>10</y>
       <width>1021</width>
-      <height>191</height>
+      <height>261</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>36</pointsize>
+      <pointsize>48</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -63,8 +63,28 @@
     </property>
     <property name="font">
      <font>
+      <family>Unispace</family>
       <pointsize>24</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}
+</string>
     </property>
     <property name="text">
      <string>New Injury</string>
@@ -81,13 +101,65 @@
     </property>
     <property name="font">
      <font>
+      <family>Unispace</family>
       <pointsize>24</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}
+</string>
     </property>
     <property name="text">
      <string>Finished</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1024</width>
+      <height>600</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>pictures/program_pictures/main_wallpaper.png</pixmap>
+    </property>
+   </widget>
+   <zorder>label</zorder>
+   <zorder>TITLE</zorder>
+   <zorder>new_injury_button</zorder>
+   <zorder>finish_procedure</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
