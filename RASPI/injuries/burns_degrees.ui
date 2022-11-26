@@ -29,8 +29,8 @@
    <widget class="QLabel" name="title_step_4">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>0</y>
+      <x>9</x>
+      <y>1</y>
       <width>1011</width>
       <height>71</height>
      </rect>
@@ -44,7 +44,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;1st and 2nd Degree Burns&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;Types of Degree Burns&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -53,8 +53,8 @@
    <widget class="QLabel" name="gif_player_label_4">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>120</y>
+      <x>120</x>
+      <y>130</y>
       <width>360</width>
       <height>240</height>
      </rect>
@@ -95,7 +95,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="next_step_button_4">
+   <widget class="QPushButton" name="second_degree_burn">
     <property name="geometry">
      <rect>
       <x>715</x>
@@ -118,7 +118,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>18</pointsize>
+      <pointsize>28</pointsize>
      </font>
     </property>
     <property name="cursor">
@@ -141,7 +141,8 @@ border-color: black;
 }</string>
     </property>
     <property name="text">
-     <string>NEXT STEP</string>
+     <string>2nd DEGREE 
+ BURN</string>
     </property>
    </widget>
    <widget class="QPushButton" name="go_back_injury_type_4">
@@ -193,8 +194,8 @@ border-color: black;
    <widget class="QLabel" name="gif_player_label_5">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>120</y>
+      <x>550</x>
+      <y>130</y>
       <width>360</width>
       <height>240</height>
      </rect>
@@ -263,12 +264,129 @@ border-color: black;
      <pixmap>../pictures/program_pictures/main_wallpaper.png</pixmap>
     </property>
    </widget>
+   <widget class="QPushButton" name="first_degree_burn">
+    <property name="geometry">
+     <rect>
+      <x>374</x>
+      <y>440</y>
+      <width>280</width>
+      <height>140</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>280</width>
+      <height>140</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>280</width>
+      <height>140</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>28</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>1st DEGREE 
+ BURN</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>80</y>
+      <width>401</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>36</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt; font-style:italic;&quot;&gt;1st Degree Burn&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>80</y>
+      <width>401</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>36</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt; font-style:italic;&quot;&gt;2nd &lt;/span&gt;&lt;span style=&quot; font-size:24pt; font-style:italic;&quot;&gt;Degree Burn&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>380</y>
+      <width>1001</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>36</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;Please &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;CHECK&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt; carefully the type of burn&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
    <zorder>label</zorder>
    <zorder>gif_player_label_5</zorder>
    <zorder>gif_player_label_4</zorder>
    <zorder>title_step_4</zorder>
-   <zorder>next_step_button_4</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label_3</zorder>
+   <zorder>label_4</zorder>
    <zorder>go_back_injury_type_4</zorder>
+   <zorder>first_degree_burn</zorder>
+   <zorder>second_degree_burn</zorder>
   </widget>
  </widget>
  <resources/>

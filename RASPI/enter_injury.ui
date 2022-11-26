@@ -50,7 +50,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="typed_injury">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -208,7 +208,7 @@ border-color: black;
    </widget>
    <zorder>label_2</zorder>
    <zorder>TITLE</zorder>
-   <zorder>lineEdit</zorder>
+   <zorder>typed_injury</zorder>
    <zorder>enter_button</zorder>
    <zorder>label</zorder>
    <zorder>enter_injury_go_back_button</zorder>

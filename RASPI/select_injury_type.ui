@@ -75,7 +75,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>-121</y>
+       <y>0</y>
        <width>982</width>
        <height>600</height>
       </rect>
@@ -121,50 +121,6 @@ border-color: black;
         </property>
         <property name="text">
          <string>POISON</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QPushButton" name="breathing_button">
-        <property name="minimumSize">
-         <size>
-          <width>310</width>
-          <height>190</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>310</width>
-          <height>190</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Unispace</family>
-          <pointsize>36</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton:hover:!pressed
-{
-  background-color: rgb(195,30,60);
-}
-
-QPushButton
-{
-  background-color: white;
-color: black;
-border-style: outset;
-border-width: 3px;
-border-radius:10px;
-border-color: black;
-}</string>
-        </property>
-        <property name="text">
-         <string>DIFFUCULT
-BREATHING</string>
         </property>
        </widget>
       </item>

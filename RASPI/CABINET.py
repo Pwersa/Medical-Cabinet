@@ -1,5 +1,5 @@
 import sys, cv2, datetime, time, re, csv, socket, tqdm, os
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QSpinBox, QMessageBox, QScrollArea, QScroller, QScrollerProperties
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QSpinBox, QMessageBox, QScrollArea, QScroller, QScrollerProperties, QRadioButton, QLineEdit
 from PyQt5 import QtWidgets
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QMovie
@@ -68,7 +68,7 @@ class Ui_scan_qr_code(QMainWindow):
                        
             if (cv2.waitKey(1) == ord("r")):
                 time.sleep(0.5)
-                session.append("34543-22-22 23:23:59")
+                session.append("87897-12-31 23:23:59")
                 # ID
                 session.append("TUPC-RESPONDER")
                 # NAME
@@ -280,6 +280,10 @@ class Ui_select_body_part(QMainWindow):
         session.append(injury_types_selected[-1])
         session.append(body_parts_selected[-1])
         
+        filename = "recorded_accessed_responder.csv"
+        f = open(filename, "w+")
+        f.close()
+        
         with open('cabinet-history/accessed-responder/recorded_accessed_responder.csv', 'w', encoding='UTF8', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(session)
@@ -302,9 +306,11 @@ class Ui_select_body_part(QMainWindow):
                 BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
 
                 # the ip address or hostname of the server, the receiver
-                host = "192.168.1.6"
+                print("ENTER HOST HERE")
+                host = ""
                 # the port, let's use 5001
-                port = 4899
+                print("ENTER PORT HERE")
+                port = None
                 # the name of file we want to send, make sure it exists
                 filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
                 # get the file size
@@ -352,14 +358,89 @@ class Ui_enter_injury(QMainWindow):
         self.enter_button.clicked.connect(self.enter_injury)
         self.enter_injury_go_back_button.clicked.connect(self.go_back)
         
-        self.typed_injury = self.findChild(QTextEdit, "text_edit_injury")
+        self.typed_injury = self.findChild(QLineEdit, "typed_injury")
+        
+        #print(self.typed_injury)
 
     def enter_injury(self):
-        session.append(self.typed_injury)
+        print(self.typed_injury.text())
+        session.append(self.typed_injury.text())
+        session.append("Emergency Seek")
+        
+        filename = "recorded_accessed_responder.csv"
+        f = open(filename, "w+")
+        f.close()
+        
+        with open('cabinet-history/accessed-responder/recorded_accessed_responder.csv', 'w', encoding='UTF8', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(session)
+        
+        self.responder_threading()
         window.setCurrentIndex(4)
 
     def go_back(self):
-        window.setCurrentIndex(window.currentIndex()-1)  
+        window.setCurrentIndex(window.currentIndex()-1)
+        
+    def responder_threading(self):
+        global dead
+        dead = False
+        
+        x = threading.Thread(target=self.send_injury)
+        x.start()
+        
+    def send_injury(self):
+        global dead
+        while not dead:
+            
+            try:
+                SEPARATOR = "<SEPARATOR>"
+                BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
+
+                # the ip address or hostname of the server, the receiver
+                print("ENTER HOST HERE")
+                host = ""
+                # the port, let's use 5001
+                print("ENTER PORT HERE")
+                port = None
+                # the name of file we want to send, make sure it exists
+                filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+                # get the file size
+                filesize = os.path.getsize(filename)
+
+                # create the client socket
+                s = socket.socket()
+
+                print(f"[+] Connecting to {host}:{port}")
+                s.connect((host, port))
+                print("[+] Connected.")
+
+                # send the filename and filesize
+                s.send(f"{filename}{SEPARATOR}{filesize}".encode())
+
+                # start sending the file
+                progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
+                with open(filename, "rb") as f:
+                    while True:
+                        
+                        # read the bytes from the file
+                        bytes_read = f.read(BUFFER_SIZE)
+                        if not bytes_read:
+                            # file transmitting is done
+                            break
+
+                        # we use sendall to assure transimission in 
+                        # busy networks
+                        s.sendall(bytes_read)
+                    
+                        # update the progress bar
+                        progress.update(len(bytes_read))
+
+                # close the socket
+                s.close()
+                dead = True
+                
+            except:
+                self.send_injury()
 
 class Ui_request_nurse(QMainWindow):
     def __init__(self):
@@ -444,6 +525,8 @@ class Ui_gender_patient_window(QMainWindow):
         self.confirm_guest.clicked.connect(self.gender_and_age_submit)
         
         self.age =  self.findChild(QSpinBox, "age_box")
+        self.male_radio = self.findChild(QRadioButton, "male_checkbox")
+        self.female_radio = self.findChild(QRadioButton, "female_checkbox")
             
     def gender_and_age_submit(self, ):
         if self.male_checkbox.isChecked():
@@ -494,6 +577,10 @@ class Ui_gender_patient_window(QMainWindow):
 
     def save_session_tolocal(self):
         
+        filename = "recorded_session.csv"
+        f = open(filename, "w+")
+        f.close()
+        
         with open('cabinet-history/session/recorded_session.csv', 'w', encoding='UTF8', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(session)
@@ -508,7 +595,6 @@ class Ui_gender_patient_window(QMainWindow):
         
         x = threading.Thread(target=self.send_to_companion)
         x.start()
-        print(threading.activeCount())
         
     def send_to_companion(self):
         global dead
@@ -518,12 +604,13 @@ class Ui_gender_patient_window(QMainWindow):
             BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
 
             # the ip address or hostname of the server, the receiver
-            host = "192.168.1.6"
+            print("ENTER HOST HERE")
+            host = ""
             # the port, let's use 5001
-            port = 4799
+            print("ENTER PORT HERE")
+            port = None
             # the name of file we want to send, make sure it exists
             filename = "cabinet-history/session/recorded_session.csv"
-            # get the file size
             filesize = os.path.getsize(filename)
 
             # create the client socket
@@ -581,7 +668,7 @@ class Ui_before_procedures(QMainWindow):
 
         elif injury_types_selected[-1] == "BURN":
             print(injury_types_selected[-1])
-            window.setCurrentIndex(17)
+            window.setCurrentIndex(18)
             
         elif injury_types_selected[-1] == "POISON":
             print(injury_types_selected[-1])
@@ -779,11 +866,15 @@ class Ui_degrees_burns(QMainWindow):
     def __init__(self):
         super(Ui_degrees_burns, self).__init__()
         loadUi("injuries/burns_degrees.ui", self)
-        self.next_step_button_4.clicked.connect(self.next_step)
+        self.first_degree_burn.clicked.connect(self.first_degree)
+        self.second_degree_burn.clicked.connect(self.second_degree)
         self.go_back_injury_type_4.clicked.connect(self.go_back)
         
-    def next_step(self):
-        window.setCurrentIndex(18)
+    def first_degree(self):
+        window.setCurrentIndex(19)
+        
+    def second_degree(self):
+        window.setCurrentIndex(38)
     
     def go_back(self):
         window.setCurrentIndex(28)
@@ -800,30 +891,30 @@ class Ui_before_steps_burns(QMainWindow):
         self.gif_player_label = self.findChild(QLabel, "gif_player_label")
         
         # PROPERTIES FOR SETMOVIE
-        self.cut_step1 = QMovie("GIFs/burns-remove-jewelries.gif")
+        self.cut_step1 = QMovie("GIFs/1st-burn-cool.gif")
         self.gif_player_label.setMovie(self.cut_step1)
         self.cut_step1.start()
         
     def next_step(self):
-        window.setCurrentIndex(19)
+        window.setCurrentIndex(17)
     
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)
         
         
-class Ui_step_1_burn(QMainWindow):
+class Ui_step_1_1st_burn(QMainWindow):
     def __init__(self):
-        super(Ui_step_1_burn, self).__init__()
-        loadUi("injuries/burns_step_1.ui", self)
+        super(Ui_step_1_1st_burn, self).__init__()
+        loadUi("injuries/1st_burns_step_1.ui", self)
         
         self.next_step_button.clicked.connect(self.next_step)
         self.go_back_injury_type.clicked.connect(self.go_back)
    
         self.gif_player_label = self.findChild(QLabel, "gif_player_label")
 
-        self.cut_step1 = QMovie("GIFs/burns-1.gif")
-        self.gif_player_label.setMovie(self.cut_step1)
-        self.cut_step1.start()
+        self.burn_step1 = QMovie("GIFs/1st-burns-1.gif")
+        self.gif_player_label.setMovie(self.burn_step1)
+        self.burn_step1.start()
         
     def next_step(self):
         window.setCurrentIndex(20)
@@ -831,10 +922,10 @@ class Ui_step_1_burn(QMainWindow):
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)
         
-class Ui_step_2_burn(QMainWindow):
+class Ui_step_2_1st_burn(QMainWindow):
     def __init__(self):
-        super(Ui_step_2_burn, self).__init__()
-        loadUi("injuries/burns_step_2.ui", self)
+        super(Ui_step_2_1st_burn, self).__init__()
+        loadUi("injuries/1st_burns_step_2.ui", self)
         
         self.next_step_button_2.clicked.connect(self.next_step)
         self.go_back_injury_type_2.clicked.connect(self.go_back)
@@ -845,19 +936,75 @@ class Ui_step_2_burn(QMainWindow):
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)
         
-class Ui_step_3_burn(QMainWindow):
+class Ui_step_3_1st_burn(QMainWindow):
     def __init__(self):
-        super(Ui_step_3_burn, self).__init__()
-        loadUi("injuries/burns_step_3.ui", self)
+        super(Ui_step_3_1st_burn, self).__init__()
+        loadUi("injuries/1st_burns_step_3.ui", self)
         
         self.next_step_button_3.clicked.connect(self.next_step)
         self.go_back_injury_type_3.clicked.connect(self.go_back)
         
         self.gif_player_label_3 = self.findChild(QLabel, "gif_player_label_3")
 
-        self.cut_step1_3 = QMovie("GIFs/burns-3.gif")
-        self.gif_player_label_3.setMovie(self.cut_step1_3)
-        self.cut_step1_3.start()
+        self.burn_step3 = QMovie("GIFs/1st-burns-2.gif")
+        self.gif_player_label_3.setMovie(self.burn_step3)
+        self.burn_step3.start()
+        
+    def next_step(self):
+        window.setCurrentIndex(5)
+    
+    def go_back(self):
+        window.setCurrentIndex(window.currentIndex()-1)
+
+#########################################################################################
+
+class Ui_step_1_2nd_burn(QMainWindow):
+    def __init__(self):
+        super(Ui_step_1_2nd_burn, self).__init__()
+        loadUi("injuries/2nd_burns_step_1.ui", self)
+        
+        self.next_step_button.clicked.connect(self.next_step)
+        self.go_back_injury_type.clicked.connect(self.go_back)
+   
+        self.gif_player_label = self.findChild(QLabel, "gif_player_label")
+
+        self.burn_step1 = QMovie("GIFs/2nd-burns-1.gif")
+        self.gif_player_label.setMovie(self.burn_step1)
+        self.burn_step1.start()
+        
+    def next_step(self):
+        window.setCurrentIndex(39)
+    
+    def go_back(self):
+        window.setCurrentIndex(18)
+        
+class Ui_step_2_2nd_burn(QMainWindow):
+    def __init__(self):
+        super(Ui_step_2_2nd_burn, self).__init__()
+        loadUi("injuries/2nd_burns_step_2.ui", self)
+        
+        self.next_step_button_2.clicked.connect(self.next_step)
+        self.go_back_injury_type_2.clicked.connect(self.go_back)
+        
+    def next_step(self):
+        window.setCurrentIndex(40)
+    
+    def go_back(self):
+        window.setCurrentIndex(window.currentIndex()-1)
+        
+class Ui_step_3_2nd_burn(QMainWindow):
+    def __init__(self):
+        super(Ui_step_3_2nd_burn, self).__init__()
+        loadUi("injuries/2nd_burns_step_3.ui", self)
+        
+        self.next_step_button_3.clicked.connect(self.next_step)
+        self.go_back_injury_type_3.clicked.connect(self.go_back)
+        
+        self.gif_player_label_3 = self.findChild(QLabel, "gif_player_label_3")
+
+        self.burn_step3 = QMovie("GIFs/2nd-burns-2.gif")
+        self.gif_player_label_3.setMovie(self.burn_step3)
+        self.burn_step3.start()
         
     def next_step(self):
         window.setCurrentIndex(5)
@@ -940,13 +1087,20 @@ class Ui_step_poison_inhalation(QMainWindow):
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)
         
-class Ui_step_poison_skin_eyes(QMainWindow):
+class Ui_step_poison_eyes(QMainWindow):
     def __init__(self):
-        super(Ui_step_poison_skin_eyes, self).__init__()
-        loadUi("injuries/poison_skin_eye.ui", self)
+        super(Ui_step_poison_eyes, self).__init__()
+        loadUi("injuries/poison_eye.ui", self)
         
         self.next_step_button.clicked.connect(self.next_step)
         self.go_back_injury_type.clicked.connect(self.go_back)
+        
+        self.gif_player_label = self.findChild(QLabel, "gif_player_label")
+        
+        # PROPERTIES FOR SETMOVIE
+        self.poison_spill_eyes = QMovie("GIFs/poison-spill-1.gif")
+        self.gif_player_label.setMovie(self.poison_spill_eyes)
+        self.poison_spill_eyes.start()
         
     def next_step(self):
         window.setCurrentIndex(5)
@@ -1024,6 +1178,14 @@ class Ui_step_1_bruises(QMainWindow):
         self.next_step_button.clicked.connect(self.next_step)
         self.go_back_button.clicked.connect(self.go_back)
         
+        # FIND THE LABEL THAT WE NEED TO SET THE GIF
+        self.gif_player_label = self.findChild(QLabel, "gif_player_label")
+        
+        # PROPERTIES FOR SETMOVIE
+        self.bruises_step1 = QMovie("GIFs/bruise-1.gif")
+        self.gif_player_label.setMovie(self.bruises_step1)
+        self.bruises_step1.start()
+        
     def next_step(self):
         window.setCurrentIndex(5)
     
@@ -1038,9 +1200,14 @@ class Ui_step_1_laceration(QMainWindow):
     def __init__(self):
         super(Ui_step_1_laceration, self).__init__()
         loadUi("injuries/laceration_step_1.ui", self)
-        
         self.next_step_button.clicked.connect(self.next_step)
         self.go_back_button.clicked.connect(self.go_back)
+    
+        self.gif_player_label = self.findChild(QLabel, "gif_player_label")
+        
+        self.laceration_step1 = QMovie("GIFs/laceration-1.gif")
+        self.gif_player_label.setMovie(self.laceration_step1)
+        self.laceration_step1.start()
         
     def next_step(self):
         window.setCurrentIndex(36)
@@ -1048,14 +1215,18 @@ class Ui_step_1_laceration(QMainWindow):
     def go_back(self):
         window.setCurrentIndex(28)
         
-        
 class Ui_step_2_laceration(QMainWindow):
     def __init__(self):
         super(Ui_step_2_laceration, self).__init__()
         loadUi("injuries/laceration_step_2.ui", self)
-        
         self.next_step_button.clicked.connect(self.next_step)
         self.go_back_button.clicked.connect(self.go_back)
+        
+        self.gif_player_label = self.findChild(QLabel, "gif_player_label")
+        
+        self.laceration_step2 = QMovie("GIFs/laceration-2.gif")
+        self.gif_player_label.setMovie(self.laceration_step2)
+        self.laceration_step2.start()
         
     def next_step(self):
         window.setCurrentIndex(37)
@@ -1070,6 +1241,12 @@ class Ui_step_3_laceration(QMainWindow):
 
         self.next_step_button.clicked.connect(self.next_step)
         self.go_back_button.clicked.connect(self.go_back)
+        
+        self.gif_player_label = self.findChild(QLabel, "gif_player_label")
+        
+        self.laceration_step3 = QMovie("GIFs/laceration-3.gif")
+        self.gif_player_label.setMovie(self.laceration_step3)
+        self.laceration_step3.start()
         
     def next_step(self):
         window.setCurrentIndex(5)
@@ -1104,16 +1281,16 @@ window.addWidget(Ui_step_4_puncture()) # INDEX 16
 
 window.addWidget(Ui_degrees_burns()) # INDEX 17
 window.addWidget(Ui_before_steps_burns()) # INDEX 18
-window.addWidget(Ui_step_1_burn()) # INDEX 19
-window.addWidget(Ui_step_2_burn()) # INDEX 20
-window.addWidget(Ui_step_3_burn()) # INDEX 21
+window.addWidget(Ui_step_1_1st_burn()) # INDEX 19
+window.addWidget(Ui_step_2_1st_burn()) # INDEX 20
+window.addWidget(Ui_step_3_1st_burn()) # INDEX 21
 
 window.addWidget(Ui_posion_types()) # INDEX 22
 window.addWidget(Ui_step_1_poison()) # INDEX 23
 window.addWidget(Ui_step_2_poison()) # INDEX 24
 window.addWidget(Ui_step_3_poison()) # INDEX 25
 window.addWidget(Ui_step_poison_inhalation()) # INDEX 26
-window.addWidget(Ui_step_poison_skin_eyes()) # INDEX 27
+window.addWidget(Ui_step_poison_eyes()) # INDEX 27
 
 window.addWidget(Ui_before_procedures()) # INDEX 28
 window.addWidget(Ui_guest_patient_window()) # INDEX 29
@@ -1128,6 +1305,10 @@ window.addWidget(Ui_step_1_bruises()) # INDEX 34
 window.addWidget(Ui_step_1_laceration()) # INDEX 35
 window.addWidget(Ui_step_2_laceration()) # INDEX 36
 window.addWidget(Ui_step_3_laceration()) # INDEX 37
+
+window.addWidget(Ui_step_1_2nd_burn()) # INDEX 38
+window.addWidget(Ui_step_2_2nd_burn()) # INDEX 39
+window.addWidget(Ui_step_3_2nd_burn()) # INDEX 40
 
 
 #######################  PARAMETERS FOR THE WINDOW (EXACT FOR THE TOUCH SCREEN DISPLAY)  #######################
