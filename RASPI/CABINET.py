@@ -12,7 +12,7 @@ body_parts_selected = []
 injury_types_selected = ["Placeholder"]
 
 injury_type_selection = ["Cut", "Poison", "Puncture", "Burn", "Electric", "Bruises", "Laceration", "Others"]
-body_parts_list = ["Hand", "Head", "Face", "Knee"]
+body_parts_list = ["Eyes", "Nose", "Mouth", "Ear", "Shoulder", "Wrist", "Elbow", "Finger", "Hand", "Knee",]
 gender_types = ["Male", "Female", "N/A"]
 
 # CSV FILE
@@ -224,16 +224,74 @@ class Ui_select_body_part(QMainWindow):
     def __init__(self):
         super(Ui_select_body_part, self).__init__()
         loadUi("select_body_part.ui", self)
-        self.hand_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[0]))
+        #body_parts_list = ["Eyes", "Nose", "Mouth", "Ear", "Shoulder", "Wrist", "Elbow", "Finger", "Hand", "Knee",]
+        self.eyes_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[0]))
+        self.nose_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[1]))
+        self.mouth_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[2]))
+        self.ear_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[3]))
+        self.shoulder_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[4]))
+        self.wrist_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[5]))
+        self.elbow_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[6]))
+        self.finger_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[7]))
+        self.hand_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[8]))
+        self.knee_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[9]))
         
     def body_part_buttons(self, body_parts_list):
-        if body_parts_list == "Hand":
+        if body_parts_list == "Eyes":
+            body_parts_selected.append("EYES") 
+            window.setCurrentIndex(1)
+            self.injuries()
+            
+        elif body_parts_list == "Nose":
+            body_parts_selected.append("NOSE") 
+            window.setCurrentIndex(1)
+            self.injuries()
+                        
+        elif body_parts_list == "Mouth":
+            body_parts_selected.append("MOUTH") 
+            window.setCurrentIndex(1)
+            self.injuries()
+                        
+        elif body_parts_list == "Ear":
+            body_parts_selected.append("EAR") 
+            window.setCurrentIndex(1)
+            self.injuries()
+            
+                        
+        elif body_parts_list == "Shoulder":
+            body_parts_selected.append("SHOULDER") 
+            window.setCurrentIndex(1)
+            self.injuries()
+                        
+        elif body_parts_list == "Wrist":
+            body_parts_selected.append("WRIST") 
+            window.setCurrentIndex(1)
+            self.injuries()
+                        
+        elif body_parts_list == "Elbow":
+            body_parts_selected.append("ELBOW")
+            window.setCurrentIndex(1)
+            self.injuries()
+            
+                        
+        elif body_parts_list == "Finger":
+            body_parts_selected.append("FINGER")
+            window.setCurrentIndex(1)
+            self.injuries()
+                        
+        elif body_parts_list == "Hand":
             body_parts_selected.append("HAND") 
-            print("Selected Body Part: " + str(self.hand_button.text()))
+            window.setCurrentIndex(1)
+            self.injuries()
+            
+                        
+        elif body_parts_list == "Knee":
+            body_parts_selected.append("Knee") 
             window.setCurrentIndex(1)
             self.injuries()
     
     def injuries(self):
+        print("Selected Body Part: " + body_parts_selected[-1])
         if injury_types_selected[-1] == "CUT":
             print(injury_types_selected[-1])
             window.setCurrentIndex(28)
@@ -288,7 +346,7 @@ class Ui_select_body_part(QMainWindow):
             writer = csv.writer(f)
             writer.writerow(session)
         
-        self.responder_threading()
+        #self.responder_threading()
         
     def responder_threading(self):
         global dead
@@ -562,8 +620,8 @@ class Ui_gender_patient_window(QMainWindow):
         self.ui.qr_responder_name.setText(f"<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600;\">{self.respond}</span></p></body><html>")
         self.ui.qr_patient_name.setText(f"<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600;\">{self.patient}</span></p></body><html>")
         self.ui.date_session.setText(f"<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{self.date}</span></p></body></html>")
-        self.ui.body_injured.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{}</span></p></body></html>".format(", ".join(self.body)))
-        self.ui.type_of_injury.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{}</span></p></body></html>".format(", ".join(self.injury)))
+        self.ui.body_injured.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{}</span></p></body></html>".format(", ".join(body_parts_selected)))
+        self.ui.type_of_injury.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{}</span></p></body></html>".format(", ".join(injury_types_selected[1:])))
         
         print("SESSION:")
         print(session)
