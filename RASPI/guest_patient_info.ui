@@ -62,7 +62,7 @@
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>26</pointsize>
+      <pointsize>28</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -74,7 +74,7 @@
    <widget class="QLabel" name="label_for_section">
     <property name="geometry">
      <rect>
-      <x>74</x>
+      <x>80</x>
       <y>230</y>
       <width>191</width>
       <height>71</height>
@@ -83,7 +83,7 @@
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>26</pointsize>
+      <pointsize>28</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>

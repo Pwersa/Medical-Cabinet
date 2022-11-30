@@ -64,7 +64,7 @@
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>24</pointsize>
+      <pointsize>36</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -102,7 +102,7 @@ border-color: black;
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>24</pointsize>
+      <pointsize>36</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>

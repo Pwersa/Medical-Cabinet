@@ -153,7 +153,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>160</y>
+      <y>150</y>
       <width>371</width>
       <height>181</height>
      </rect>
@@ -161,7 +161,7 @@
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>36</pointsize>
+      <pointsize>48</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -190,7 +190,7 @@ border-color: black;
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>160</y>
+      <y>150</y>
       <width>371</width>
       <height>181</height>
      </rect>
@@ -198,7 +198,7 @@ border-color: black;
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>36</pointsize>
+      <pointsize>48</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>

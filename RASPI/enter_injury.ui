@@ -54,9 +54,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>110</y>
+      <y>105</y>
       <width>1001</width>
-      <height>71</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="font">
@@ -80,7 +80,7 @@ border-color: black;
     <property name="geometry">
      <rect>
       <x>705</x>
-      <y>190</y>
+      <y>195</y>
       <width>280</width>
       <height>140</height>
      </rect>
@@ -94,7 +94,7 @@ border-color: black;
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>28</pointsize>
+      <pointsize>36</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -139,7 +139,7 @@ border-color: black;
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>190</y>
+      <y>195</y>
       <width>280</width>
       <height>140</height>
      </rect>
@@ -153,7 +153,7 @@ border-color: black;
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>28</pointsize>
+      <pointsize>36</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>

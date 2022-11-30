@@ -118,7 +118,7 @@
    <widget class="QLabel" name="date_session">
     <property name="geometry">
      <rect>
-      <x>102</x>
+      <x>50</x>
       <y>342</y>
       <width>331</width>
       <height>41</height>
@@ -131,7 +131,7 @@
    <widget class="QLabel" name="label_responder_6">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>460</x>
       <y>301</y>
       <width>141</width>
       <height>41</height>
@@ -144,7 +144,7 @@
    <widget class="QLabel" name="label_responder_8">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>460</x>
       <y>350</y>
       <width>141</width>
       <height>41</height>
@@ -157,9 +157,9 @@
    <widget class="QLabel" name="body_injured">
     <property name="geometry">
      <rect>
-      <x>700</x>
+      <x>620</x>
       <y>301</y>
-      <width>261</width>
+      <width>371</width>
       <height>41</height>
      </rect>
     </property>
@@ -170,9 +170,9 @@
    <widget class="QLabel" name="type_of_injury">
     <property name="geometry">
      <rect>
-      <x>699</x>
+      <x>620</x>
       <y>350</y>
-      <width>261</width>
+      <width>371</width>
       <height>41</height>
      </rect>
     </property>
@@ -191,7 +191,10 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>24</pointsize>
+      <family>Unispace</family>
+      <pointsize>36</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">

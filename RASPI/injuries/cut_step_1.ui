@@ -56,7 +56,7 @@
       <x>31</x>
       <y>310</y>
       <width>961</width>
-      <height>101</height>
+      <height>141</height>
      </rect>
     </property>
     <property name="font">
@@ -65,7 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;Apply pressure with a clean bandage or cloth.&lt;br/&gt;Keep that part of your body elevated above the heart, if possible&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;Apply &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;PRESSURE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; with a clean &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;BANDAGE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; or &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;CLOTH&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;.&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;KEEP&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; that part of your body &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;ELEVATED&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; above the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;HEART&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;, &lt;br/&gt;if possible&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label">

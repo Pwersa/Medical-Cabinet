@@ -62,7 +62,7 @@
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>24</pointsize>
+      <pointsize>28</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -101,7 +101,7 @@ Procedure</string>
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>24</pointsize>
+      <pointsize>36</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>

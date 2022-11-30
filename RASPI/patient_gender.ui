@@ -185,7 +185,7 @@ border-color: black;
    <widget class="QRadioButton" name="male_checkbox">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>190</x>
       <y>140</y>
       <width>321</width>
       <height>111</height>
@@ -193,7 +193,7 @@ border-color: black;
     </property>
     <property name="font">
      <font>
-      <pointsize>36</pointsize>
+      <pointsize>48</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -221,15 +221,15 @@ QRadioButton::indicator
    <widget class="QRadioButton" name="female_checkbox">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>260</y>
+      <x>190</x>
+      <y>250</y>
       <width>361</width>
       <height>111</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>36</pointsize>
+      <pointsize>48</pointsize>
      </font>
     </property>
     <property name="styleSheet">

@@ -3,8 +3,9 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QSpinB
 from PyQt5 import QtWidgets
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QMovie
-from record_session import Ui_record_session
 import threading
+from record_session import Ui_record_session
+from cabinet_notif import Ui_cabinet_notif
 
 # DATE AND TIME, RESPONDER ID, NAME, COURSE, PATIENT ID, NAME, COURSE, GENDER, INJURY TYPE
 session = []
@@ -305,6 +306,12 @@ class Ui_select_body_part(QMainWindow):
             self.injuries()
     
     def injuries(self):
+        
+        self.cabinet_notif = QtWidgets.QMainWindow()
+        self.ui = Ui_cabinet_notif()
+        self.ui.setupUi(self.cabinet_notif)
+        self.cabinet_notif.show()
+        
         print("Selected Body Part: " + body_parts_selected[-1])
         if injury_types_selected[-1] == "CUT":
             print(injury_types_selected[-1])
@@ -345,7 +352,7 @@ class Ui_select_body_part(QMainWindow):
             window.setCurrentIndex(3)
             
         elif injury_type_selection == "Go back to window":
-            window.setCurrentIndex(window.currentIndex()-1)
+            window.setCurrentIndex(window.currentIndex()-1) 
             
     def responder_csv_file(self):
         print("TRYING TO SEND DATA")

@@ -54,9 +54,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>320</y>
+      <y>200</y>
       <width>981</width>
-      <height>121</height>
+      <height>241</height>
      </rect>
     </property>
     <property name="font">
@@ -65,22 +65,22 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;Before proceeding,&lt;br/&gt;place the patient in a comfortable position.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;Check the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;AREA&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; if it safe.&lt;br/&gt;Before proceeding, &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;PLACE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; the patient in a &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;COMFORTABLE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; and &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;SECURED&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; position.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>420</x>
       <y>80</y>
-      <width>360</width>
-      <height>240</height>
+      <width>180</width>
+      <height>120</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>360</width>
-      <height>240</height>
+      <width>180</width>
+      <height>120</height>
      </size>
     </property>
     <property name="maximumSize">

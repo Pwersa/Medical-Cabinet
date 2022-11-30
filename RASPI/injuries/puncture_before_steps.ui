@@ -65,7 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; color:#000000;&quot;&gt;If there are objects stuck in the wound, &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; font-weight:600; color:#ff0000;&quot;&gt;DO NOT &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; color:#000000;&quot;&gt;attempt to remove them.&lt;br/&gt;Wait for medical personnel to arrive&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; color:#000000;&quot;&gt;If there are objects &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; text-decoration: underline; color:#000000;&quot;&gt;STUCK&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; color:#000000;&quot;&gt; in the wound, &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; color:#000000;&quot;&gt;attempt to remove them.&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; text-decoration: underline; color:#000000;&quot;&gt;WAIT&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; color:#000000;&quot;&gt; for medical personnel to arrive&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label_4">
