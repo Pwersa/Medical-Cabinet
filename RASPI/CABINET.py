@@ -12,7 +12,7 @@ body_parts_selected = []
 injury_types_selected = ["Placeholder"]
 
 injury_type_selection = ["Cut", "Poison", "Puncture", "Burn", "Electric", "Bruises", "Laceration", "Others"]
-body_parts_list = ["Eyes", "Nose", "Mouth", "Ear", "Shoulder", "Wrist", "Elbow", "Finger", "Hand", "Knee",]
+body_parts_list = ["Eyes", "Nose", "Mouth", "Ear", "Hand", "Knee", "Stomach", "Upper_Arm", "Lower_Arm", "Crotch", "Thigh", "Lower_Leg", "Foot"]
 gender_types = ["Male", "Female", "N/A"]
 
 # CSV FILE
@@ -224,17 +224,19 @@ class Ui_select_body_part(QMainWindow):
     def __init__(self):
         super(Ui_select_body_part, self).__init__()
         loadUi("select_body_part.ui", self)
-        #body_parts_list = ["Eyes", "Nose", "Mouth", "Ear", "Shoulder", "Wrist", "Elbow", "Finger", "Hand", "Knee",]
         self.eyes_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[0]))
         self.nose_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[1]))
         self.mouth_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[2]))
         self.ear_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[3]))
-        self.shoulder_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[4]))
-        self.wrist_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[5]))
-        self.elbow_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[6]))
-        self.finger_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[7]))
-        self.hand_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[8]))
-        self.knee_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[9]))
+        self.hand_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[4]))
+        self.knee_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[5]))
+        self.stomach_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[6]))
+        self.upper_arm.clicked.connect(lambda: self.body_part_buttons(body_parts_list[7]))
+        self.lower_arm.clicked.connect(lambda: self.body_part_buttons(body_parts_list[8]))
+        self.crotch_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[9]))
+        self.thigh_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[10]))
+        self.lower_leg.clicked.connect(lambda: self.body_part_buttons(body_parts_list[11]))
+        self.foot_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[12]))
         
     def body_part_buttons(self, body_parts_list):
         if body_parts_list == "Eyes":
@@ -256,37 +258,49 @@ class Ui_select_body_part(QMainWindow):
             body_parts_selected.append("EAR") 
             window.setCurrentIndex(1)
             self.injuries()
-            
-                        
-        elif body_parts_list == "Shoulder":
-            body_parts_selected.append("SHOULDER") 
-            window.setCurrentIndex(1)
-            self.injuries()
-                        
-        elif body_parts_list == "Wrist":
-            body_parts_selected.append("WRIST") 
-            window.setCurrentIndex(1)
-            self.injuries()
-                        
-        elif body_parts_list == "Elbow":
-            body_parts_selected.append("ELBOW")
-            window.setCurrentIndex(1)
-            self.injuries()
-            
-                        
-        elif body_parts_list == "Finger":
-            body_parts_selected.append("FINGER")
-            window.setCurrentIndex(1)
-            self.injuries()
                         
         elif body_parts_list == "Hand":
             body_parts_selected.append("HAND") 
             window.setCurrentIndex(1)
             self.injuries()
-            
-                        
+                
         elif body_parts_list == "Knee":
             body_parts_selected.append("Knee") 
+            window.setCurrentIndex(1)
+            self.injuries()
+
+        elif body_parts_list == "Stomach":
+            body_parts_selected.append("STOMACH") 
+            window.setCurrentIndex(1)
+            self.injuries()
+            
+        elif body_parts_list == "Upper_Arm":
+            body_parts_selected.append("UPPER ARM") 
+            window.setCurrentIndex(1)
+            self.injuries()
+            
+        elif body_parts_list == "Lower_Arm":
+            body_parts_selected.append("LOWER ARM") 
+            window.setCurrentIndex(1)
+            self.injuries()
+            
+        elif body_parts_list == "Crotch":
+            body_parts_selected.append("CROTCH") 
+            window.setCurrentIndex(1)
+            self.injuries()
+            
+        elif body_parts_list == "Thigh":
+            body_parts_selected.append("THIGH") 
+            window.setCurrentIndex(1)
+            self.injuries()
+            
+        elif body_parts_list == "Lower_Leg":
+            body_parts_selected.append("LOWER_LEG") 
+            window.setCurrentIndex(1)
+            self.injuries()
+            
+        elif body_parts_list == "Foot":
+            body_parts_selected.append("FOOT") 
             window.setCurrentIndex(1)
             self.injuries()
     
