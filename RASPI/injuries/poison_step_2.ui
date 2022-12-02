@@ -65,7 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;Determine and note the type of toxic product that &lt;br/&gt;caused the poisoning.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;Determine and note the type of &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;TOXIC PRODUCT&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;&lt;br/&gt;that caused the poisoning.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label_2">

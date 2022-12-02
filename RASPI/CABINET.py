@@ -306,7 +306,6 @@ class Ui_select_body_part(QMainWindow):
             self.injuries()
     
     def injuries(self):
-        
         self.cabinet_notif = QtWidgets.QMainWindow()
         self.ui = Ui_cabinet_notif()
         self.ui.setupUi(self.cabinet_notif)
@@ -359,7 +358,7 @@ class Ui_select_body_part(QMainWindow):
         session.append(injury_types_selected[-1])
         session.append(body_parts_selected[-1])
         
-        filename = "recorded_accessed_responder.csv"
+        filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
         f = open(filename, "w+")
         f.close()
         

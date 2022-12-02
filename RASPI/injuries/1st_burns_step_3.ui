@@ -54,7 +54,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>310</y>
+      <y>305</y>
       <width>981</width>
       <height>141</height>
      </rect>
@@ -65,7 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;Cover the burn with a &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; font-weight:600; color:#000000;&quot;&gt;nonstick, sterile bandage&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;.&lt;br/&gt;If blisters form, let them heal on their own while keeping the area covered.&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#ff0000;&quot;&gt;DO NOT&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt; pop the blisters.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;COVER&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt; the burn with a nonstick&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; font-weight:600; color:#000000;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;STERILE BANDAGE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;.&lt;br/&gt;If &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;BLISTERS&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt; form, let them heal on their own while keeping the area &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;COVERED&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;.&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt; pop the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;BLISTERS&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label_3">

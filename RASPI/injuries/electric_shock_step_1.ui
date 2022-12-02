@@ -53,9 +53,9 @@
    <widget class="QLabel" name="text_steps">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>16</x>
       <y>320</y>
-      <width>981</width>
+      <width>991</width>
       <height>141</height>
      </rect>
     </property>
@@ -65,7 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;Unplug the tool that is causing the shock, if the plug is &lt;br/&gt;undamaged, shut of the power via the circuit breaker, &lt;br/&gt;fuse box or outside switch&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;UNPLUG&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt; the tool that is causing the &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;SHOCK&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;, if the plug is &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;UNDAMAGED&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;, shut off the power via the &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;CIRCUIT BREAKER&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;, &lt;br/&gt;fuse box or outside switch&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label">
