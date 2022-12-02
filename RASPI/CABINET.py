@@ -7,6 +7,16 @@ import threading
 from record_session import Ui_record_session
 from cabinet_notif import Ui_cabinet_notif
 
+###### RASPBERRY PI SETTINGS (UNCOMMENT WHEN USING THIS SOURCE CODE IN RASPBERRY)
+#import RPi.GPIO as GPIO
+#from time import sleep
+
+#GPIO.setwarnings(False)
+#GPIO.setmode(GPIO.BCM)
+#GPIO.setup(18, GPIO.OUT)
+
+#GPIO.output(18, 1)
+
 # DATE AND TIME, RESPONDER ID, NAME, COURSE, PATIENT ID, NAME, COURSE, GENDER, INJURY TYPE
 session = []
 body_parts_selected = []
@@ -306,6 +316,7 @@ class Ui_select_body_part(QMainWindow):
             self.injuries()
     
     def injuries(self):
+        #self.solenoid_unlock()
         self.cabinet_notif = QtWidgets.QMainWindow()
         self.ui = Ui_cabinet_notif()
         self.ui.setupUi(self.cabinet_notif)
@@ -353,6 +364,10 @@ class Ui_select_body_part(QMainWindow):
         elif injury_type_selection == "Go back to window":
             window.setCurrentIndex(window.currentIndex()-1) 
             
+    def solenoid_unlock(self):
+        #GPIO.output(18, 0)
+        pass
+            
     def responder_csv_file(self):
         print("TRYING TO SEND DATA")
         session.append(injury_types_selected[-1])
@@ -379,7 +394,7 @@ class Ui_select_body_part(QMainWindow):
         global dead
         while not dead:
             
-            try:
+            try:  
                 SEPARATOR = "<SEPARATOR>"
                 BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
 
@@ -580,6 +595,7 @@ class Ui_confirmation_again(QMainWindow):
     
     # GOING TO SCAN QR CODE AGAIN BUT FOR THE PATIENT
     def done_procedure(self):
+        #GPIO.output(18, 1)
         window.setCurrentIndex(7)
         
 class Ui_guest_patient_window(QMainWindow):
@@ -665,7 +681,7 @@ class Ui_gender_patient_window(QMainWindow):
             
         session.clear()
         # SEND TO COMPANION APP AFTER SAVING LOCALLY
-        self.session_threading()
+        #self.session_threading()
         
     def session_threading(self):
         global dead
