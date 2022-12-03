@@ -70,6 +70,8 @@ class Ui_cabinet_notif(object):
 
         self.retranslateUi(cabinet_notif)
         QtCore.QMetaObject.connectSlotsByName(cabinet_notif)
+        
+        #self.auto_close()
 
     def retranslateUi(self, cabinet_notif):
         _translate = QtCore.QCoreApplication.translate
@@ -78,13 +80,16 @@ class Ui_cabinet_notif(object):
         self.pushButton.setText(_translate("cabinet_notif", "DISMISS"))
         self.label_3.setText(_translate("cabinet_notif", "<html><head/><body><p align=\"center\"></p></body></html>"))
         
-        self.auto_close()
+        
 
     def auto_close(self):
        print("ASDASD")
    
     def close_window(self):
         self.cabinet_notif_window.close()
+        
+    def open_window(self):
+        self.cabinet_notif_window.show()
 
 if __name__ == "__main__":
     import sys

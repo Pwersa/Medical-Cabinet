@@ -29,6 +29,10 @@ gender_types = ["Male", "Female", "N/A"]
 # CSV FILE
 data_qr = []
 
+#
+check_connection_companion = [0]
+
+
 class Ui_scan_qr_code(QMainWindow):
     def __init__(self):
         super(Ui_scan_qr_code, self).__init__()
@@ -369,7 +373,6 @@ class Ui_select_body_part(QMainWindow):
         pass
             
     def responder_csv_file(self):
-        print("TRYING TO SEND DATA")
         session.append(injury_types_selected[-1])
         session.append(body_parts_selected[-1])
         
@@ -381,29 +384,26 @@ class Ui_select_body_part(QMainWindow):
             writer = csv.writer(f)
             writer.writerow(session)
         
-        #self.responder_threading()
+        self.responder_threading()
         
-    def responder_threading(self):
-        global dead
-        dead = False
-        
+    def responder_threading(self):   
         x = threading.Thread(target=self.send_to_companion_responder)
         x.start()
         
     def send_to_companion_responder(self):
-        global dead
-        while not dead:
-            
-            try:  
+    
+        for i in range(5):
+            print("TRYING TO SEND DATA")
+            try:
                 SEPARATOR = "<SEPARATOR>"
                 BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
 
                 # the ip address or hostname of the server, the receiver
                 print("ENTER HOST HERE")
-                host = ""
+                host = "192.168.1.6"
                 # the port, let's use 5001
                 print("ENTER PORT HERE")
-                port = None
+                port = 4799
                 # the name of file we want to send, make sure it exists
                 filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
                 # get the file size
@@ -439,10 +439,18 @@ class Ui_select_body_part(QMainWindow):
 
                 # close the socket
                 s.close()
-                dead = True
+                
                 
             except:
-                self.send_to_companion_responder()
+                print("TRYING TO CONNECT AGAIN")
+                #pass
+
+        else:
+            #check_connection_companion.clear()
+            check_connection_companion.append(1)
+            window.setCurrentIndex(41)
+        
+            
 
 class Ui_enter_injury(QMainWindow):
     def __init__(self):
@@ -460,7 +468,7 @@ class Ui_enter_injury(QMainWindow):
         session.append(self.typed_injury.text())
         session.append("Emergency Seek")
         
-        filename = "recorded_accessed_responder.csv"
+        filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
         f = open(filename, "w+")
         f.close()
         
@@ -667,11 +675,12 @@ class Ui_gender_patient_window(QMainWindow):
         injury_types_selected.clear()
         
         window.setCurrentIndex(0)
+        
         self.save_session_tolocal()
 
     def save_session_tolocal(self):
         
-        filename = "recorded_session.csv"
+        filename = "cabinet-history/session/recorded_session.csv"
         f = open(filename, "w+")
         f.close()
         
@@ -681,7 +690,16 @@ class Ui_gender_patient_window(QMainWindow):
             
         session.clear()
         # SEND TO COMPANION APP AFTER SAVING LOCALLY
+        
         #self.session_threading()
+
+        # CHECK IF RESPONDER NOTIF FAILED TO SENT, IF YES, IT WILL NOW CONTINUOSLY SEND UNTIL A CONNECTION IS RECEIVED
+        if check_connection_companion[-1] == 1:
+            print("RESPONDER WAS NOT NOTIFIED")
+            self.responder_threading()     
+        else:
+            print("RESPONDER WAS ALREADY NOTIFIED")
+            #pass
         
     def session_threading(self):
         global dead
@@ -699,10 +717,10 @@ class Ui_gender_patient_window(QMainWindow):
 
             # the ip address or hostname of the server, the receiver
             print("ENTER HOST HERE")
-            host = ""
+            host = "192.168.12.2"
             # the port, let's use 5001
             print("ENTER PORT HERE")
-            port = None
+            port = 1233
             # the name of file we want to send, make sure it exists
             filename = "cabinet-history/session/recorded_session.csv"
             filesize = os.path.getsize(filename)
@@ -737,9 +755,66 @@ class Ui_gender_patient_window(QMainWindow):
 
             # close the socket
             s.close()
+            check_connection_companion.clear()
             dead = True
+            
         except:
             self.send_to_companion()
+        
+    def responder_threading(self):   
+        x = threading.Thread(target=self.send_to_companion_responder)
+        x.start()
+        
+    def send_to_companion_responder(self):
+        try:
+            SEPARATOR = "<SEPARATOR>"
+            BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
+
+            # the ip address or hostname of the server, the receiver
+            print("ENTER HOST HERE")
+            host = "192.168.1.6"
+            # the port, let's use 5001
+            print("ENTER PORT HERE")
+            port = 4799
+            # the name of file we want to send, make sure it exists
+            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+            # get the file size
+            filesize = os.path.getsize(filename)
+
+            # create the client socket
+            s = socket.socket()
+
+            print(f"[+] Connecting to {host}:{port}")
+            s.connect((host, port))
+            print("[+] Connected.")
+
+            # send the filename and filesize
+            s.send(f"{filename}{SEPARATOR}{filesize}".encode())
+
+            # start sending the file
+            progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
+            with open(filename, "rb") as f:
+                while True:
+                    
+                    # read the bytes from the file
+                    bytes_read = f.read(BUFFER_SIZE)
+                    if not bytes_read:
+                        # file transmitting is done
+                        break
+
+                    # we use sendall to assure transimission in 
+                    # busy networks
+                    s.sendall(bytes_read)
+                
+                    # update the progress bar
+                    progress.update(len(bytes_read))
+
+            # close the socket
+            s.close()
+            
+            
+        except:
+            self.send_to_companion_responder()      
         
         
 ####################### STEPS UI FOR EVERY INJURIES  #######################
@@ -1348,6 +1423,20 @@ class Ui_step_3_laceration(QMainWindow):
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)   
         
+        
+        
+###################################### SEND FAILED UI ##########################################
+class Ui_send_failed(QMainWindow):
+    def __init__(self):
+        super(Ui_send_failed, self).__init__()
+        loadUi("send_failed_notif.ui", self)
+        
+        self.confirm_button.clicked.connect(self.dismiss)
+        
+    def dismiss(self):
+        #window.setCurrentIndex(window.currentIndex()-1)  
+        window.setCurrentIndex(28)   
+        
 app = QApplication(sys.argv)
 window = QtWidgets.QStackedWidget()
 
@@ -1403,6 +1492,8 @@ window.addWidget(Ui_step_3_laceration()) # INDEX 37
 window.addWidget(Ui_step_1_2nd_burn()) # INDEX 38
 window.addWidget(Ui_step_2_2nd_burn()) # INDEX 39
 window.addWidget(Ui_step_3_2nd_burn()) # INDEX 40
+
+window.addWidget(Ui_send_failed()) # INDEX 41
 
 
 #######################  PARAMETERS FOR THE WINDOW (EXACT FOR THE TOUCH SCREEN DISPLAY)  #######################

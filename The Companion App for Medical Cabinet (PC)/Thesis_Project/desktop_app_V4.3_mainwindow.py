@@ -210,6 +210,7 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
         s.bind((SERVER_HOST, SERVER_PORT))
 
         s.listen(5)
+        s.listen(5)
         print(f"[*] Listening as {SERVER_HOST}:{SERVER_PORT}")
 
         client_socket, address = s.accept() 
