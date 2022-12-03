@@ -53,16 +53,16 @@
    <widget class="QPushButton" name="no_button">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>250</y>
-      <width>291</width>
-      <height>161</height>
+      <x>130</x>
+      <y>210</y>
+      <width>331</width>
+      <height>201</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Unispace</family>
-      <pointsize>28</pointsize>
+      <family>PibotoLt</family>
+      <pointsize>36</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -93,14 +93,14 @@ Procedure</string>
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>250</y>
-      <width>291</width>
-      <height>161</height>
+      <y>210</y>
+      <width>331</width>
+      <height>201</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Unispace</family>
+      <family>PibotoLt</family>
       <pointsize>36</pointsize>
       <weight>75</weight>
       <bold>true</bold>

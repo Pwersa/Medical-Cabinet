@@ -251,15 +251,15 @@ border-color: black;
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>165</y>
+      <y>170</y>
       <width>181</width>
       <height>81</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Unispace</family>
-      <pointsize>28</pointsize>
+      <family>PibotoLt</family>
+      <pointsize>24</pointsize>
       <weight>75</weight>
       <bold>true</bold>
       <underline>true</underline>
@@ -334,8 +334,8 @@ border-color: black;
     </property>
     <property name="font">
      <font>
-      <family>Unispace</family>
-      <pointsize>36</pointsize>
+      <family>PibotoLt</family>
+      <pointsize>28</pointsize>
       <weight>75</weight>
       <bold>true</bold>
       <underline>true</underline>
@@ -443,7 +443,7 @@ ARM</string>
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>250</y>
+      <y>260</y>
       <width>181</width>
       <height>81</height>
      </rect>
@@ -480,8 +480,8 @@ border-color: black;
    <widget class="QPushButton" name="foot_button">
     <property name="geometry">
      <rect>
-      <x>250</x>
-      <y>505</y>
+      <x>40</x>
+      <y>440</y>
       <width>181</width>
       <height>81</height>
      </rect>
@@ -519,7 +519,7 @@ border-color: black;
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>335</y>
+      <y>350</y>
       <width>181</width>
       <height>81</height>
      </rect>
@@ -557,7 +557,7 @@ border-color: black;
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>420</y>
+      <y>440</y>
       <width>181</width>
       <height>81</height>
      </rect>

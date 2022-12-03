@@ -183,7 +183,8 @@ border-color: black;
 }</string>
     </property>
     <property name="text">
-     <string>SCAN NOW</string>
+     <string>SCAN
+NOW</string>
     </property>
    </widget>
    <widget class="QPushButton" name="guest_patient_window">

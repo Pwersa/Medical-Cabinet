@@ -56,7 +56,7 @@
       <x>20</x>
       <y>310</y>
       <width>981</width>
-      <height>131</height>
+      <height>141</height>
      </rect>
     </property>
     <property name="font">
@@ -98,7 +98,7 @@
      </font>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="lineWidth">
      <number>1</number>
@@ -113,22 +113,22 @@
    <widget class="QPushButton" name="next_step_button">
     <property name="geometry">
      <rect>
-      <x>715</x>
-      <y>440</y>
-      <width>280</width>
-      <height>140</height>
+      <x>780</x>
+      <y>450</y>
+      <width>220</width>
+      <height>120</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>280</width>
-      <height>140</height>
+      <width>220</width>
+      <height>120</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>280</width>
-      <height>140</height>
+      <width>220</width>
+      <height>120</height>
      </size>
     </property>
     <property name="font">
@@ -162,22 +162,22 @@ border-color: black;
    <widget class="QPushButton" name="go_back_button">
     <property name="geometry">
      <rect>
-      <x>28</x>
-      <y>440</y>
-      <width>280</width>
-      <height>140</height>
+      <x>30</x>
+      <y>450</y>
+      <width>220</width>
+      <height>120</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>280</width>
-      <height>140</height>
+      <width>220</width>
+      <height>120</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>280</width>
-      <height>140</height>
+      <width>220</width>
+      <height>120</height>
      </size>
     </property>
     <property name="font">

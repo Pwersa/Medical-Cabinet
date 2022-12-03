@@ -384,7 +384,7 @@ class Ui_select_body_part(QMainWindow):
             writer = csv.writer(f)
             writer.writerow(session)
         
-        self.responder_threading()
+        #self.responder_threading()
         
     def responder_threading(self):   
         x = threading.Thread(target=self.send_to_companion_responder)
@@ -400,10 +400,10 @@ class Ui_select_body_part(QMainWindow):
 
                 # the ip address or hostname of the server, the receiver
                 print("ENTER HOST HERE")
-                host = "192.168.1.6"
+                host = ""
                 # the port, let's use 5001
                 print("ENTER PORT HERE")
-                port = 4799
+                port = None
                 # the name of file we want to send, make sure it exists
                 filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
                 # get the file size
@@ -440,7 +440,6 @@ class Ui_select_body_part(QMainWindow):
                 # close the socket
                 s.close()
                 
-                
             except:
                 print("TRYING TO CONNECT AGAIN")
                 #pass
@@ -450,8 +449,6 @@ class Ui_select_body_part(QMainWindow):
             check_connection_companion.append(1)
             window.setCurrentIndex(41)
         
-            
-
 class Ui_enter_injury(QMainWindow):
     def __init__(self):
         super(Ui_enter_injury, self).__init__()
@@ -476,7 +473,7 @@ class Ui_enter_injury(QMainWindow):
             writer = csv.writer(f)
             writer.writerow(session)
         
-        self.responder_threading()
+        #self.responder_threading()
         window.setCurrentIndex(4)
 
     def go_back(self):
@@ -717,10 +714,10 @@ class Ui_gender_patient_window(QMainWindow):
 
             # the ip address or hostname of the server, the receiver
             print("ENTER HOST HERE")
-            host = "192.168.12.2"
+            host = ""
             # the port, let's use 5001
             print("ENTER PORT HERE")
-            port = 1233
+            port = None
             # the name of file we want to send, make sure it exists
             filename = "cabinet-history/session/recorded_session.csv"
             filesize = os.path.getsize(filename)
@@ -772,10 +769,10 @@ class Ui_gender_patient_window(QMainWindow):
 
             # the ip address or hostname of the server, the receiver
             print("ENTER HOST HERE")
-            host = "192.168.1.6"
+            host = ""
             # the port, let's use 5001
             print("ENTER PORT HERE")
-            port = 4799
+            port = None
             # the name of file we want to send, make sure it exists
             filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
             # get the file size
