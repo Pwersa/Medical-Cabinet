@@ -52,16 +52,11 @@ class Ui_emergency_history(object):
 
     def display_dates(self):
         try:
-            #self.EnterItemBox.clear()
             self.mycursor.execute("SELECT DISTINCT date_time_e FROM emergency_history")
             self.distinct_names = self.mycursor.fetchall()
-            #print(self.distinct_names)
-
             self.column1 = [item[0] for item in self.distinct_names]
-            #print(self.column1)
             self.comboBox.addItems(self.column1)
 
-            #self.display_item_stats()
 
         except mysql.connector.Error as err:
             self.errorDisplay(err.errno, err.sqlstate, err.msg)
@@ -121,7 +116,6 @@ class Ui_emergency_history(object):
         msg.setIcon(QMessageBox.Information)
         msg.setWindowIcon(QtGui.QIcon('logo.png'))
         msg.setText("Data Has Been Exported as Excel File")
-        # msg.setInformativeText('Please Select An Item First')
         msg.setWindowTitle("Success")
         msg.exec_()
 
@@ -133,8 +127,8 @@ class Ui_emergency_history(object):
         
         try:
             try:
-                sql = "SELECT * FROM emergency_history WHERE %s IN (date_time_e, responder_id, responder_name, responder_course, patient_id, patient_name, patient_course, injury, body_part, patient_gender, patient_age) ;"
-                value = (self.searched_term,)
+                sql = "SELECT * FROM emergency_history WHERE date_time_e LIKE %s OR responder_id LIKE %s OR responder_name LIKE %s OR responder_course LIKE %s OR patient_id LIKE %s OR patient_name LIKE %s OR patient_course LIKE %s   OR injury LIKE %s OR body_part LIKE %s OR patient_gender LIKE %s OR patient_age LIKE %s"
+                value = ("%" + self.searched_term + "%","%" + self.searched_term + "%","%" + self.searched_term + "%","%" + self.searched_term + "%","%" + self.searched_term + "%","%" + self.searched_term + "%","%" + self.searched_term + "%","%" + self.searched_term + "%","%" + self.searched_term + "%","%" + self.searched_term + "%","%" + self.searched_term + "%")
                 self.mycursor.execute(sql, value)
                 self.result = self.mycursor.fetchall()
 
@@ -195,8 +189,8 @@ class Ui_emergency_history(object):
         font.setBold(True)
         font.setWeight(75)
         self.exportButton.setFont(font)
-        self.exportButton.setStyleSheet("image: url(:/export/export.png);\n"
-"background-color: rgb(209, 209, 209);")
+        self.exportButton.setStyleSheet("background-color: rgb(209, 209, 209);")
+        #"image: url(:/export/export.png);\n" 
         self.exportButton.setText("")
         self.exportButton.setObjectName("exportButton")
         self.horizontalLayout.addWidget(self.exportButton)
@@ -214,18 +208,20 @@ class Ui_emergency_history(object):
         self.refreshButton.setMaximumSize(QtCore.QSize(16777215, 60))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(14)
+        font.setPointSize(28)
         font.setBold(True)
         font.setWeight(75)
         self.refreshButton.setFont(font)
-        self.refreshButton.setStyleSheet("image: url(:/refresh/refresh.png);\n"
-"background-image: url(:/refresh/refresh.png);\n"
-"background-color: rgb(209, 209, 209);")
+        self.refreshButton.setStyleSheet("background-color: rgb(209, 209, 209);")
+        #"image: url(:/refresh/refresh.png);\n" "background-image: url(:/refresh/refresh.png);\n" 
         self.refreshButton.setText("")
         self.refreshButton.setObjectName("refreshButton")
         self.horizontalLayout.addWidget(self.refreshButton)
         self.refreshButton.clicked.connect(self.display_data)
 
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("green_cross.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
 
         self.horizontalLayout_5.addLayout(self.horizontalLayout)
         spacerItem1 = QtWidgets.QSpacerItem(408, 68, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -418,6 +414,10 @@ class Ui_emergency_history(object):
         self.searchButton = QtWidgets.QPushButton(self.centralwidget)
         self.searchButton.setMaximumSize(QtCore.QSize(100, 16777215))
         self.searchButton.setObjectName("searchButton")
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        self.searchButton.setFont(font)
+        self.searchButton.setStyleSheet("background-color: rgb(209, 209, 209);\n")
         self.horizontalLayout_2.addWidget(self.searchButton)
         self.searchButton.clicked.connect(self.search)
 
@@ -447,6 +447,8 @@ class Ui_emergency_history(object):
         self.topbanner.setText(_translate("MainWindow", "The Companion App"))
         self.TheCompanionApp.setText(_translate("MainWindow", "First Aid Cabinet"))
         self.AccessHistory.setText(_translate("MainWindow", "Emergency History"))
+        self.refreshButton.setText(_translate("MainWindow", "⟳"))
+        self.exportButton.setText(_translate("MainWindow", "Export"))
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Date & Time"))
         item = self.tableWidget.horizontalHeaderItem(1)
@@ -456,15 +458,15 @@ class Ui_emergency_history(object):
         item = self.tableWidget.horizontalHeaderItem(3)
         item.setText(_translate("MainWindow", "Responder Course"))
         item = self.tableWidget.horizontalHeaderItem(4)
-        item.setText(_translate("MainWindow", "Injury"))
-        item = self.tableWidget.horizontalHeaderItem(5)
-        item.setText(_translate("MainWindow", "Body Part"))
-        item = self.tableWidget.horizontalHeaderItem(6)
         item.setText(_translate("MainWindow", "Patient ID"))
-        item = self.tableWidget.horizontalHeaderItem(7)
+        item = self.tableWidget.horizontalHeaderItem(5)
         item.setText(_translate("MainWindow", "Patient Name"))
-        item = self.tableWidget.horizontalHeaderItem(8)
+        item = self.tableWidget.horizontalHeaderItem(6)
         item.setText(_translate("MainWindow", "Patient Course"))
+        item = self.tableWidget.horizontalHeaderItem(7)
+        item.setText(_translate("MainWindow", "Injury"))
+        item = self.tableWidget.horizontalHeaderItem(8)
+        item.setText(_translate("MainWindow", "Body Part"))
         item = self.tableWidget.horizontalHeaderItem(9)
         item.setText(_translate("MainWindow", "Patient Sex"))
         item = self.tableWidget.horizontalHeaderItem(10)

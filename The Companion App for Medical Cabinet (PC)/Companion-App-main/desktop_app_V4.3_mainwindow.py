@@ -1,19 +1,15 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMessageBox, QAbstractItemView, QTableWidgetItem
+from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem
 import mysql.connector
 import socket
-import tqdm
 import os
 import csv
 from time import sleep
 import threading
-from datetime import datetime
 import xlsxwriter
 from emergency_history import Ui_emergency_history
-from playsound import playsound
 import vlc
-import multiprocessing
-import tkinter as tk
+import tkinter
 from tkinter import * 
 from tkinter import messagebox as mb
 
@@ -42,23 +38,74 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
 
     def display_dates(self):
         try:
-            #self.EnterItemBox.clear()
             self.mycursor.execute("SELECT DISTINCT date_time_a FROM access_history")
             self.distinct_names = self.mycursor.fetchall()
-
-            #print(self.distinct_names)
-
             self.column1 = [item[0] for item in self.distinct_names]
-            #print(self.column1)
             self.searchcomboBox.addItems(self.column1)
-
-            #self.display_item_stats()
 
         except mysql.connector.Error as err:
             self.errorDisplay(err.errno, err.sqlstate, err.msg)
+    
+    def export(self):
+        exporter = QMessageBox.question(self, 'Notice', 'This will erase the previous file, continue anyway?', 
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+        if exporter == QMessageBox.Yes:
+            self.username = os.getlogin()
+            self.path = str("C:/Users/" + self.username)
+            self.directory = str(self.path + '/Desktop/Access History.xlsx')
+            
+            self.outWorkBook = xlsxwriter.Workbook(self.directory)
+            self.outsheet = self.outWorkBook.add_worksheet()
+
+            self.outsheet.write("A1", "Date & Time")
+            self.outsheet.write("B1", "Responder ID")
+            self.outsheet.write("C1", "Responder Name")
+            self.outsheet.write("D1", "Responder Course")
+            self.outsheet.write("E1", "Injury")
+            self.outsheet.write("F1", "Body Part")
+            
+            self.mycursor.execute("SELECT * FROM access_history")
+            self.result = self.mycursor.fetchall()
+            
+            self.column1 = [item[0] for item in self.result]
+            self.column2 = [item[1] for item in self.result]
+            self.column3 = [item[2] for item in self.result]
+            self.column4 = [item[3] for item in self.result]
+            self.column5 = [item[4] for item in self.result]
+            self.column6 = [item[5] for item in self.result]
+
+            for item in range(len(self.column1)):
+                    self.outsheet.write(item + 1, 0, self.column1[item])
+                    self.outsheet.write(item + 1, 1, self.column2[item])
+                    self.outsheet.write(item + 1, 2, self.column3[item])
+                    self.outsheet.write(item + 1, 3, self.column4[item])
+                    self.outsheet.write(item + 1, 4, self.column5[item])
+                    self.outsheet.write(item + 1, 5, self.column6[item])
+
+            self.outWorkBook.close()
+
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowIcon(QtGui.QIcon('green_cross.png'))
+            msg.setText("Data Has Been Exported as Excel File")
+            msg.setWindowTitle("Success")
+            msg.exec_()
+        else:
+            pass
+
+
+    def closeEvent(self, event):
+        reply = QMessageBox.question(self, 'Exit', 'Are you sure you want to exit?',
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
 
     def display_data(self):
         print("refresh")
+        
         try:
             try:
                 self.mycursor.execute("SELECT * FROM access_history")
@@ -81,7 +128,6 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
         except:
             print("error")
             pass
-
 
     def receive_data(self):
 
@@ -106,18 +152,13 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
         received = client_socket.recv(BUFFER_SIZE).decode()
         filename, filesize = received.split(SEPARATOR)
         filename = os.path.basename(filename)
-        filesize = int(filesize)
 
-        progress = tqdm.tqdm(range(filesize), f"Receiving {filename}", unit="B", unit_scale=True, unit_divisor=1024)
         with open(filename, "wb") as f:
             while True:
                 bytes_read = client_socket.recv(BUFFER_SIZE)
                 if not bytes_read:    
                     break
                 f.write(bytes_read)
-                progress.update(len(bytes_read))
-        
-        #self.writeData
 
         ################## READ CSV FILE ######################
         with open(filename, 'r') as file:
@@ -143,9 +184,9 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
             value = (date_time, r_id, rname, rcourse, injury, bodypart)
             self.mycursor.execute(sql, value)
             self.mydb.commit()
-
+            
         except mysql.connector.Error as err:
-                    self.errorDisplay(err.errno, err.sqlstate, err.msg)
+            self.errorDisplay(err.errno, err.sqlstate, err.msg)
 
         client_socket.close()
         s.close()
@@ -156,21 +197,16 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
         self.data = str("On " + date_time + ", Responder " + r_id + " " + rname + " of " + rcourse + ", responded to " + injury + " on " + bodypart)
 
         def play():
-            print("test2")
-            #self.x.join()           
+            print("test2")      
             try:                
                 while True:
-                    print("test3")  
-                                      
                     p = vlc.MediaPlayer("alarm.mp3")
                     p.play() 
-                    sleep(1.98)
+                    sleep(1)
                     p.stop()                    
                     if self.stop_thread:
                         break
             except:
-                print("exception")
-                #t1.join()
                 pass
 
         self.stop_thread = False
@@ -179,19 +215,20 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
 
         self.data = str("On " + date_time + ", Responder " + r_id + " " + rname + " of " + rcourse + ", responded to " + injury + " on " + bodypart)
 
-        res = mb.showwarning('Emergency Received', self.data)
-      
-        if res == 'ok' :
-            print("confirm")
+        root = tkinter.Tk()
+        root.withdraw()
+
+        alert = mb.showwarning('Emergency Received', self.data)
+
+        root.destroy()
+
+        if alert == 'ok' :
             try:
                 self.stop_thread = True
                 t1.join()
-                global flag
-                flag = False
-                print("thread killed")
             except:
-                print("asdasdasd")
-          
+                pass
+ 
         else :            
             print("else")
         
@@ -210,7 +247,6 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
         s.bind((SERVER_HOST, SERVER_PORT))
 
         s.listen(5)
-        s.listen(5)
         print(f"[*] Listening as {SERVER_HOST}:{SERVER_PORT}")
 
         client_socket, address = s.accept() 
@@ -218,18 +254,15 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
         print(f"[+] {address} is connected.")
 
         received = client_socket.recv(BUFFER_SIZE).decode()
-        filename, filesize = received.split(SEPARATOR)
+        filename = received.split(SEPARATOR)
         filename = os.path.basename(filename)
-        filesize = int(filesize)
 
-        progress = tqdm.tqdm(range(filesize), f"Receiving {filename}", unit="B", unit_scale=True, unit_divisor=1024)
         with open(filename, "wb") as f:
             while True:
                 bytes_read = client_socket.recv(BUFFER_SIZE)
                 if not bytes_read:    
                     break
                 f.write(bytes_read)
-                progress.update(len(bytes_read))
         
         ################## READ CSV FILE ######################
         with open(filename, 'r') as file:
@@ -250,6 +283,7 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
         p_age = row[10]
 
         ################## WRITE DATA FROM CSV FILE TO DATABASE ######################
+        
         try:
             sql = "INSERT INTO emergency_history (date_time_e, responder_id, responder_name, responder_course, patient_id, patient_name, patient_course, injury, body_part, patient_gender, patient_age) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             value = (date_time, r_id, rname, rcourse, p_id, pname, pcourse, injury, bodypart, pgender, p_age)
@@ -267,34 +301,29 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
 
 
     def start_threading(self):
-
+        global x
         x = threading.Thread(target=self.receive_data)
+        x.setDaemon(True)
         x.start()
         
+        global y
         y = threading.Thread(target=self.complete_data)
+        y.setDaemon(True)
         y.start()
 
         print(threading.active_count())
-
-    def closeEvent(self, event):
-        reply = QMessageBox.question(self, 'Exit', 'Are you sure you want to exit?',
-                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-        if reply == QMessageBox.Yes:
-            event.accept()
-            raise Exception("Program Has Been Exited")
-        else:
-            event.ignore()
 
     def search(self):
         print("search")
         self.searched_term = self.searchcomboBox.currentText()
         while (self.tableWidget.rowCount()>0):
             self.tableWidget.removeRow(0)
-        
+       
         try:
             try:
-                sql = "SELECT * FROM access_history WHERE %s IN (date_time_a, responder_id, responder_name, responder_course, injury, body_part) ;"
-                value = (self.searched_term,)
+                sql = "SELECT * FROM access_history WHERE date_time_a LIKE %s OR responder_id LIKE %s OR responder_name LIKE %s OR responder_course LIKE %s OR injury LIKE %s OR body_part LIKE %s"
+                print(sql)
+                value = ("%" + self.searched_term + "%","%" + self.searched_term + "%","%" + self.searched_term + "%","%" + self.searched_term + "%","%" + self.searched_term + "%","%" + self.searched_term + "%")
                 self.mycursor.execute(sql, value)
                 self.result = self.mycursor.fetchall()
 
@@ -312,68 +341,27 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
                                 self.tableWidget.setItem(row, column, QTableWidgetItem(str(self.result[row][column])))
                             else:
                                 self.tableWidget.setItem(row, column, QTableWidgetItem((self.result[row][column])))
-
             except mysql.connector.Error as err:
-                pass
+                self.errorDisplay(err.errno, err.sqlstate, err.msg)
         except:
             pass
 
 
-    def export(self):
-        print("export")
-        self.username = os.getlogin()
-        self.path = str("C:/Users/" + self.username)
-        self.directory = str(self.path + '/Desktop/Access History.xlsx')
-        
-        self.outWorkBook = xlsxwriter.Workbook(self.directory)
-        self.outsheet = self.outWorkBook.add_worksheet()
-
-        self.outsheet.write("A1", "Date & Time")
-        self.outsheet.write("B1", "Responder ID")
-        self.outsheet.write("C1", "Responder Name")
-        self.outsheet.write("D1", "Responder Course")
-        self.outsheet.write("E1", "Injury")
-        self.outsheet.write("F1", "Body Part")
-        
-        self.mycursor.execute("SELECT * FROM access_history")
-        self.result = self.mycursor.fetchall()
-        
-        self.column1 = [item[0] for item in self.result]
-        self.column2 = [item[1] for item in self.result]
-        self.column3 = [item[2] for item in self.result]
-        self.column4 = [item[3] for item in self.result]
-        self.column5 = [item[4] for item in self.result]
-        self.column6 = [item[5] for item in self.result]
-
-        for item in range(len(self.column1)):
-                self.outsheet.write(item + 1, 0, self.column1[item])
-                self.outsheet.write(item + 1, 1, self.column2[item])
-                self.outsheet.write(item + 1, 2, self.column3[item])
-                self.outsheet.write(item + 1, 3, self.column4[item])
-                self.outsheet.write(item + 1, 4, self.column5[item])
-                self.outsheet.write(item + 1, 5, self.column6[item])
-
-        self.outWorkBook.close()
-
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        msg.setWindowIcon(QtGui.QIcon('logo.png'))
-        msg.setText("Data Has Been Exported as Excel File")
-        # msg.setInformativeText('Please Select An Item First')
-        msg.setWindowTitle("Success")
-        msg.exec_()
     
     
     def setupUi(self, MainWindow):
         ################## call functions ###################
         self.connectDatabase()
         self.start_threading()
-
+        
         #################### UI STUFF ######################
         MainWindow.setObjectName("MainWindow")
         MainWindow.setWindowModality(QtCore.Qt.WindowModal)
         MainWindow.resize(1378, 1037)
-        #MainWindow.setStyleSheet("background-image: url(bg-image.png)")
+
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("green_cross.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -470,8 +458,11 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
         self.searchButton = QtWidgets.QPushButton(self.centralwidget)
         self.searchButton.setMaximumSize(QtCore.QSize(100, 16777215))
         self.searchButton.setObjectName("searchButton")
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        self.searchButton.setFont(font)
+        self.searchButton.setStyleSheet("background-color: rgb(209, 209, 209);\n")
         self.horizontalLayout_20.addWidget(self.searchButton)
-        #self.searchButton.clicked.connect(self.search)
         self.searchButton.clicked.connect(self.search)
 
         ######################## SEARCH COMBO BOX ###############################
@@ -579,7 +570,7 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
         font.setBold(True)
         font.setWeight(75)
         self.exportButton.setFont(font)
-        self.exportButton.setStyleSheet("image: url(:/export/export.png);background-color: rgb(209, 209, 209);\n")
+        self.exportButton.setStyleSheet("background-color: rgb(209, 209, 209);\n")
         self.exportButton.setText("")
         self.exportButton.setObjectName("exportButton")
         self.horizontalLayout.addWidget(self.exportButton)
@@ -596,13 +587,11 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
         self.refreshButton.setMaximumSize(QtCore.QSize(16777215, 60))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(14)
+        font.setPointSize(28)
         font.setBold(True)
         font.setWeight(75)
         self.refreshButton.setFont(font)
-        self.refreshButton.setStyleSheet("image: url(:/refresh/refresh.png);\n"
-"background-image: url(:/refresh/refresh.png);\n"
-"background-color: rgb(209, 209, 209);")
+        self.refreshButton.setStyleSheet("background-color: rgb(209, 209, 209);")
         self.refreshButton.setText("")
         self.refreshButton.setObjectName("refreshButton")
         self.horizontalLayout.addWidget(self.refreshButton)
@@ -648,6 +637,8 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
         self.TheCompanionApp.setText(_translate("MainWindow", "First Aid Cabinet"))
         self.AccessHistory.setText(_translate("MainWindow", "Access History"))
         self.searchButton.setText(_translate("MainWindow", "Search"))
+        self.refreshButton.setText(_translate("MainWindow", "⟳"))
+        self.exportButton.setText(_translate("MainWindow", "Export"))
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Date & Time"))
         item = self.tableWidget.horizontalHeaderItem(1)
@@ -673,9 +664,6 @@ class Ui_Desktop_MainWindow(QtWidgets.QMainWindow):
         self.ui = Ui_emergency_history()
         self.ui.setupUi(self.window)
         self.window.show()
-
-import test
-
 
 if __name__ == "__main__":
     import sys

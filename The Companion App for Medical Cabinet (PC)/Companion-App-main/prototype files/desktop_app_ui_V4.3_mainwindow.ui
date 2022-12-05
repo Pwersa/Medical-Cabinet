@@ -248,6 +248,13 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <family>Bahnschrift SemiBold</family>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>Search</string>
           </property>
@@ -504,7 +511,7 @@ background-image: url(:/refresh/306694507_631656378471399_6647396348825534255_n.
 background-color: rgb(209, 209, 209);</string>
             </property>
             <property name="text">
-             <string/>
+             <string>Export</string>
             </property>
            </widget>
           </item>
@@ -531,7 +538,7 @@ background-color: rgb(209, 209, 209);</string>
             <property name="font">
              <font>
               <family>Bahnschrift SemiBold</family>
-              <pointsize>14</pointsize>
+              <pointsize>28</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -545,7 +552,7 @@ background-image: url(:/refresh/refresh.png);
 background-color: rgb(209, 209, 209);</string>
             </property>
             <property name="text">
-             <string/>
+             <string>⟳</string>
             </property>
            </widget>
           </item>
