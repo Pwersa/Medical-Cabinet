@@ -1,4 +1,4 @@
-import sys, cv2, datetime, time, re, csv, socket, tqdm, os, threading, ast
+import sys, cv2, datetime, time, re, csv, socket, tqdm, os, threading, ast, smtplib
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QSpinBox, QMessageBox, QScrollArea, QScroller, QScrollerProperties, QRadioButton, QLineEdit
 from PyQt5 import QtWidgets
 from PyQt5.uic import loadUi
@@ -31,6 +31,10 @@ data_qr = []
 
 #
 check_connection_companion = [0]
+
+# Enable Email Sending
+server = smtplib.SMTP('smtp.gmail.com', 587)
+server.starttls()
 
 # OPEN CONFIGURATION FILES AS SOON PROGRAM RUNS (IP ADDRESS, PORT, EMAIL, etc.)
 with open("config/config.txt", "r") as data:
@@ -380,6 +384,14 @@ class Ui_select_body_part(QMainWindow):
         with open('cabinet-history/accessed-responder/recorded_accessed_responder.csv', 'w', encoding='UTF8', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(session)
+        
+        
+        # EMAIL ALSO SENT TO THE NURSE
+        if configuration_settings["email"] is None:
+            pass
+        else:
+            server.login("coetmedicalcabinet.2022@gmail.com", "bovcsjaynaszeels")
+            server.sendmail("coetmedicalcabinet.2022@gmail.com", "indaya42@gmail.com", "HELLO BADI")
         
         if configuration_settings["connection_mode"] == True:
             self.responder_threading()
@@ -934,7 +946,6 @@ class Ui_step_4_cut(QMainWindow):
 
 
 ######################  PUNCTURE PROCEDURES STEPS (4 windows TOTAL)  ###################### 
-
 class Ui_step_1_puncture(QMainWindow):
     def __init__(self):
         super(Ui_step_1_puncture, self).__init__()
