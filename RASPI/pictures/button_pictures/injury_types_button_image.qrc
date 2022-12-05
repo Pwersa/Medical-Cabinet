@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="image">
+    <file>bruises.png</file>
+    <file>cut.png</file>
+    <file>electric_shock.png</file>
+    <file>laceration.png</file>
+    <file>puncture.png</file>
+  </qresource>
+</RCC>

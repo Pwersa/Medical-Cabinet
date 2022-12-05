@@ -1,11 +1,11 @@
-import sys, cv2, datetime, time, re, csv, socket, tqdm, os
+import sys, cv2, datetime, time, re, csv, socket, tqdm, os, threading, ast
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QSpinBox, QMessageBox, QScrollArea, QScroller, QScrollerProperties, QRadioButton, QLineEdit
 from PyQt5 import QtWidgets
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QMovie
-import threading
 from record_session import Ui_record_session
 from cabinet_notif import Ui_cabinet_notif
+
 
 ###### RASPBERRY PI SETTINGS (UNCOMMENT WHEN USING THIS SOURCE CODE IN RASPBERRY)
 #import RPi.GPIO as GPIO
@@ -32,6 +32,9 @@ data_qr = []
 #
 check_connection_companion = [0]
 
+# OPEN CONFIGURATION FILES AS SOON PROGRAM RUNS (IP ADDRESS, PORT, EMAIL, etc.)
+with open("config/config.txt", "r") as data:
+    configuration_settings = ast.literal_eval(data.read())
 
 class Ui_scan_qr_code(QMainWindow):
     def __init__(self):
@@ -183,7 +186,6 @@ class Ui_select_injury_type(QMainWindow):
         
         self.scroll = QScroller.scroller(self.scroll_area.viewport())
         self.scroll.grabGesture(self.scrollArea.viewport(), QScroller.LeftMouseButtonGesture)
-        #self.scroll.scrollerPropertiesChanged.connect(self.PropsChanged)
         self.props = self.scroll.scrollerProperties()
         self.props.setScrollMetric(QScrollerProperties.VerticalOvershootPolicy, QScrollerProperties.OvershootAlwaysOff)
         
@@ -192,43 +194,36 @@ class Ui_select_injury_type(QMainWindow):
     def injuries(self, injury_type_selection):
         if injury_type_selection == "Cut":
             injury_types_selected.append("CUT") 
-            #session.append("CUT")
             print(injury_types_selected[-1])
             window.setCurrentIndex(1)
             
         elif injury_type_selection == "Poison":
             injury_types_selected.append("POISON") 
-            #session.append("POISON")
             print(injury_types_selected[-1])
             window.setCurrentIndex(1)
         
         elif injury_type_selection == "Puncture":
             injury_types_selected.append("PUNCTURE") 
-            #session.append("PUNCTURE")
             print(injury_types_selected[-1])
             window.setCurrentIndex(1)
         
         elif injury_type_selection == "Burn":
             injury_types_selected.append("BURN") 
-            #session.append("BURN")
             print(injury_types_selected[-1])
             window.setCurrentIndex(1)
             
         elif injury_type_selection == "Electric":
             injury_types_selected.append("ELECTRIC") 
-            #session.append("BURN")
             print(injury_types_selected[-1])
             window.setCurrentIndex(1)
             
         elif injury_type_selection == "Bruises":
             injury_types_selected.append("BRUISES") 
-            #session.append("BURN")
             print(injury_types_selected[-1])
             window.setCurrentIndex(1)
             
         elif injury_type_selection == "Laceration":
             injury_types_selected.append("LACERATION") 
-            #session.append("BURN")
             print(injury_types_selected[-1])
             window.setCurrentIndex(1)
             
@@ -320,7 +315,9 @@ class Ui_select_body_part(QMainWindow):
             self.injuries()
     
     def injuries(self):
+        # UNLOCK THE CABINET
         #self.solenoid_unlock()
+        
         self.cabinet_notif = QtWidgets.QMainWindow()
         self.ui = Ui_cabinet_notif()
         self.ui.setupUi(self.cabinet_notif)
@@ -384,14 +381,16 @@ class Ui_select_body_part(QMainWindow):
             writer = csv.writer(f)
             writer.writerow(session)
         
-        #self.responder_threading()
+        if configuration_settings["connection_mode"] == True:
+            self.responder_threading()
+        else:
+            pass
         
     def responder_threading(self):   
         x = threading.Thread(target=self.send_to_companion_responder)
         x.start()
         
     def send_to_companion_responder(self):
-    
         for i in range(5):
             print("TRYING TO SEND DATA")
             try:
@@ -400,10 +399,10 @@ class Ui_select_body_part(QMainWindow):
 
                 # the ip address or hostname of the server, the receiver
                 print("ENTER HOST HERE")
-                host = ""
+                host = configuration_settings["companion_app_IP"]
                 # the port, let's use 5001
                 print("ENTER PORT HERE")
-                port = None
+                port = configuration_settings["port_1st"]
                 # the name of file we want to send, make sure it exists
                 filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
                 # get the file size
@@ -440,8 +439,9 @@ class Ui_select_body_part(QMainWindow):
                 # close the socket
                 s.close()
                 
-            except:
+            except:   
                 print("TRYING TO CONNECT AGAIN")
+                #continue
                 #pass
 
         else:
@@ -457,8 +457,6 @@ class Ui_enter_injury(QMainWindow):
         self.enter_injury_go_back_button.clicked.connect(self.go_back)
         
         self.typed_injury = self.findChild(QLineEdit, "typed_injury")
-        
-        #print(self.typed_injury)
 
     def enter_injury(self):
         print(self.typed_injury.text())
@@ -473,72 +471,70 @@ class Ui_enter_injury(QMainWindow):
             writer = csv.writer(f)
             writer.writerow(session)
         
-        #self.responder_threading()
         window.setCurrentIndex(4)
 
+        if configuration_settings["connection_mode"] == True:
+            self.enter_injury_threading()
+        else:
+            pass
+        
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)
         
-    def responder_threading(self):
-        global dead
-        dead = False
-        
+    def enter_injury_threading(self):
         x = threading.Thread(target=self.send_injury)
         x.start()
         
     def send_injury(self):
-        global dead
-        while not dead:
-            
-            try:
-                SEPARATOR = "<SEPARATOR>"
-                BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
+        try:
+            SEPARATOR = "<SEPARATOR>"
+            BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
 
-                # the ip address or hostname of the server, the receiver
-                print("ENTER HOST HERE")
-                host = ""
-                # the port, let's use 5001
-                print("ENTER PORT HERE")
-                port = None
-                # the name of file we want to send, make sure it exists
-                filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
-                # get the file size
-                filesize = os.path.getsize(filename)
+            # the ip address or hostname of the server, the receiver
+            print("ENTER HOST HERE")
+            host = configuration_settings["companion_app_IP"]
+            # the port, let's use 5001
+            print("ENTER PORT HERE")
+            port = configuration_settings["port_1st"]
+            # the name of file we want to send, make sure it exists
+            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+            # get the file size
+            filesize = os.path.getsize(filename)
 
-                # create the client socket
-                s = socket.socket()
+            # create the client socket
+            s = socket.socket()
 
-                print(f"[+] Connecting to {host}:{port}")
-                s.connect((host, port))
-                print("[+] Connected.")
+            print(f"[+] Connecting to {host}:{port}")
+            s.connect((host, port))
+            print("[+] Connected.")
 
-                # send the filename and filesize
-                s.send(f"{filename}{SEPARATOR}{filesize}".encode())
+            # send the filename and filesize
+            s.send(f"{filename}{SEPARATOR}{filesize}".encode())
 
-                # start sending the file
-                progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
-                with open(filename, "rb") as f:
-                    while True:
-                        
-                        # read the bytes from the file
-                        bytes_read = f.read(BUFFER_SIZE)
-                        if not bytes_read:
-                            # file transmitting is done
-                            break
-
-                        # we use sendall to assure transimission in 
-                        # busy networks
-                        s.sendall(bytes_read)
+            # start sending the file
+            progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
+            with open(filename, "rb") as f:
+                while True:
                     
-                        # update the progress bar
-                        progress.update(len(bytes_read))
+                    # read the bytes from the file
+                    bytes_read = f.read(BUFFER_SIZE)
+                    if not bytes_read:
+                        # file transmitting is done
+                        break
 
-                # close the socket
-                s.close()
-                dead = True
+                    # we use sendall to assure transimission in 
+                    # busy networks
+                    s.sendall(bytes_read)
                 
-            except:
-                self.send_injury()
+                    # update the progress bar
+                    progress.update(len(bytes_read))
+
+            # close the socket
+            s.close()
+            dead = True
+            
+        except:
+            self.send_injury()
 
 class Ui_request_nurse(QMainWindow):
     def __init__(self):
@@ -672,11 +668,9 @@ class Ui_gender_patient_window(QMainWindow):
         injury_types_selected.clear()
         
         window.setCurrentIndex(0)
-        
         self.save_session_tolocal()
 
     def save_session_tolocal(self):
-        
         filename = "cabinet-history/session/recorded_session.csv"
         f = open(filename, "w+")
         f.close()
@@ -686,9 +680,9 @@ class Ui_gender_patient_window(QMainWindow):
             writer.writerow(session)
             
         session.clear()
+        
         # SEND TO COMPANION APP AFTER SAVING LOCALLY
         
-        #self.session_threading()
 
         # CHECK IF RESPONDER NOTIF FAILED TO SENT, IF YES, IT WILL NOW CONTINUOSLY SEND UNTIL A CONNECTION IS RECEIVED
         if check_connection_companion[-1] == 1:
@@ -697,27 +691,27 @@ class Ui_gender_patient_window(QMainWindow):
         else:
             print("RESPONDER WAS ALREADY NOTIFIED")
             #pass
+            
+        if configuration_settings["connection_mode"] == True:
+            self.session_threading()
+        else:
+            pass
         
     def session_threading(self):
-        global dead
-        dead = False
-        
         x = threading.Thread(target=self.send_to_companion)
         x.start()
         
     def send_to_companion(self):
-        global dead
-        
         try:
             SEPARATOR = "<SEPARATOR>"
             BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
 
             # the ip address or hostname of the server, the receiver
             print("ENTER HOST HERE")
-            host = ""
+            host = configuration_settings["companion_app_IP"]
             # the port, let's use 5001
             print("ENTER PORT HERE")
-            port = None
+            port = configuration_settings["port_2nd"]
             # the name of file we want to send, make sure it exists
             filename = "cabinet-history/session/recorded_session.csv"
             filesize = os.path.getsize(filename)
@@ -769,10 +763,10 @@ class Ui_gender_patient_window(QMainWindow):
 
             # the ip address or hostname of the server, the receiver
             print("ENTER HOST HERE")
-            host = ""
+            host = configuration_settings["companion_app_IP"]
             # the port, let's use 5001
             print("ENTER PORT HERE")
-            port = None
+            port = configuration_settings["port_1st"]
             # the name of file we want to send, make sure it exists
             filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
             # get the file size
@@ -897,7 +891,6 @@ class Ui_step_2_cut(QMainWindow):
         window.setCurrentIndex(11)
     
     def go_back(self):
-        # GO BACK A WINDOW WHICH IS STEP 1
         window.setCurrentIndex(window.currentIndex()-1)
 
 class Ui_step_3_cut(QMainWindow):
@@ -917,7 +910,6 @@ class Ui_step_3_cut(QMainWindow):
         window.setCurrentIndex(12)
     
     def go_back(self):
-        # GO BACK A WINDOW WHICH IS STEP 2
         window.setCurrentIndex(window.currentIndex()-1)
         
 class Ui_step_4_cut(QMainWindow):
@@ -937,7 +929,6 @@ class Ui_step_4_cut(QMainWindow):
         window.setCurrentIndex(5)
     
     def go_back(self):
-        # GO BACK A WINDOW WHICH IS STEP 2
         window.setCurrentIndex(window.currentIndex()-1)
         
 
@@ -951,7 +942,6 @@ class Ui_step_1_puncture(QMainWindow):
         
         self.next_step_button_4.clicked.connect(self.next_step)
         self.go_back_injury_type_4.clicked.connect(self.go_back)
-
         #self.gif_player_label = self.findChild(QLabel, "gif_player_label")
         
     def next_step(self):
@@ -1122,7 +1112,7 @@ class Ui_step_3_1st_burn(QMainWindow):
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)
 
-#########################################################################################
+####################################### 2nd DEGREE BURN ##################################################
 
 class Ui_step_1_2nd_burn(QMainWindow):
     def __init__(self):
@@ -1257,13 +1247,11 @@ class Ui_step_poison_eyes(QMainWindow):
     def __init__(self):
         super(Ui_step_poison_eyes, self).__init__()
         loadUi("injuries/poison_eye.ui", self)
-        
         self.next_step_button.clicked.connect(self.next_step)
         self.go_back_injury_type.clicked.connect(self.go_back)
         
         self.gif_player_label = self.findChild(QLabel, "gif_player_label")
         
-        # PROPERTIES FOR SETMOVIE
         self.poison_spill_eyes = QMovie("GIFs/poison-spill-1.gif")
         self.gif_player_label.setMovie(self.poison_spill_eyes)
         self.poison_spill_eyes.start()
@@ -1282,7 +1270,6 @@ class Ui_step_electric_shock_caution(QMainWindow):
     def __init__(self):
         super(Ui_step_electric_shock_caution, self).__init__()
         loadUi("injuries/electric_shock_caution.ui", self)
-        
         self.next_step_button.clicked.connect(self.next_step)
         self.go_back_button.clicked.connect(self.go_back)
         
@@ -1296,7 +1283,6 @@ class Ui_step_electric_seek_emergency(QMainWindow):
     def __init__(self):
         super(Ui_step_electric_seek_emergency, self).__init__()
         loadUi("injuries/electric_shock_seek_emergency.ui", self)
-        
         self.next_step_button.clicked.connect(self.next_step)
         self.go_back_button.clicked.connect(self.go_back)
         
@@ -1387,7 +1373,6 @@ class Ui_step_2_laceration(QMainWindow):
         loadUi("injuries/laceration_step_2.ui", self)
         self.next_step_button.clicked.connect(self.next_step)
         self.go_back_button.clicked.connect(self.go_back)
-        
         self.gif_player_label = self.findChild(QLabel, "gif_player_label")
         
         self.laceration_step2 = QMovie("GIFs/laceration-2.gif")
@@ -1404,7 +1389,6 @@ class Ui_step_3_laceration(QMainWindow):
     def __init__(self):
         super(Ui_step_3_laceration, self).__init__()
         loadUi("injuries/laceration_step_3.ui", self)
-
         self.next_step_button.clicked.connect(self.next_step)
         self.go_back_button.clicked.connect(self.go_back)
         
@@ -1427,11 +1411,9 @@ class Ui_send_failed(QMainWindow):
     def __init__(self):
         super(Ui_send_failed, self).__init__()
         loadUi("send_failed_notif.ui", self)
-        
         self.confirm_button.clicked.connect(self.dismiss)
         
     def dismiss(self):
-        #window.setCurrentIndex(window.currentIndex()-1)  
         window.setCurrentIndex(28)   
         
 app = QApplication(sys.argv)

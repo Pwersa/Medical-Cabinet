@@ -121,7 +121,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap>pictures/program_pictures/first-aid-logo-png-png-image-762531.png</pixmap>
+        <pixmap>pictures/program_pictures/green_cross.png</pixmap>
        </property>
       </widget>
      </item>
