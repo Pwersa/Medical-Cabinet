@@ -1,9 +1,11 @@
 # SET THE EXACT DATA PLEASE
 
 {
-  'companion_app_IP': "192.168.1.1", 
-  'port_1st': 4799, 
-  'port_2nd': 4899, 
-  'email': None,
-  'connection_mode': False,
+  'connection_mode': True,
+  'companion_app_IP': "192.168.254.103", 
+  'port_1st': 4899, 
+  'port_2nd': 4799, 
+  'email_connection': False,
+  'email': "example.email@email",
+  'enable_camera': True,
 }

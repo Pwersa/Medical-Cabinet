@@ -1,10 +1,11 @@
-import sys, cv2, datetime, time, re, csv, socket, tqdm, os, threading, ast
+import sys, cv2, datetime, time, re, csv, socket, tqdm, os, threading, ast, smtplib
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QSpinBox, QMessageBox, QScrollArea, QScroller, QScrollerProperties, QRadioButton, QLineEdit
 from PyQt5 import QtWidgets
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QMovie
 from record_session import Ui_record_session
 from cabinet_notif import Ui_cabinet_notif
+from tkinter import *
 
 
 ###### RASPBERRY PI SETTINGS (UNCOMMENT WHEN USING THIS SOURCE CODE IN RASPBERRY)
@@ -19,6 +20,7 @@ from cabinet_notif import Ui_cabinet_notif
 
 # DATE AND TIME, RESPONDER ID, NAME, COURSE, PATIENT ID, NAME, COURSE, GENDER, INJURY TYPE
 session = []
+
 body_parts_selected = []
 injury_types_selected = ["Placeholder"]
 
@@ -40,7 +42,11 @@ class Ui_scan_qr_code(QMainWindow):
     def __init__(self):
         super(Ui_scan_qr_code, self).__init__()
         loadUi("scan_qr_code.ui", self)
-        self.scan_button.clicked.connect(self.qr_camera)
+        
+        if configuration_settings["enable_camera"] == True:
+            self.scan_button.clicked.connect(self.qr_camera)
+        else:
+            pass
     
     def qr_camera(self):
         cap = cv2.VideoCapture(0)
@@ -103,8 +109,13 @@ class Ui_scan_qr_patient(QMainWindow):
     def __init__(self):
         super(Ui_scan_qr_patient, self).__init__()
         loadUi("scan_qr_code_again.ui", self)
-        self.scan_qr_patient.clicked.connect(self.qr_camera)
+        
         self.guest_patient_window.clicked.connect(self.guest_patient)
+        
+        if configuration_settings["enable_camera"] == True:
+            self.scan_qr_patient.clicked.connect(self.qr_camera)
+        else:
+            pass
         
     def guest_patient(self):
         session.append("GUEST")
@@ -138,11 +149,11 @@ class Ui_scan_qr_patient(QMainWindow):
                 # 1st QR CODE Patient
                 #session.append(str(x))
                 # ID
-                session.append(parsed_text[0])
+                session.insert(4, parsed_text[0])
                 # NAME
-                session.append(fullname)
+                session.insert(5, fullname)
                 # COURSE
-                session.append(parsed_text[-2])
+                session.insert(6, parsed_text[-2])
                 # CHECK IF ADDED DATA IN LIST IS CORRECT
                 
                 # Same situation but for CSV File
@@ -381,6 +392,16 @@ class Ui_select_body_part(QMainWindow):
             writer = csv.writer(f)
             writer.writerow(session)
         
+        # EMAIL ALSO SENT TO THE NURSE
+        if configuration_settings["email_connection"] == True:
+            #email_sending
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login("coetmedicalcabinet.2022@gmail.com", "bovcsjaynaszeels")
+            server.sendmail("coetmedicalcabinet.2022@gmail.com", configuration_settings["email"], "HELLO BADI")
+        else:
+            pass
+        
         if configuration_settings["connection_mode"] == True:
             self.responder_threading()
         else:
@@ -391,6 +412,7 @@ class Ui_select_body_part(QMainWindow):
         x.start()
         
     def send_to_companion_responder(self):
+        
         for i in range(5):
             print("TRYING TO SEND DATA")
             try:
@@ -412,6 +434,7 @@ class Ui_select_body_part(QMainWindow):
                 s = socket.socket()
 
                 print(f"[+] Connecting to {host}:{port}")
+                s.settimeout(1)
                 s.connect((host, port))
                 print("[+] Connected.")
 
@@ -438,16 +461,42 @@ class Ui_select_body_part(QMainWindow):
 
                 # close the socket
                 s.close()
+                print("ASDASDASDASD")
                 
             except:   
-                print("TRYING TO CONNECT AGAIN")
-                #continue
-                #pass
+                pass
 
         else:
             #check_connection_companion.clear()
             check_connection_companion.append(1)
-            window.setCurrentIndex(41)
+            print("QWEQWEQWEQWE")
+            #window.setCurrentIndex(41)
+
+            #TKINTER
+
+            root = Tk()
+            root.geometry('800x600')
+
+            def delete_items():
+                root.destroy()
+
+            frame1 = Frame(root)
+            frame1.configure(bg='gray')
+            frame1.pack()
+
+            title = Label(frame1, text = "FAILED!!! TO SEND\nEMERGENCY\nNOTIFICATION", font=("Unispace", 48))
+            title.grid(row=0, column=0, pady=(20, 0))
+
+            title_2 = Label(frame1, text = "Please check the Clinic manually\nif the Nurse is PRESENT", font=("Unispace", 28))
+            title_2.grid(row=1, column=0, pady=(20, 10))
+
+            button_remove = Button(frame1, text = "CONFIRM", command = delete_items, font=("Unispace", 45, "bold", "underline"))
+            button_remove.config(height=1, width=10)
+            button_remove.grid(row=2, column=0)
+
+            root.title("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
+            root.configure(bg='gray')
+            root.mainloop()
         
 class Ui_enter_injury(QMainWindow):
     def __init__(self):
@@ -640,19 +689,23 @@ class Ui_gender_patient_window(QMainWindow):
         self.ui.setupUi(self.window_record_session)
         self.window_record_session.show()
 
-        #self.ui.qr_responder_name.setText(session[2] + " - " + session[3])
-        #self.ui.qr_patient_name.setText(session[5] + " - " + session[6])
-        #self.ui.date_session.setText(session[0])
+        self.ui.qr_responder_name.setText(session[2] + " - " + session[3])
+        self.ui.qr_patient_name.setText(session[5] + " - " + session[6])
+        self.ui.date_session.setText(session[0])
+        
+        self.respond = session[2] + " - " + session[3]
+        self.patient = session[5] + " - " + session[6]
+        self.date = session[0]
 
         #self.ui.body_injured.setText(', ' .join(body_parts_selected))
         #self.ui.type_of_injury.setText(', ' .join(injury_types_selected))
         
         # DEBUG DISPLAY ITEMS
-        self.respond = "JR ANGELO IGNACIO INDAYA  -  COET-4A"
-        self.patient = "ROGIE PRINZ DURAN  -  BET-COET-4A"
-        self.date = "1234-44-44"
-        self.body = ["HAND", "HAND"]
-        self.injury = ["CUT", "PUNCTURE"]
+        #self.respond = "JR ANGELO IGNACIO INDAYA  -  COET-4A"
+        #self.patient = "ROGIE PRINZ DURAN  -  BET-COET-4A"
+        #self.date = "1234-44-44"
+        #self.body = ["HAND", "HAND"]
+        #self.injury = ["CUT", "PUNCTURE"]
         
         self.ui.qr_responder_name.setText(f"<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600;\">{self.respond}</span></p></body><html>")
         self.ui.qr_patient_name.setText(f"<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600;\">{self.patient}</span></p></body><html>")
@@ -682,7 +735,6 @@ class Ui_gender_patient_window(QMainWindow):
         session.clear()
         
         # SEND TO COMPANION APP AFTER SAVING LOCALLY
-        
 
         # CHECK IF RESPONDER NOTIF FAILED TO SENT, IF YES, IT WILL NOW CONTINUOSLY SEND UNTIL A CONNECTION IS RECEIVED
         if check_connection_companion[-1] == 1:
@@ -934,7 +986,6 @@ class Ui_step_4_cut(QMainWindow):
 
 
 ######################  PUNCTURE PROCEDURES STEPS (4 windows TOTAL)  ###################### 
-
 class Ui_step_1_puncture(QMainWindow):
     def __init__(self):
         super(Ui_step_1_puncture, self).__init__()
