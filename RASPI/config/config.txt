@@ -8,4 +8,5 @@
   'email_connection': False,
   'email': "example.email@email",
   'enable_camera': True,
+  'enable_solenoid': False,
 }

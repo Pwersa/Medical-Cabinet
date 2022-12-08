@@ -8,15 +8,24 @@ from cabinet_notif import Ui_cabinet_notif
 from tkinter import *
 
 
+with open("config/config.txt", "r") as data:
+    configuration_settings = ast.literal_eval(data.read())
+
 ###### RASPBERRY PI SETTINGS (UNCOMMENT WHEN USING THIS SOURCE CODE IN RASPBERRY)
-#import RPi.GPIO as GPIO
-#from time import sleep
+def solenoid_unlock():
+    
+    if configuration_settings["enable_solenoid"] == True:
+        print("SOLENOID FEATURE IS ON")
+        import RPi.GPIO as GPIO
+        from time import sleep 
 
-#GPIO.setwarnings(False)
-#GPIO.setmode(GPIO.BCM)
-#GPIO.setup(18, GPIO.OUT)
-
-#GPIO.output(18, 1)
+        GPIO.setwarnings(False)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(18, GPIO.OUT)
+        GPIO.output(18, 1)
+    
+    else:
+        print("SOLENOID FEATURE IS OFF")
 
 # DATE AND TIME, RESPONDER ID, NAME, COURSE, PATIENT ID, NAME, COURSE, GENDER, INJURY TYPE
 session = []
@@ -25,7 +34,10 @@ body_parts_selected = []
 injury_types_selected = ["Placeholder"]
 
 injury_type_selection = ["Cut", "Poison", "Puncture", "Burn", "Electric", "Bruises", "Laceration", "Others"]
-body_parts_list = ["Eyes", "Nose", "Mouth", "Ear", "Hand", "Knee", "Stomach", "Upper_Arm", "Lower_Arm", "Crotch", "Thigh", "Lower_Leg", "Foot"]
+body_parts_list = ["Neck", "Stomach", "Thigh", "Crotch", "Legs", "Head", "Arm", "Hand", "Knee", "Foot"]
+arm = ["Shoulder", "Forearm", "Wrist", "Elbow"]
+face = ["Lips", "Nose", "Ears", "Cheeks", "Eyes", "Jaw", "Forehead", "Chin"]
+hand = ["Palm", "Wrist", "Knuckles", "Fingers"]
 gender_types = ["Male", "Female", "N/A"]
 
 # CSV FILE
@@ -35,8 +47,7 @@ data_qr = []
 check_connection_companion = [0]
 
 # OPEN CONFIGURATION FILES AS SOON PROGRAM RUNS (IP ADDRESS, PORT, EMAIL, etc.)
-with open("config/config.txt", "r") as data:
-    configuration_settings = ast.literal_eval(data.read())
+
 
 class Ui_scan_qr_code(QMainWindow):
     def __init__(self):
@@ -244,79 +255,51 @@ class Ui_select_injury_type(QMainWindow):
 class Ui_select_body_part(QMainWindow):
     def __init__(self):
         super(Ui_select_body_part, self).__init__()
-        loadUi("select_body_part.ui", self)
-        self.eyes_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[0]))
-        self.nose_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[1]))
-        self.mouth_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[2]))
-        self.ear_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[3]))
-        self.hand_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[4]))
-        self.knee_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[5]))
-        self.stomach_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[6]))
-        self.upper_arm.clicked.connect(lambda: self.body_part_buttons(body_parts_list[7]))
-        self.lower_arm.clicked.connect(lambda: self.body_part_buttons(body_parts_list[8]))
-        self.crotch_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[9]))
-        self.thigh_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[10]))
-        self.lower_leg.clicked.connect(lambda: self.body_part_buttons(body_parts_list[11]))
-        self.foot_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[12]))
+        loadUi("select_body_part(beta).ui", self)
+#face = ["Lips", "Nose", "Ears", "Cheeks", "Eyes", "Jaw", "Forehead", "Chin"]
+#hand = ["Palm", "Wrist", "Knuckles", "Fingers"]
+
+        #body_parts_list = ["Neck", "Stomach", "Thigh", "Crotch", "Legs", "Head", "Arm", "Hand", "Knee", "Foot"]
+
+        self.neck_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[0]))
+        self.stomach_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[1]))
+        self.thigh_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[2]))
+        self.crotch_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[3]))
+        self.legs_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[4]))
+        self.head_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[5]))
+        self.arm_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[6]))
+        self.hand_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[7]))
+        self.knee_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[8]))
+        self.foot_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[9]))
         
     def body_part_buttons(self, body_parts_list):
-        if body_parts_list == "Eyes":
-            body_parts_selected.append("EYES") 
+        if body_parts_list == "Neck":
+            body_parts_selected.append("NECK") 
             window.setCurrentIndex(1)
             self.injuries()
             
-        elif body_parts_list == "Nose":
-            body_parts_selected.append("NOSE") 
-            window.setCurrentIndex(1)
-            self.injuries()
-                        
-        elif body_parts_list == "Mouth":
-            body_parts_selected.append("MOUTH") 
-            window.setCurrentIndex(1)
-            self.injuries()
-                        
-        elif body_parts_list == "Ear":
-            body_parts_selected.append("EAR") 
-            window.setCurrentIndex(1)
-            self.injuries()
-                        
-        elif body_parts_list == "Hand":
-            body_parts_selected.append("HAND") 
-            window.setCurrentIndex(1)
-            self.injuries()
-                
-        elif body_parts_list == "Knee":
-            body_parts_selected.append("Knee") 
-            window.setCurrentIndex(1)
-            self.injuries()
-
         elif body_parts_list == "Stomach":
             body_parts_selected.append("STOMACH") 
             window.setCurrentIndex(1)
             self.injuries()
-            
-        elif body_parts_list == "Upper_Arm":
-            body_parts_selected.append("UPPER ARM") 
-            window.setCurrentIndex(1)
-            self.injuries()
-            
-        elif body_parts_list == "Lower_Arm":
-            body_parts_selected.append("LOWER ARM") 
-            window.setCurrentIndex(1)
-            self.injuries()
-            
-        elif body_parts_list == "Crotch":
-            body_parts_selected.append("CROTCH") 
-            window.setCurrentIndex(1)
-            self.injuries()
-            
+                         
         elif body_parts_list == "Thigh":
             body_parts_selected.append("THIGH") 
             window.setCurrentIndex(1)
             self.injuries()
+                        
+        elif body_parts_list == "Crotch":
+            body_parts_selected.append("CROTCH") 
+            window.setCurrentIndex(1)
+            self.injuries()
+                
+        elif body_parts_list == "Legs":
+            body_parts_selected.append("LEG") 
+            window.setCurrentIndex(1)
+            self.injuries()
             
-        elif body_parts_list == "Lower_Leg":
-            body_parts_selected.append("LOWER_LEG") 
+        elif body_parts_list == "Knee":
+            body_parts_selected.append("KNEE") 
             window.setCurrentIndex(1)
             self.injuries()
             
@@ -324,10 +307,20 @@ class Ui_select_body_part(QMainWindow):
             body_parts_selected.append("FOOT") 
             window.setCurrentIndex(1)
             self.injuries()
+            
+        elif body_parts_list == "Head":
+            window.setCurrentIndex(1)
+            
+        elif body_parts_list == "Arm":
+            print("ARM")
+            window.setCurrentIndex(41)
+            
+        elif body_parts_list == "Hand":
+            window.setCurrentIndex(1)
     
     def injuries(self):
         # UNLOCK THE CABINET
-        #self.solenoid_unlock()
+        solenoid_unlock()
         
         self.cabinet_notif = QtWidgets.QMainWindow()
         self.ui = Ui_cabinet_notif()
@@ -375,10 +368,6 @@ class Ui_select_body_part(QMainWindow):
             
         elif injury_type_selection == "Go back to window":
             window.setCurrentIndex(window.currentIndex()-1) 
-            
-    def solenoid_unlock(self):
-        #GPIO.output(18, 0)
-        pass
             
     def responder_csv_file(self):
         session.append(injury_types_selected[-1])
@@ -1451,18 +1440,212 @@ class Ui_step_3_laceration(QMainWindow):
         
         
         
-###################################### SEND FAILED UI ##########################################
-class Ui_send_failed(QMainWindow):
+###################################### BODY PARTS ##########################################
+
+#arm = ["Shoulder", "Forearm", "Wrist", "Elbow"]
+class Ui_body_part_arm(QMainWindow):
     def __init__(self):
-        super(Ui_send_failed, self).__init__()
-        loadUi("send_failed_notif.ui", self)
-        self.confirm_button.clicked.connect(self.dismiss)
+        super(Ui_body_part_arm, self).__init__()
+        loadUi("body_parts/body_part_arm.ui", self)
+        self.go_back.clicked.connect(self.back)
+        self.shoulder_button.clicked.connect(lambda: self.arm_part(arm[0]))
+        self.forearm_button.clicked.connect(lambda: self.arm_part(arm[1]))
+        self.wrist_button.clicked.connect(lambda: self.arm_part(arm[2]))
+        self.elbow_button.clicked.connect(lambda: self.arm_part(arm[3]))
         
-    def dismiss(self):
-        window.setCurrentIndex(28)   
+    def back(self):
+        window.setCurrentIndex(1)  
+        
+    def arm_part(self, arm):    
+        if arm == "Shoulder":
+            print("Shoulder")
+            body_parts_selected.append("SHOULDER")
+            self.injuries()
+        
+        elif arm == "Forearm":
+            print("FOREARM")   
+            body_parts_selected.append("FOREARM") 
+            self.injuries()
+        
+        elif arm == "Wrist":
+            print("WRIST")  
+            body_parts_selected.append("WRIST") 
+            self.injuries()
+            
+        elif arm == "Elbow":
+            print("ELBOW")
+            body_parts_selected.append("WRIST") 
+            self.injuries()
+            
+    def injuries(self):
+        solenoid_unlock()
+        
+        self.cabinet_notif = QtWidgets.QMainWindow()
+        self.ui = Ui_cabinet_notif()
+        self.ui.setupUi(self.cabinet_notif)
+        self.cabinet_notif.show()
+        
+        print("Selected Body Part: " + body_parts_selected[-1])
+        if injury_types_selected[-1] == "CUT":
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(28)
+            self.responder_csv_file()
+            
+        elif injury_types_selected[-1] == "POISON":
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(28)
+            self.responder_csv_file()
+        
+        elif injury_types_selected[-1] == "PUNCTURE":
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(28)
+            self.responder_csv_file()
+        
+        elif injury_types_selected[-1] == "BURN":
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(28)
+            self.responder_csv_file()
+        
+        elif injury_types_selected[-1] == "ELECTRIC":
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(28)
+            self.responder_csv_file()
+            
+        elif injury_types_selected[-1] == "BRUISES":
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(28)
+            self.responder_csv_file()
+            
+        elif injury_types_selected[-1] == "LACERATION":
+            print(injury_types_selected[-1])
+            window.setCurrentIndex(28)
+            self.responder_csv_file()
+            
+        elif injury_type_selection == "Others":
+            window.setCurrentIndex(3)
+            
+        elif injury_type_selection == "Go back to window":
+            window.setCurrentIndex(window.currentIndex()-1) 
+            
+            
+    def responder_csv_file(self):
+        session.append(injury_types_selected[-1])
+        session.append(body_parts_selected[-1])
+        
+        filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+        f = open(filename, "w+")
+        f.close()
+        
+        with open('cabinet-history/accessed-responder/recorded_accessed_responder.csv', 'w', encoding='UTF8', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(session)
+        
+        # EMAIL ALSO SENT TO THE NURSE
+        if configuration_settings["email_connection"] == True:
+            #email_sending
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login("coetmedicalcabinet.2022@gmail.com", "bovcsjaynaszeels")
+            server.sendmail("coetmedicalcabinet.2022@gmail.com", configuration_settings["email"], "HELLO BADI")
+        else:
+            pass
+        
+        if configuration_settings["connection_mode"] == True:
+            self.responder_threading()
+        else:
+            pass
+        
+    def responder_threading(self):   
+        x = threading.Thread(target=self.send_to_companion_responder)
+        x.start()
+        
+    def send_to_companion_responder(self):
+        try:
+            SEPARATOR = "<SEPARATOR>"
+            BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
+
+            # the ip address or hostname of the server, the receiver
+            print("ENTER HOST HERE")
+            host = configuration_settings["companion_app_IP"]
+            # the port, let's use 5001
+            print("ENTER PORT HERE")
+            port = configuration_settings["port_1st"]
+            # the name of file we want to send, make sure it exists
+            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+            # get the file size
+            filesize = os.path.getsize(filename)
+
+            # create the client socket
+            s = socket.socket()
+
+            print(f"[+] Connecting to {host}:{port}")
+            s.settimeout(5)
+            s.connect((host, port))
+            print("[+] Connected.")
+
+            # send the filename and filesize
+            s.send(f"{filename}{SEPARATOR}{filesize}".encode())
+
+            # start sending the file
+            progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
+            with open(filename, "rb") as f:
+                while True:
+                    
+                    # read the bytes from the file
+                    bytes_read = f.read(BUFFER_SIZE)
+                    if not bytes_read:
+                        # file transmitting is done
+                        break
+
+                    # we use sendall to assure transimission in 
+                    # busy networks
+                    s.sendall(bytes_read)
+                
+                    # update the progress bar
+                    progress.update(len(bytes_read))
+
+            # close the socket
+            s.close()
+            print("ASDASDASDASD")
+            
+        except:   
+            #check_connection_companion.clear()
+            check_connection_companion.append(1)
+            print("QWEQWEQWEQWE")
+            #window.setCurrentIndex(41)
+
+            #TKINTER
+
+            root = Tk()
+            root.geometry('800x600')
+
+            def delete_items():
+                root.destroy()
+
+            frame1 = Frame(root)
+            frame1.configure(bg='gray')
+            frame1.pack()
+
+            title = Label(frame1, text = "FAILED!!! TO SEND\nEMERGENCY\nNOTIFICATION", font=("Unispace", 48))
+            title.grid(row=0, column=0, pady=(20, 0))
+
+            title_2 = Label(frame1, text = "Please check the Clinic manually\nif the Nurse is PRESENT", font=("Unispace", 28))
+            title_2.grid(row=1, column=0, pady=(20, 10))
+
+            button_remove = Button(frame1, text = "CONFIRM", command = delete_items, font=("Unispace", 45, "bold", "underline"))
+            button_remove.config(height=1, width=10)
+            button_remove.grid(row=2, column=0)
+
+            root.title("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
+            root.configure(bg='gray')
+            root.mainloop()
+            
         
 app = QApplication(sys.argv)
 window = QtWidgets.QStackedWidget()
+
+
+
 
 #############################  ADD CLASS HERE  /  ADDING THE WINDOWS IN THE WIDGETS FOR INDEXING  #############################
 
@@ -1517,7 +1700,9 @@ window.addWidget(Ui_step_1_2nd_burn()) # INDEX 38
 window.addWidget(Ui_step_2_2nd_burn()) # INDEX 39
 window.addWidget(Ui_step_3_2nd_burn()) # INDEX 40
 
-window.addWidget(Ui_send_failed()) # INDEX 41
+window.addWidget(Ui_body_part_arm()) # INDEX 41
+
+
 
 
 #######################  PARAMETERS FOR THE WINDOW (EXACT FOR THE TOUCH SCREEN DISPLAY)  #######################
