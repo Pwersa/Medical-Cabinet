@@ -1,12 +1,12 @@
 # SET THE EXACT DATA PLEASE
 
 {
-  'connection_mode': True,
+  'connection_mode': False,
   'companion_app_IP': "192.168.254.103", 
   'port_1st': 4899, 
   'port_2nd': 4799, 
   'email_connection': False,
   'email': "example.email@email",
-  'enable_camera': True,
+  'enable_camera': False,
   'enable_solenoid': False,
 }

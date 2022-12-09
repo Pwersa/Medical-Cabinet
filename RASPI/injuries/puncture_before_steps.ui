@@ -56,7 +56,7 @@
       <x>20</x>
       <y>250</y>
       <width>981</width>
-      <height>171</height>
+      <height>241</height>
      </rect>
     </property>
     <property name="font">
@@ -65,49 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;If there are objects &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;STUCK&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; in the wound, &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;attempt to remove them.&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;WAIT&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; for medical personnel to arrive&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="gif_player_label_4">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>40</y>
-      <width>360</width>
-      <height>240</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>360</width>
-      <height>240</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>360</width>
-      <height>240</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <family>Unispace</family>
-      <pointsize>16</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="lineWidth">
-     <number>1</number>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>../pictures/x_mark.png</pixmap>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;If there are objects &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;STUCK&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; in the wound, &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;attempt to remove them.&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;WAIT&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; or call your local NURSE for medical&lt;br/&gt;personnel to arrive&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="next_step_button_4">
@@ -233,12 +191,57 @@ border-color: black;
      <pixmap>../pictures/program_pictures/main_wallpaper.png</pixmap>
     </property>
    </widget>
+   <widget class="QLabel" name="gif_player_label">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>80</y>
+      <width>200</width>
+      <height>150</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>200</width>
+      <height>150</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>200</width>
+      <height>150</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../pictures/x_mark.png</pixmap>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
    <zorder>label</zorder>
    <zorder>text_steps_4</zorder>
    <zorder>title_step_4</zorder>
-   <zorder>gif_player_label_4</zorder>
    <zorder>next_step_button_4</zorder>
    <zorder>go_back_injury_type_4</zorder>
+   <zorder>gif_player_label</zorder>
   </widget>
  </widget>
  <resources/>

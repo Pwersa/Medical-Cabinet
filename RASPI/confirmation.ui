@@ -85,7 +85,7 @@ border-color: black;
 </string>
     </property>
     <property name="text">
-     <string>Reset
+     <string>Restart
 Procedure</string>
     </property>
    </widget>

@@ -30,7 +30,7 @@
     <property name="geometry">
      <rect>
       <x>5</x>
-      <y>10</y>
+      <y>40</y>
       <width>1011</width>
       <height>71</height>
      </rect>
@@ -44,7 +44,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;WHEN TO SEEK EMERGENCY CARE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;SEEK EMERGENCY CARE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -61,11 +61,14 @@
     </property>
     <property name="font">
      <font>
+      <family>Unispace</family>
       <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt; font-weight:600;&quot;&gt;Call the clinic or your local emergency number if the &lt;br/&gt;injured person experiences&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;:&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;A) Severe Burns&lt;br/&gt;B) Difficult Breathing&lt;br/&gt;C) Muscle Pain and Contractions&lt;br/&gt;D) Uncrontrollable Movement&lt;br/&gt;E) Unconsciousness&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:48pt; text-decoration: underline;&quot;&gt;Immediately&lt;/span&gt;&lt;span style=&quot; font-size:48pt;&quot;&gt; call &lt;br/&gt;your local clinic.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="next_step_button">

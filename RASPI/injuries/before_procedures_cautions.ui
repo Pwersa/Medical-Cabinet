@@ -26,37 +26,13 @@
    <string>Step 1 Procedure</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="title_step">
-    <property name="geometry">
-     <rect>
-      <x>6</x>
-      <y>10</y>
-      <width>1011</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Unispace</family>
-      <pointsize>18</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt; color:#ff0000;&quot;&gt;CAUTION&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
    <widget class="QLabel" name="text_steps">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>200</y>
-      <width>981</width>
-      <height>241</height>
+      <x>30</x>
+      <y>220</y>
+      <width>941</width>
+      <height>231</height>
      </rect>
     </property>
     <property name="font">
@@ -65,14 +41,14 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;Check the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;AREA&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; if it safe.&lt;br/&gt;Before proceeding, &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;PLACE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; the patient in a &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;COMFORTABLE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; and &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;SECURED&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; position.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;Check the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;AREA&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; if it safe. Before proceeding, &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;PLACE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; the patient in a &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;COMFORTABLE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; and &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;SECURED&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; position. Don't forget to &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;WEAR&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; your &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;MASK&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; and &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;GLOVES&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label">
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>80</y>
+      <y>40</y>
       <width>200</width>
       <height>150</height>
      </rect>
@@ -107,7 +83,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../pictures/x_mark.png</pixmap>
+     <pixmap>../pictures/caution.png</pixmap>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -237,7 +213,6 @@ border-color: black;
     </property>
    </widget>
    <zorder>label</zorder>
-   <zorder>title_step</zorder>
    <zorder>text_steps</zorder>
    <zorder>gif_player_label</zorder>
    <zorder>goto_steps_button</zorder>

@@ -54,7 +54,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>310</y>
+      <y>320</y>
       <width>981</width>
       <height>121</height>
      </rect>
@@ -65,7 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;TAKE OFF&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; jewelry, belts, and tight clothing. &lt;br/&gt;Burns can swell &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;QUICKLY&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;TAKE OFF&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; jewelry, belts, and tight clothing. &lt;br/&gt;Burns can swell &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;QUICKLY&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label">

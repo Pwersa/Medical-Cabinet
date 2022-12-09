@@ -26,30 +26,6 @@
    <string>Step 1 Procedure</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="title_step">
-    <property name="geometry">
-     <rect>
-      <x>5</x>
-      <y>10</y>
-      <width>1011</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Unispace</family>
-      <pointsize>18</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:48pt; color:#ff0000;&quot;&gt;CAUTION&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
    <widget class="QLabel" name="text_steps">
     <property name="geometry">
      <rect>
@@ -65,7 +41,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt; touch an injured person who's still in &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;CONTACT&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;&lt;br/&gt;with an &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;ELECTRICAL CURRENT&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;.&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:28pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt; move a person with an &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;ELECTRICAL INJURY&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;&lt;br/&gt;unless there is an &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;IMMEDIATE DANGER&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt; go near a person who's still in &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;CONTACT&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;&lt;br/&gt;with an &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;ELECTRICAL CURRENT&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;.&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:28pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt; move a person with an &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;ELECTRICAL INJURY&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;&lt;br/&gt;unless there is an &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;IMMEDIATE DANGER&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="next_step_button">
@@ -195,7 +171,7 @@ border-color: black;
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>80</y>
+      <y>50</y>
       <width>200</width>
       <height>150</height>
      </rect>
@@ -230,14 +206,13 @@ border-color: black;
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../pictures/x_mark.png</pixmap>
+     <pixmap>../pictures/caution.png</pixmap>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <zorder>label</zorder>
-   <zorder>title_step</zorder>
    <zorder>text_steps</zorder>
    <zorder>next_step_button</zorder>
    <zorder>go_back_button</zorder>

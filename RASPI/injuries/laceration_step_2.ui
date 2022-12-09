@@ -65,7 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;Use &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;BEDATINE SOLUTION &lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;to clean the wound.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;Use &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;POVIDONE IODINE&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt; to clean the wound.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label">

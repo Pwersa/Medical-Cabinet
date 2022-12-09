@@ -7,103 +7,110 @@ from record_session import Ui_record_session
 from cabinet_notif import Ui_cabinet_notif
 from tkinter import *
 
+# OPEN CONFIGURATION FILES AS SOON PROGRAM RUNS (IP ADDRESS, PORT, EMAIL, etc.)
+with open("config/config.txt", "r") as data:
+    configuration_settings = ast.literal_eval(data.read())
 
-###### RASPBERRY PI SETTINGS (UNCOMMENT WHEN USING THIS SOURCE CODE IN RASPBERRY)
-#import RPi.GPIO as GPIO
-#from time import sleep
+# RASPBERRY PI SETTINGS
+def solenoid_unlock():
+    if configuration_settings["enable_solenoid"] == True:
+        print("SOLENOID FEATURE IS ON")
+        import RPi.GPIO as GPIO
+        from time import sleep 
 
-#GPIO.setwarnings(False)
-#GPIO.setmode(GPIO.BCM)
-#GPIO.setup(18, GPIO.OUT)
+        GPIO.setwarnings(False)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(18, GPIO.OUT)
+        GPIO.output(18, 1)
+    
+    else:
+        print("SOLENOID FEATURE IS OFF")
 
-#GPIO.output(18, 1)
-
-# DATE AND TIME, RESPONDER ID, NAME, COURSE, PATIENT ID, NAME, COURSE, GENDER, INJURY TYPE
+# DATE AND TIME, RESPONDER ID, NAME, COURSE, PATIENT ID, NAME, COURSE, GENDER, INJURY TYPE (used are also for csv file)
 session = []
 
 body_parts_selected = []
 injury_types_selected = ["Placeholder"]
 
 injury_type_selection = ["Cut", "Poison", "Puncture", "Burn", "Electric", "Bruises", "Laceration", "Others"]
-body_parts_list = ["Eyes", "Nose", "Mouth", "Ear", "Hand", "Knee", "Stomach", "Upper_Arm", "Lower_Arm", "Crotch", "Thigh", "Lower_Leg", "Foot"]
+body_parts_list = ["Neck", "Stomach", "Thigh", "Crotch", "Legs", "Head", "Arm", "Hand", "Knee", "Foot"]
+arm = ["Shoulder", "Forearm", "Wrist", "Elbow"]
+face = ["Lips", "Nose", "Ears", "Cheeks", "Eyes", "Jaw", "Forehead", "Chin"]
+hand = ["Palm", "Wrist", "Knuckles", "Fingers"]
 gender_types = ["Male", "Female", "N/A"]
 
-# CSV FILE
+# CSV FILE (DEBUG)
 data_qr = []
 
 #
 check_connection_companion = [0]
 
-# OPEN CONFIGURATION FILES AS SOON PROGRAM RUNS (IP ADDRESS, PORT, EMAIL, etc.)
-with open("config/config.txt", "r") as data:
-    configuration_settings = ast.literal_eval(data.read())
-
 class Ui_scan_qr_code(QMainWindow):
     def __init__(self):
         super(Ui_scan_qr_code, self).__init__()
         loadUi("scan_qr_code.ui", self)
-        
-        if configuration_settings["enable_camera"] == True:
-            self.scan_button.clicked.connect(self.qr_camera)
-        else:
-            pass
+        self.scan_button.clicked.connect(self.qr_camera)
     
     def qr_camera(self):
-        cap = cv2.VideoCapture(0)
-        detector = cv2.QRCodeDetector()
+        if configuration_settings["enable_camera"] == True:
+            cap = cv2.VideoCapture(0)
+            detector = cv2.QRCodeDetector()
 
-        while True:
-            _, img = cap.read()
-            data, bbox, _ = detector.detectAndDecode(img)
+            while True:
+                _, img = cap.read()
+                data, bbox, _ = detector.detectAndDecode(img)
+        
+                if(bbox is not None):
+                    for i in range(len(bbox)):
+                        cv2.line(img, tuple(bbox[i][0]), tuple(bbox[(i+1) % len(bbox)][0]), color=(255, 0, 0), thickness=2)
+                        cv2.putText(img, data, (int(bbox[0][0][0]), int(bbox[0][0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 250, 120), 2)
+
+
+                cv2.imshow("Scan QR CODE", img)
+
+                if data:
+                    dt = datetime.datetime.now()
     
-            if(bbox is not None):
-                for i in range(len(bbox)):
-                    cv2.line(img, tuple(bbox[i][0]), tuple(bbox[(i+1) % len(bbox)][0]), color=(255, 0, 0), thickness=2)
-                    cv2.putText(img, data, (int(bbox[0][0][0]), int(bbox[0][0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 250, 120), 2)
+                    # Format datetime string
+                    x = dt.strftime("%Y-%m-%d %H:%M:%S")
+                    regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
+                    parsed_text = regexp.findall(data)
+                    fullname = str(parsed_text[1]+" "+ parsed_text[2])
+                    #print(parsed_text)
+                    # 1st QR CODE RESPONDER of COET
+                    session.append(str(x))
+                    # ID
+                    session.append(parsed_text[0])
+                    # NAME
+                    session.append(fullname)
+                    # COURSE
+                    session.append(parsed_text[-2])
+                    # Same situation but for CSV File
+                    #data_qr.append(str(x))
+                    #data_qr.append(parsed_text[0])
+                    #data_qr.append(fullname)
+                    #data_qr.append(parsed_text[-2])
 
+                    time.sleep(0.5)
+                    break
+                        
+                if (cv2.waitKey(1) == ord("r")):
+                    time.sleep(0.5)
+                    session.append("87897-12-31 23:23:59")
+                    # ID
+                    session.append("TUPC-RESPONDER")
+                    # NAME
+                    session.append("JR ANGELO")
+                    # COURSE
+                    session.append("COET")
+                    break
 
-            cv2.imshow("Scan QR CODE", img)
+            cap.release()
+            cv2.destroyAllWindows()
+            window.setCurrentIndex(2)
 
-            if data:
-                dt = datetime.datetime.now()
- 
-                # Format datetime string
-                x = dt.strftime("%Y-%m-%d %H:%M:%S")
-                regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
-                parsed_text = regexp.findall(data)
-                fullname = str(parsed_text[1]+" "+ parsed_text[2])
-                #print(parsed_text)
-                # 1st QR CODE RESPONDER of COET
-                session.append(str(x))
-                # ID
-                session.append(parsed_text[0])
-                # NAME
-                session.append(fullname)
-                # COURSE
-                session.append(parsed_text[-2])
-                # Same situation but for CSV File
-                #data_qr.append(str(x))
-                #data_qr.append(parsed_text[0])
-                #data_qr.append(fullname)
-                #data_qr.append(parsed_text[-2])
-
-                time.sleep(0.5)
-                break
-                       
-            if (cv2.waitKey(1) == ord("r")):
-                time.sleep(0.5)
-                session.append("87897-12-31 23:23:59")
-                # ID
-                session.append("TUPC-RESPONDER")
-                # NAME
-                session.append("JR ANGELO")
-                # COURSE
-                session.append("COET")
-                break
-
-        cap.release()
-        cv2.destroyAllWindows()
-        window.setCurrentIndex(2)
+        else:
+            window.setCurrentIndex(2)
 
 class Ui_scan_qr_patient(QMainWindow):
     def __init__(self):
@@ -211,7 +218,7 @@ class Ui_select_injury_type(QMainWindow):
         elif injury_type_selection == "Poison":
             injury_types_selected.append("POISON") 
             print(injury_types_selected[-1])
-            window.setCurrentIndex(1)
+            window.setCurrentIndex(28)
         
         elif injury_type_selection == "Puncture":
             injury_types_selected.append("PUNCTURE") 
@@ -244,79 +251,49 @@ class Ui_select_injury_type(QMainWindow):
 class Ui_select_body_part(QMainWindow):
     def __init__(self):
         super(Ui_select_body_part, self).__init__()
-        loadUi("select_body_part.ui", self)
-        self.eyes_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[0]))
-        self.nose_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[1]))
-        self.mouth_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[2]))
-        self.ear_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[3]))
-        self.hand_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[4]))
-        self.knee_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[5]))
-        self.stomach_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[6]))
-        self.upper_arm.clicked.connect(lambda: self.body_part_buttons(body_parts_list[7]))
-        self.lower_arm.clicked.connect(lambda: self.body_part_buttons(body_parts_list[8]))
-        self.crotch_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[9]))
-        self.thigh_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[10]))
-        self.lower_leg.clicked.connect(lambda: self.body_part_buttons(body_parts_list[11]))
-        self.foot_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[12]))
+        loadUi("select_body_part(beta).ui", self)
+
+        #body_parts_list = ["Neck", "Stomach", "Thigh", "Crotch", "Legs", "Head", "Arm", "Hand", "Knee", "Foot"]
+
+        self.neck_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[0]))
+        self.stomach_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[1]))
+        self.thigh_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[2]))
+        self.crotch_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[3]))
+        self.legs_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[4]))
+        self.head_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[5]))
+        self.arm_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[6]))
+        self.hand_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[7]))
+        self.knee_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[8]))
+        self.foot_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[9]))
         
     def body_part_buttons(self, body_parts_list):
-        if body_parts_list == "Eyes":
-            body_parts_selected.append("EYES") 
+        if body_parts_list == "Neck":
+            body_parts_selected.append("NECK") 
             window.setCurrentIndex(1)
             self.injuries()
             
-        elif body_parts_list == "Nose":
-            body_parts_selected.append("NOSE") 
-            window.setCurrentIndex(1)
-            self.injuries()
-                        
-        elif body_parts_list == "Mouth":
-            body_parts_selected.append("MOUTH") 
-            window.setCurrentIndex(1)
-            self.injuries()
-                        
-        elif body_parts_list == "Ear":
-            body_parts_selected.append("EAR") 
-            window.setCurrentIndex(1)
-            self.injuries()
-                        
-        elif body_parts_list == "Hand":
-            body_parts_selected.append("HAND") 
-            window.setCurrentIndex(1)
-            self.injuries()
-                
-        elif body_parts_list == "Knee":
-            body_parts_selected.append("Knee") 
-            window.setCurrentIndex(1)
-            self.injuries()
-
         elif body_parts_list == "Stomach":
             body_parts_selected.append("STOMACH") 
             window.setCurrentIndex(1)
             self.injuries()
-            
-        elif body_parts_list == "Upper_Arm":
-            body_parts_selected.append("UPPER ARM") 
-            window.setCurrentIndex(1)
-            self.injuries()
-            
-        elif body_parts_list == "Lower_Arm":
-            body_parts_selected.append("LOWER ARM") 
-            window.setCurrentIndex(1)
-            self.injuries()
-            
-        elif body_parts_list == "Crotch":
-            body_parts_selected.append("CROTCH") 
-            window.setCurrentIndex(1)
-            self.injuries()
-            
+                         
         elif body_parts_list == "Thigh":
             body_parts_selected.append("THIGH") 
             window.setCurrentIndex(1)
             self.injuries()
+                        
+        elif body_parts_list == "Crotch":
+            body_parts_selected.append("CROTCH") 
+            window.setCurrentIndex(1)
+            self.injuries()
+                
+        elif body_parts_list == "Legs":
+            body_parts_selected.append("LEG") 
+            window.setCurrentIndex(1)
+            self.injuries()
             
-        elif body_parts_list == "Lower_Leg":
-            body_parts_selected.append("LOWER_LEG") 
+        elif body_parts_list == "Knee":
+            body_parts_selected.append("KNEE") 
             window.setCurrentIndex(1)
             self.injuries()
             
@@ -324,10 +301,26 @@ class Ui_select_body_part(QMainWindow):
             body_parts_selected.append("FOOT") 
             window.setCurrentIndex(1)
             self.injuries()
+            
+        elif body_parts_list == "Head":
+            body_parts_selected.append("HEAD") 
+            window.setCurrentIndex(1)
+            self.injuries()
+            
+        elif body_parts_list == "Arm":
+            print("ARM")
+            body_parts_selected.append("ARM") 
+            window.setCurrentIndex(1)
+            self.injuries()
+            
+        elif body_parts_list == "Hand":
+            body_parts_selected.append("HAND") 
+            window.setCurrentIndex(1)
+            self.injuries()
     
     def injuries(self):
         # UNLOCK THE CABINET
-        #self.solenoid_unlock()
+        solenoid_unlock()
         
         self.cabinet_notif = QtWidgets.QMainWindow()
         self.ui = Ui_cabinet_notif()
@@ -340,9 +333,9 @@ class Ui_select_body_part(QMainWindow):
             window.setCurrentIndex(28)
             self.responder_csv_file()
             
-        elif injury_types_selected[-1] == "POISON":
+        elif injury_types_selected[-1] == "POISON_CONTACT":
             print(injury_types_selected[-1])
-            window.setCurrentIndex(28)
+            window.setCurrentIndex(27)
             self.responder_csv_file()
         
         elif injury_types_selected[-1] == "PUNCTURE":
@@ -375,10 +368,6 @@ class Ui_select_body_part(QMainWindow):
             
         elif injury_type_selection == "Go back to window":
             window.setCurrentIndex(window.currentIndex()-1) 
-            
-    def solenoid_unlock(self):
-        #GPIO.output(18, 0)
-        pass
             
     def responder_csv_file(self):
         session.append(injury_types_selected[-1])
@@ -461,7 +450,6 @@ class Ui_select_body_part(QMainWindow):
             print("ASDASDASDASD")
             
         except:   
-            #check_connection_companion.clear()
             check_connection_companion.append(1)
             print("QWEQWEQWEQWE")
             #window.setCurrentIndex(41)
@@ -599,10 +587,18 @@ class Ui_confirmation(QMainWindow):
         if injury_types_selected[-1] == "CUT":
             print("CUT IS LAST")
             window.setCurrentIndex(28)
-            
-        elif injury_types_selected[-1] == "POISON":
+
+        elif injury_types_selected[-1] == "POISON_INHALATION":
             print("POISON IS LAST")
-            window.setCurrentIndex(28)
+            window.setCurrentIndex(26)
+            
+        elif injury_types_selected[-1] == "POISON_INGESTION":
+            print("POISON IS LAST")
+            window.setCurrentIndex(23)
+            
+        elif injury_types_selected[-1] == "POISON_CONTACT":
+            print("POISON IS LAST")
+            window.setCurrentIndex(27)
             
         elif injury_types_selected[-1] == "PUNCTURE":
             print("PUNCTURE IS LAST")
@@ -736,6 +732,7 @@ class Ui_gender_patient_window(QMainWindow):
             self.responder_threading()     
         else:
             print("RESPONDER WAS ALREADY NOTIFIED")
+            check_connection_companion.clear()
             #pass
             
         if configuration_settings["connection_mode"] == True:
@@ -876,9 +873,22 @@ class Ui_before_procedures(QMainWindow):
             print(injury_types_selected[-1])
             window.setCurrentIndex(18)
             
-        elif injury_types_selected[-1] == "POISON":
+        elif "POISON" in injury_types_selected: 
+            print("POISON IN LIST")
             print(injury_types_selected[-1])
             window.setCurrentIndex(22)
+            
+        elif injury_types_selected[-1] == "POISON_INHALATION":
+            print("POISON IS LAST")
+            window.setCurrentIndex(26)
+            
+        elif injury_types_selected[-1] == "POISON_INGESTION":
+            print("POISON IS LAST")
+            window.setCurrentIndex(23)
+            
+        elif injury_types_selected[-1] == "POISON_CONTACT":
+            print("POISON IS LAST")
+            window.setCurrentIndex(27)
                 
         elif injury_types_selected[-1] == "ELECTRIC":
             print(injury_types_selected[-1])
@@ -990,7 +1000,7 @@ class Ui_step_1_puncture(QMainWindow):
         #self.gif_player_label = self.findChild(QLabel, "gif_player_label")
         
     def next_step(self):
-        window.setCurrentIndex(14)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         window.setCurrentIndex(28)
@@ -1078,7 +1088,7 @@ class Ui_degrees_burns(QMainWindow):
         window.setCurrentIndex(38)
     
     def go_back(self):
-        window.setCurrentIndex(28)
+        window.setCurrentIndex(18)
         
 class Ui_before_steps_burns(QMainWindow):
     def __init__(self):
@@ -1100,7 +1110,7 @@ class Ui_before_steps_burns(QMainWindow):
         window.setCurrentIndex(17)
     
     def go_back(self):
-        window.setCurrentIndex(window.currentIndex()-1)
+        window.setCurrentIndex(28)
         
         
 class Ui_step_1_1st_burn(QMainWindow):
@@ -1118,10 +1128,10 @@ class Ui_step_1_1st_burn(QMainWindow):
         self.burn_step1.start()
         
     def next_step(self):
-        window.setCurrentIndex(20)
+        window.setCurrentIndex(21)
     
     def go_back(self):
-        window.setCurrentIndex(window.currentIndex()-1)
+        window.setCurrentIndex(17)
         
 class Ui_step_2_1st_burn(QMainWindow):
     def __init__(self):
@@ -1155,7 +1165,7 @@ class Ui_step_3_1st_burn(QMainWindow):
         window.setCurrentIndex(5)
     
     def go_back(self):
-        window.setCurrentIndex(window.currentIndex()-1)
+        window.setCurrentIndex(19)
 
 ####################################### 2nd DEGREE BURN ##################################################
 
@@ -1174,10 +1184,10 @@ class Ui_step_1_2nd_burn(QMainWindow):
         self.burn_step1.start()
         
     def next_step(self):
-        window.setCurrentIndex(39)
+        window.setCurrentIndex(40)
     
     def go_back(self):
-        window.setCurrentIndex(18)
+        window.setCurrentIndex(17)
         
 class Ui_step_2_2nd_burn(QMainWindow):
     def __init__(self):
@@ -1211,26 +1221,57 @@ class Ui_step_3_2nd_burn(QMainWindow):
         window.setCurrentIndex(5)
     
     def go_back(self):
-        window.setCurrentIndex(window.currentIndex()-1)
+        window.setCurrentIndex(38)
         
         
         
 ######################  POISON PROCEDURES STEPS (6 windows TOTAL)  ###################### 
         
-class Ui_posion_types(QMainWindow):
+class Ui_poison_types(QMainWindow):
     def __init__(self):
-        super(Ui_posion_types, self).__init__()
+        super(Ui_poison_types, self).__init__()
         loadUi("injuries/poison_types.ui", self)
         
-        self.next_step_button.clicked.connect(self.next_step)
+        self.inhalation_button.clicked.connect(self.inhalation_steps)
+        self.ingestion_button.clicked.connect(self.ingestion_steps)
+        self.contact_button.clicked.connect(self.contact_steps)
         self.go_back_injury_type.clicked.connect(self.go_back)
         
-    def next_step(self):
+    def inhalation_steps(self):
+        body_parts_selected.append("NOSE")
+        injury_types_selected.append("POISON_INHALATION")
+        print("NOSE")
+        window.setCurrentIndex(26)
+        
+        solenoid_unlock()
+        self.cabinet_notif = QtWidgets.QMainWindow()
+        self.ui = Ui_cabinet_notif()
+        self.ui.setupUi(self.cabinet_notif)
+        self.cabinet_notif.show()
+    
+    def ingestion_steps(self):
+        body_parts_selected.append("MOUTH")
+        injury_types_selected.append("POISON_INGESTION")
         window.setCurrentIndex(23)
+        
+        solenoid_unlock()
+        self.cabinet_notif = QtWidgets.QMainWindow()
+        self.ui = Ui_cabinet_notif()
+        self.ui.setupUi(self.cabinet_notif)
+        self.cabinet_notif.show()
+    
+    def contact_steps(self):
+        injury_types_selected.append("POISON_CONTACT")
+        window.setCurrentIndex(1)
+        
+        solenoid_unlock()
+        self.cabinet_notif = QtWidgets.QMainWindow()
+        self.ui = Ui_cabinet_notif()
+        self.ui.setupUi(self.cabinet_notif)
+        self.cabinet_notif.show()
     
     def go_back(self):
-        
-        window.setCurrentIndex(28)
+        window.setCurrentIndex(2)
         
 class Ui_step_1_poison(QMainWindow):
     def __init__(self):
@@ -1269,7 +1310,7 @@ class Ui_step_3_poison(QMainWindow):
         self.go_back_injury_type_3.clicked.connect(self.go_back)
         
     def next_step(self):
-        window.setCurrentIndex(26)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)
@@ -1283,14 +1324,14 @@ class Ui_step_poison_inhalation(QMainWindow):
         self.go_back_injury_type_4.clicked.connect(self.go_back)
         
     def next_step(self):
-        window.setCurrentIndex(27)
+        window.setCurrentIndex(5)
     
     def go_back(self):
-        window.setCurrentIndex(window.currentIndex()-1)
+        window.setCurrentIndex(22)
         
-class Ui_step_poison_eyes(QMainWindow):
+class Ui_step_poison_contact(QMainWindow):
     def __init__(self):
-        super(Ui_step_poison_eyes, self).__init__()
+        super(Ui_step_poison_contact, self).__init__()
         loadUi("injuries/poison_eye.ui", self)
         self.next_step_button.clicked.connect(self.next_step)
         self.go_back_injury_type.clicked.connect(self.go_back)
@@ -1305,7 +1346,7 @@ class Ui_step_poison_eyes(QMainWindow):
         window.setCurrentIndex(5)
     
     def go_back(self):
-        window.setCurrentIndex(window.currentIndex()-1)
+        window.setCurrentIndex(22)
 
 
 
@@ -1332,7 +1373,7 @@ class Ui_step_electric_seek_emergency(QMainWindow):
         self.go_back_button.clicked.connect(self.go_back)
         
     def next_step(self):
-        window.setCurrentIndex(32)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)
@@ -1447,22 +1488,13 @@ class Ui_step_3_laceration(QMainWindow):
         window.setCurrentIndex(5)
     
     def go_back(self):
-        window.setCurrentIndex(window.currentIndex()-1)   
-        
-        
-        
-###################################### SEND FAILED UI ##########################################
-class Ui_send_failed(QMainWindow):
-    def __init__(self):
-        super(Ui_send_failed, self).__init__()
-        loadUi("send_failed_notif.ui", self)
-        self.confirm_button.clicked.connect(self.dismiss)
-        
-    def dismiss(self):
-        window.setCurrentIndex(28)   
+        window.setCurrentIndex(window.currentIndex()-1)
         
 app = QApplication(sys.argv)
 window = QtWidgets.QStackedWidget()
+
+
+
 
 #############################  ADD CLASS HERE  /  ADDING THE WINDOWS IN THE WIDGETS FOR INDEXING  #############################
 
@@ -1492,12 +1524,12 @@ window.addWidget(Ui_step_1_1st_burn()) # INDEX 19
 window.addWidget(Ui_step_2_1st_burn()) # INDEX 20
 window.addWidget(Ui_step_3_1st_burn()) # INDEX 21
 
-window.addWidget(Ui_posion_types()) # INDEX 22
+window.addWidget(Ui_poison_types()) # INDEX 22
 window.addWidget(Ui_step_1_poison()) # INDEX 23
 window.addWidget(Ui_step_2_poison()) # INDEX 24
 window.addWidget(Ui_step_3_poison()) # INDEX 25
 window.addWidget(Ui_step_poison_inhalation()) # INDEX 26
-window.addWidget(Ui_step_poison_eyes()) # INDEX 27
+window.addWidget(Ui_step_poison_contact()) # INDEX 27
 
 window.addWidget(Ui_before_procedures()) # INDEX 28
 window.addWidget(Ui_guest_patient_window()) # INDEX 29
@@ -1516,8 +1548,6 @@ window.addWidget(Ui_step_3_laceration()) # INDEX 37
 window.addWidget(Ui_step_1_2nd_burn()) # INDEX 38
 window.addWidget(Ui_step_2_2nd_burn()) # INDEX 39
 window.addWidget(Ui_step_3_2nd_burn()) # INDEX 40
-
-window.addWidget(Ui_send_failed()) # INDEX 41
 
 
 #######################  PARAMETERS FOR THE WINDOW (EXACT FOR THE TOUCH SCREEN DISPLAY)  #######################

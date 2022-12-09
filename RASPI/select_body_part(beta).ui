@@ -136,7 +136,7 @@ border-color: black;
    <widget class="QPushButton" name="head_button">
     <property name="geometry">
      <rect>
-      <x>590</x>
+      <x>630</x>
       <y>81</y>
       <width>181</width>
       <height>81</height>
@@ -250,7 +250,7 @@ border-color: black;
    <widget class="QPushButton" name="arm_button">
     <property name="geometry">
      <rect>
-      <x>650</x>
+      <x>660</x>
       <y>180</y>
       <width>181</width>
       <height>81</height>

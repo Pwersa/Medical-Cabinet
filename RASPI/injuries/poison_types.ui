@@ -44,42 +44,24 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt; text-decoration: underline;&quot;&gt;Symptomps of Chemical Poisoning&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt; text-decoration: underline;&quot;&gt;TYPE OF POISONING:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="text_steps">
+   <widget class="QPushButton" name="ingestion_button">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>90</y>
-      <width>981</width>
-      <height>341</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>14</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;DIZZINESS&lt;br/&gt;DISORIENTATION&lt;br/&gt;VOMITING&lt;br/&gt;TROUBLE HEARING&lt;br/&gt;PAIN&lt;br/&gt;HEADACHES / FEELING FAINT&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="next_step_button">
-    <property name="geometry">
-     <rect>
-      <x>730</x>
-      <y>420</y>
+      <x>375</x>
+      <y>150</y>
       <width>281</width>
-      <height>141</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>18</pointsize>
+      <pointsize>36</pointsize>
      </font>
     </property>
     <property name="cursor">
@@ -102,14 +84,14 @@ border-color: black;
 }</string>
     </property>
     <property name="text">
-     <string>NEXT STEP</string>
+     <string>INGESTION</string>
     </property>
    </widget>
    <widget class="QPushButton" name="go_back_injury_type">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>420</y>
+      <x>375</x>
+      <y>390</y>
       <width>281</width>
       <height>141</height>
      </rect>
@@ -167,11 +149,86 @@ border-color: black;
      <pixmap>../pictures/program_pictures/main_wallpaper.png</pixmap>
     </property>
    </widget>
+   <widget class="QPushButton" name="inhalation_button">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>150</y>
+      <width>281</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>28</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>INHALATION</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="contact_button">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>150</y>
+      <width>281</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>CONTACT</string>
+    </property>
+   </widget>
    <zorder>label</zorder>
-   <zorder>text_steps</zorder>
    <zorder>title_step</zorder>
-   <zorder>next_step_button</zorder>
+   <zorder>ingestion_button</zorder>
    <zorder>go_back_injury_type</zorder>
+   <zorder>inhalation_button</zorder>
+   <zorder>contact_button</zorder>
   </widget>
  </widget>
  <resources/>
