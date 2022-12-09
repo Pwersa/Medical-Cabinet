@@ -11,27 +11,12 @@ from tkinter import *
 with open("config/config.txt", "r") as data:
     configuration_settings = ast.literal_eval(data.read())
 
-# RASPBERRY PI SETTINGS
-def solenoid_unlock():
-    if configuration_settings["enable_solenoid"] == True:
-        print("SOLENOID FEATURE IS ON")
-        import RPi.GPIO as GPIO
-        from time import sleep 
-
-        GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(18, GPIO.OUT)
-        GPIO.output(18, 1)
-    
-    else:
-        print("SOLENOID FEATURE IS OFF")
-
 # DATE AND TIME, RESPONDER ID, NAME, COURSE, PATIENT ID, NAME, COURSE, GENDER, INJURY TYPE (used are also for csv file)
 session = []
-
 body_parts_selected = []
 injury_types_selected = ["Placeholder"]
 
+# All available options in their respective type
 injury_type_selection = ["Cut", "Poison", "Puncture", "Burn", "Electric", "Bruises", "Laceration", "Others"]
 body_parts_list = ["Neck", "Stomach", "Thigh", "Crotch", "Legs", "Head", "Arm", "Hand", "Knee", "Foot"]
 arm = ["Shoulder", "Forearm", "Wrist", "Elbow"]
@@ -42,7 +27,8 @@ gender_types = ["Male", "Female", "N/A"]
 # CSV FILE (DEBUG)
 data_qr = []
 
-#
+# Used for checking if the 1st send (responder) is succesfull, if not, 
+# it will send again in the end with the last sending which is session
 check_connection_companion = [0]
 
 class Ui_scan_qr_code(QMainWindow):
@@ -52,7 +38,10 @@ class Ui_scan_qr_code(QMainWindow):
         self.scan_button.clicked.connect(self.qr_camera)
     
     def qr_camera(self):
+        
+        # Check config file for CAMERA
         if configuration_settings["enable_camera"] == True:
+            print("CAMERA IS CONNECTED")
             cap = cv2.VideoCapture(0)
             detector = cv2.QRCodeDetector()
 
@@ -65,13 +54,10 @@ class Ui_scan_qr_code(QMainWindow):
                         cv2.line(img, tuple(bbox[i][0]), tuple(bbox[(i+1) % len(bbox)][0]), color=(255, 0, 0), thickness=2)
                         cv2.putText(img, data, (int(bbox[0][0][0]), int(bbox[0][0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 250, 120), 2)
 
-
                 cv2.imshow("Scan QR CODE", img)
 
                 if data:
                     dt = datetime.datetime.now()
-    
-                    # Format datetime string
                     x = dt.strftime("%Y-%m-%d %H:%M:%S")
                     regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
                     parsed_text = regexp.findall(data)
@@ -85,7 +71,8 @@ class Ui_scan_qr_code(QMainWindow):
                     session.append(fullname)
                     # COURSE
                     session.append(parsed_text[-2])
-                    # Same situation but for CSV File
+                    
+                    # Same situation but for CSV File (DEBUG)
                     #data_qr.append(str(x))
                     #data_qr.append(parsed_text[0])
                     #data_qr.append(fullname)
@@ -110,82 +97,103 @@ class Ui_scan_qr_code(QMainWindow):
             window.setCurrentIndex(2)
 
         else:
+            print("CAMERA IS NOT CONNECTED")
+            dt = datetime.datetime.now()
+            x = dt.strftime("%Y-%m-%d %H:%M:%S")
+            session.append(x)
+            # ID
+            session.append("TUPC-RESPONDER")
+            # NAME
+            session.append("JR ANGELO")
+            # COURSE
+            session.append("COET")
             window.setCurrentIndex(2)
 
 class Ui_scan_qr_patient(QMainWindow):
     def __init__(self):
         super(Ui_scan_qr_patient, self).__init__()
         loadUi("scan_qr_code_again.ui", self)
-        
         self.guest_patient_window.clicked.connect(self.guest_patient)
-        
-        if configuration_settings["enable_camera"] == True:
-            self.scan_qr_patient.clicked.connect(self.qr_camera)
-        else:
-            pass
+        self.scan_qr_patient.clicked.connect(self.qr_camera)
         
     def guest_patient(self):
         session.append("GUEST")
         window.setCurrentIndex(29)
 
     def qr_camera(self):
-        cap = cv2.VideoCapture(0)
-        detector = cv2.QRCodeDetector()
+        # Check config file for CAMERA
+        if configuration_settings["enable_camera"] == True:
+            print("CAMERA IS CONNECTED")
+            cap = cv2.VideoCapture(0)
+            detector = cv2.QRCodeDetector()
 
-        while True:
-            _, img = cap.read()
-            data, bbox, _ = detector.detectAndDecode(img)
+            while True:
+                _, img = cap.read()
+                data, bbox, _ = detector.detectAndDecode(img)
+        
+                if(bbox is not None):
+                    for i in range(len(bbox)):
+                        cv2.line(img, tuple(bbox[i][0]), tuple(bbox[(i+1) % len(bbox)][0]), color=(255, 0, 0), thickness=2)
+                        cv2.putText(img, data, (int(bbox[0][0][0]), int(bbox[0][0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 250, 120), 2)
+                        
+
+                cv2.imshow("Scan QR CODE", img)
+
+                if data:
+                    dt = datetime.datetime.now()
     
-            if(bbox is not None):
-                for i in range(len(bbox)):
-                    cv2.line(img, tuple(bbox[i][0]), tuple(bbox[(i+1) % len(bbox)][0]), color=(255, 0, 0), thickness=2)
-                    cv2.putText(img, data, (int(bbox[0][0][0]), int(bbox[0][0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 250, 120), 2)
+                    # Format datetime string
+                    #x = dt.strftime("%Y-%m-%d %H:%M:%S")
+                    regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
+                    parsed_text = regexp.findall(data)
+                    fullname = str(parsed_text[1]+" "+ parsed_text[2])
+
+                    # 1st QR CODE Patient
+                    #session.append(str(x))
+                    # ID
+                    session.insert(4, parsed_text[0])
+                    # NAME
+                    session.insert(5, fullname)
+                    # COURSE
+                    session.insert(6, parsed_text[-2])
+                    # CHECK IF ADDED DATA IN LIST IS CORRECT
                     
+                    # Same situation but for CSV File
+                    #data_qr.append(4, parsed_text[0])
+                    # NAME
+                    #data_qr.append(5, fullname)
+                    # COURSE
+                    #data_qr.append(6, parsed_text[-2])
 
-            cv2.imshow("Scan QR CODE", img)
+                    time.sleep(0.5)
+                    break
+                        
+                if (cv2.waitKey(1) == ord("p")):
+                    session.insert(4, "TUPC-PATIENT")
+                    # NAME
+                    session.insert(5, "DURAN ROGIE")
+                    # COURSE
+                    session.insert(6, "COET")
+                    time.sleep(0.5)
+                    
+                    break
 
-            if data:
-                dt = datetime.datetime.now()
- 
-                # Format datetime string
-                #x = dt.strftime("%Y-%m-%d %H:%M:%S")
-                regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
-                parsed_text = regexp.findall(data)
-                fullname = str(parsed_text[1]+" "+ parsed_text[2])
-
-                # 1st QR CODE Patient
-                #session.append(str(x))
-                # ID
-                session.insert(4, parsed_text[0])
-                # NAME
-                session.insert(5, fullname)
-                # COURSE
-                session.insert(6, parsed_text[-2])
-                # CHECK IF ADDED DATA IN LIST IS CORRECT
-                
-                # Same situation but for CSV File
-                #data_qr.append(4, parsed_text[0])
-                # NAME
-                #data_qr.append(5, fullname)
-                # COURSE
-                #data_qr.append(6, parsed_text[-2])
-
-                time.sleep(0.5)
-                break
-                       
-            if (cv2.waitKey(1) == ord("p")):
-                session.insert(4, "TUPC-PATIENT")
-                # NAME
-                session.insert(5, "DURAN ROGIE")
-                # COURSE
-                session.insert(6, "COET")
-                time.sleep(0.5)
-                
-                break
-
-        cap.release()
-        cv2.destroyAllWindows()
-        window.setCurrentIndex(8)
+            cap.release()
+            cv2.destroyAllWindows()
+            window.setCurrentIndex(8)
+            
+        else:
+            print("CAMERA IS NOT CONNECTED")
+            dt = datetime.datetime.now()
+            x = dt.strftime("%Y-%m-%d %H:%M:%S")
+            session.append(x)
+            # ID
+            session.append("TUPC-RESPONDER")
+            # NAME
+            session.append("JR ANGELO")
+            # COURSE
+            session.append("COET")
+            window.setCurrentIndex(2)
         
 class Ui_select_injury_type(QMainWindow):
     def __init__(self):
@@ -199,62 +207,59 @@ class Ui_select_injury_type(QMainWindow):
         self.bruises_button.clicked.connect(lambda: self.injuries(injury_type_selection[5]))
         self.laceration_button.clicked.connect(lambda: self.injuries(injury_type_selection[6]))
         self.others_button.clicked.connect(lambda: self.injuries(injury_type_selection[7]))
-    
+
+        # Used for hold and drag function
         self.scroll_area = self.findChild(QScrollArea, "scrollArea")
-        
         self.scroll = QScroller.scroller(self.scroll_area.viewport())
         self.scroll.grabGesture(self.scrollArea.viewport(), QScroller.LeftMouseButtonGesture)
         self.props = self.scroll.scrollerProperties()
         self.props.setScrollMetric(QScrollerProperties.VerticalOvershootPolicy, QScrollerProperties.OvershootAlwaysOff)
-        
         self.scroll.setScrollerProperties(self.props)
         
     def injuries(self, injury_type_selection):
         if injury_type_selection == "Cut":
             injury_types_selected.append("CUT") 
-            print(injury_types_selected[-1])
+            print("Selected injury: " + injury_types_selected[-1])
             window.setCurrentIndex(1)
             
         elif injury_type_selection == "Poison":
             injury_types_selected.append("POISON") 
-            print(injury_types_selected[-1])
+            print("Selected injury: " + injury_types_selected[-1])
             window.setCurrentIndex(28)
         
         elif injury_type_selection == "Puncture":
             injury_types_selected.append("PUNCTURE") 
-            print(injury_types_selected[-1])
+            print("Selected injury: " + injury_types_selected[-1])
             window.setCurrentIndex(1)
         
         elif injury_type_selection == "Burn":
             injury_types_selected.append("BURN") 
-            print(injury_types_selected[-1])
+            print("Selected injury: " + injury_types_selected[-1])
             window.setCurrentIndex(1)
             
         elif injury_type_selection == "Electric":
             injury_types_selected.append("ELECTRIC") 
-            print(injury_types_selected[-1])
+            print("Selected injury: " + injury_types_selected[-1])
             window.setCurrentIndex(1)
             
         elif injury_type_selection == "Bruises":
             injury_types_selected.append("BRUISES") 
-            print(injury_types_selected[-1])
+            print("Selected injury: " + injury_types_selected[-1])
             window.setCurrentIndex(1)
             
         elif injury_type_selection == "Laceration":
             injury_types_selected.append("LACERATION") 
-            print(injury_types_selected[-1])
+            print("Selected injury: " + injury_types_selected[-1])
             window.setCurrentIndex(1)
             
         elif injury_type_selection == "Others":
+            print("Selected injury: OTHERS was selected.")
             window.setCurrentIndex(3)
             
 class Ui_select_body_part(QMainWindow):
     def __init__(self):
         super(Ui_select_body_part, self).__init__()
         loadUi("select_body_part(beta).ui", self)
-
-        #body_parts_list = ["Neck", "Stomach", "Thigh", "Crotch", "Legs", "Head", "Arm", "Hand", "Knee", "Foot"]
-
         self.neck_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[0]))
         self.stomach_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[1]))
         self.thigh_button.clicked.connect(lambda: self.body_part_buttons(body_parts_list[2]))
@@ -269,121 +274,156 @@ class Ui_select_body_part(QMainWindow):
     def body_part_buttons(self, body_parts_list):
         if body_parts_list == "Neck":
             body_parts_selected.append("NECK") 
+            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
             
         elif body_parts_list == "Stomach":
-            body_parts_selected.append("STOMACH") 
+            body_parts_selected.append("STOMACH")
+            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
                          
         elif body_parts_list == "Thigh":
-            body_parts_selected.append("THIGH") 
+            body_parts_selected.append("THIGH")
+            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
                         
         elif body_parts_list == "Crotch":
-            body_parts_selected.append("CROTCH") 
+            body_parts_selected.append("CROTCH")
+            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
                 
         elif body_parts_list == "Legs":
-            body_parts_selected.append("LEG") 
+            body_parts_selected.append("LEG")
+            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
             
         elif body_parts_list == "Knee":
-            body_parts_selected.append("KNEE") 
+            body_parts_selected.append("KNEE")
+            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
             
         elif body_parts_list == "Foot":
-            body_parts_selected.append("FOOT") 
+            body_parts_selected.append("FOOT")
+            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
             
         elif body_parts_list == "Head":
-            body_parts_selected.append("HEAD") 
+            body_parts_selected.append("HEAD")
+            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
             
         elif body_parts_list == "Arm":
             print("ARM")
-            body_parts_selected.append("ARM") 
+            body_parts_selected.append("ARM")
+            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
             
         elif body_parts_list == "Hand":
-            body_parts_selected.append("HAND") 
+            body_parts_selected.append("HAND")
+            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
     
     def injuries(self):
-        # UNLOCK THE CABINET
-        solenoid_unlock()
+        # RASPBERRY PI SOLENOID SETTINGS
+        # UNLOCK THE CABINET IF IN CONFIG IS TRUE, else no
+        if configuration_settings["enable_solenoid"] == True:
+            print("SOLENOID FEATURE IS ON")
+                   
+            import RPi.GPIO as GPIO
+            
+            GPIO.setwarnings(False)
+            GPIO.setmode(GPIO.BCM)
+            GPIO.setup(18, GPIO.OUT)
+            GPIO.output(18, 1)
+            
+            self.cabinet_notif = QtWidgets.QMainWindow()
+            self.ui = Ui_cabinet_notif()
+            self.ui.setupUi(self.cabinet_notif)
+            self.cabinet_notif.show()
         
-        self.cabinet_notif = QtWidgets.QMainWindow()
-        self.ui = Ui_cabinet_notif()
-        self.ui.setupUi(self.cabinet_notif)
-        self.cabinet_notif.show()
-        
-        print("Selected Body Part: " + body_parts_selected[-1])
+        else:
+            print("SOLENOID FEATURE IS OFF")
+            self.cabinet_notif = QtWidgets.QMainWindow()
+            self.ui = Ui_cabinet_notif()
+            self.ui.setupUi(self.cabinet_notif)
+            self.cabinet_notif.show()
+
         if injury_types_selected[-1] == "CUT":
-            print(injury_types_selected[-1])
+            print("Previous injury was: " + injury_types_selected[-1])
             window.setCurrentIndex(28)
             self.responder_csv_file()
             
         elif injury_types_selected[-1] == "POISON_CONTACT":
-            print(injury_types_selected[-1])
+            print("Previous injury was: " + injury_types_selected[-1])
             window.setCurrentIndex(27)
             self.responder_csv_file()
         
         elif injury_types_selected[-1] == "PUNCTURE":
-            print(injury_types_selected[-1])
+            print("Previous injury was: " + injury_types_selected[-1])
             window.setCurrentIndex(28)
             self.responder_csv_file()
         
         elif injury_types_selected[-1] == "BURN":
-            print(injury_types_selected[-1])
+            print("Previous injury was: " + injury_types_selected[-1])
             window.setCurrentIndex(28)
             self.responder_csv_file()
         
         elif injury_types_selected[-1] == "ELECTRIC":
-            print(injury_types_selected[-1])
+            print("Previous injury was: " + injury_types_selected[-1])
             window.setCurrentIndex(28)
             self.responder_csv_file()
             
         elif injury_types_selected[-1] == "BRUISES":
-            print(injury_types_selected[-1])
+            print("Previous injury was: " + injury_types_selected[-1])
             window.setCurrentIndex(28)
             self.responder_csv_file()
             
         elif injury_types_selected[-1] == "LACERATION":
-            print(injury_types_selected[-1])
+            print("Previous injury was: " + injury_types_selected[-1])
             window.setCurrentIndex(28)
             self.responder_csv_file()
             
         elif injury_type_selection == "Others":
+            print("Previous injury was: Others was selected.")
             window.setCurrentIndex(3)
             
         elif injury_type_selection == "Go back to window":
+            print("GO BACK A WINDOW")
             window.setCurrentIndex(window.currentIndex()-1) 
             
     def responder_csv_file(self):
-        session.append(injury_types_selected[-1])
-        session.append(body_parts_selected[-1])
+        # Check config file for saving csv (record data)
+        if configuration_settings["allow_saving_csv"] == True:
+            print("SAVING ALL IN A CSV FILE...")
+            session.append(injury_types_selected[-1])
+            session.append(body_parts_selected[-1])
+            
+            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+            f = open(filename, "w+")
+            f.close()
+            
+            with open('cabinet-history/accessed-responder/recorded_accessed_responder.csv', 'w', encoding='UTF8', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(session)
+                
+        else:
+            print("CSV FILE WAS NOT CREATED.")
+            session.append(injury_types_selected[-1])
+            session.append(body_parts_selected[-1])
         
-        filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
-        f = open(filename, "w+")
-        f.close()
-        
-        with open('cabinet-history/accessed-responder/recorded_accessed_responder.csv', 'w', encoding='UTF8', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(session)
-        
+        # Check config file for sending email
         # EMAIL ALSO SENT TO THE NURSE
         if configuration_settings["email_connection"] == True:
-            #email_sending
             server = smtplib.SMTP('smtp.gmail.com', 587)
             server.starttls()
             server.login("coetmedicalcabinet.2022@gmail.com", "bovcsjaynaszeels")
@@ -391,7 +431,9 @@ class Ui_select_body_part(QMainWindow):
         else:
             pass
         
+        # Check config file if program will connect to the companion app
         if configuration_settings["connection_mode"] == True:
+            print("Will try to connecto to Companion APP")
             self.responder_threading()
         else:
             pass
@@ -447,14 +489,12 @@ class Ui_select_body_part(QMainWindow):
 
             # close the socket
             s.close()
-            print("ASDASDASDASD")
             
         except:   
             check_connection_companion.append(1)
-            print("QWEQWEQWEQWE")
             #window.setCurrentIndex(41)
 
-            #TKINTER
+            #TKINTER for window if connection to the companion app was failed
 
             root = Tk()
             root.geometry('800x600')
@@ -486,24 +526,29 @@ class Ui_enter_injury(QMainWindow):
         loadUi("enter_injury.ui", self)
         self.enter_button.clicked.connect(self.enter_injury)
         self.enter_injury_go_back_button.clicked.connect(self.go_back)
-        
         self.typed_injury = self.findChild(QLineEdit, "typed_injury")
 
     def enter_injury(self):
-        print(self.typed_injury.text())
-        session.append(self.typed_injury.text())
-        session.append("Emergency Seek")
+        if configuration_settings["allow_saving_csv"] == True:
+            print("Saving typed data to csv file")
+            session.append(self.typed_injury.text())
+            session.append("Emergency Seek")
+            
+            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+            f = open(filename, "w+")
+            f.close()
+            
+            with open('cabinet-history/accessed-responder/recorded_accessed_responder.csv', 'w', encoding='UTF8', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(session)
+            
+            window.setCurrentIndex(4)
+            
+        else:
+            print("Disabled saving typed data to csv file")
+            pass
         
-        filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
-        f = open(filename, "w+")
-        f.close()
-        
-        with open('cabinet-history/accessed-responder/recorded_accessed_responder.csv', 'w', encoding='UTF8', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(session)
-        
-        window.setCurrentIndex(4)
-
+        # Check config file if program will connect to the companion app
         if configuration_settings["connection_mode"] == True:
             self.enter_injury_threading()
         else:
@@ -515,7 +560,7 @@ class Ui_enter_injury(QMainWindow):
     def enter_injury_threading(self):
         x = threading.Thread(target=self.send_injury)
         x.start()
-        
+    
     def send_injury(self):
         try:
             SEPARATOR = "<SEPARATOR>"
@@ -635,7 +680,20 @@ class Ui_confirmation_again(QMainWindow):
     
     # GOING TO SCAN QR CODE AGAIN BUT FOR THE PATIENT
     def done_procedure(self):
-        #GPIO.output(18, 1)
+        if configuration_settings["enable_solenoid"] == True:
+            print("SOLENOID FEATURE IS ON")
+                   
+            import RPi.GPIO as GPIO
+
+            GPIO.setwarnings(False)
+            GPIO.setmode(GPIO.BCM)
+            GPIO.setup(18, GPIO.OUT)
+            GPIO.output(18, 1)
+        
+        else:
+            print("SOLENOID FEATURE IS OFF")
+            pass
+        
         window.setCurrentIndex(7)
         
 class Ui_guest_patient_window(QMainWindow):
@@ -714,18 +772,22 @@ class Ui_gender_patient_window(QMainWindow):
         self.save_session_tolocal()
 
     def save_session_tolocal(self):
-        filename = "cabinet-history/session/recorded_session.csv"
-        f = open(filename, "w+")
-        f.close()
         
-        with open('cabinet-history/session/recorded_session.csv', 'w', encoding='UTF8', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(session)
+        if configuration_settings["allow_saving_csv"] == True:
+            filename = "cabinet-history/session/recorded_session.csv"
+            f = open(filename, "w+")
+            f.close()
+            
+            with open('cabinet-history/session/recorded_session.csv', 'w', encoding='UTF8', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(session)
+        
+        else:
+            pass
             
         session.clear()
         
         # SEND TO COMPANION APP AFTER SAVING LOCALLY
-
         # CHECK IF RESPONDER NOTIF FAILED TO SENT, IF YES, IT WILL NOW CONTINUOSLY SEND UNTIL A CONNECTION IS RECEIVED
         if check_connection_companion[-1] == 1:
             print("RESPONDER WAS NOT NOTIFIED")
@@ -1242,36 +1304,41 @@ class Ui_poison_types(QMainWindow):
         injury_types_selected.append("POISON_INHALATION")
         print("NOSE")
         window.setCurrentIndex(26)
-        
-        solenoid_unlock()
-        self.cabinet_notif = QtWidgets.QMainWindow()
-        self.ui = Ui_cabinet_notif()
-        self.ui.setupUi(self.cabinet_notif)
-        self.cabinet_notif.show()
     
     def ingestion_steps(self):
         body_parts_selected.append("MOUTH")
         injury_types_selected.append("POISON_INGESTION")
         window.setCurrentIndex(23)
-        
-        solenoid_unlock()
-        self.cabinet_notif = QtWidgets.QMainWindow()
-        self.ui = Ui_cabinet_notif()
-        self.ui.setupUi(self.cabinet_notif)
-        self.cabinet_notif.show()
     
     def contact_steps(self):
         injury_types_selected.append("POISON_CONTACT")
         window.setCurrentIndex(1)
-        
-        solenoid_unlock()
-        self.cabinet_notif = QtWidgets.QMainWindow()
-        self.ui = Ui_cabinet_notif()
-        self.ui.setupUi(self.cabinet_notif)
-        self.cabinet_notif.show()
     
     def go_back(self):
         window.setCurrentIndex(2)
+        
+    def solenoid_poison(self):
+        if configuration_settings["enable_solenoid"] == True:
+            print("SOLENOID FEATURE IS ON")
+                   
+            import RPi.GPIO as GPIO
+            
+            GPIO.setwarnings(False)
+            GPIO.setmode(GPIO.BCM)
+            GPIO.setup(18, GPIO.OUT)
+            GPIO.output(18, 1)
+            
+            self.cabinet_notif = QtWidgets.QMainWindow()
+            self.ui = Ui_cabinet_notif()
+            self.ui.setupUi(self.cabinet_notif)
+            self.cabinet_notif.show()
+        
+        else:
+            print("SOLENOID FEATURE IS OFF")
+            self.cabinet_notif = QtWidgets.QMainWindow()
+            self.ui = Ui_cabinet_notif()
+            self.ui.setupUi(self.cabinet_notif)
+            self.cabinet_notif.show()
         
 class Ui_step_1_poison(QMainWindow):
     def __init__(self):

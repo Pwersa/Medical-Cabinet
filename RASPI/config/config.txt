@@ -8,5 +8,6 @@
   'email_connection': False,
   'email': "example.email@email",
   'enable_camera': False,
-  'enable_solenoid': False,
+  'enable_solenoid': False, # Has debug (Debug), show window only
+  'allow_saving_csv': True,
 }
