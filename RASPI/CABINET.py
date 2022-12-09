@@ -82,8 +82,9 @@ class Ui_scan_qr_code(QMainWindow):
                     break
                         
                 if (cv2.waitKey(1) == ord("r")):
-                    time.sleep(0.5)
-                    session.append("87897-12-31 23:23:59")
+                    dt = datetime.datetime.now()
+                    x = dt.strftime("%Y-%m-%d %H:%M:%S")
+                    session.append(x)
                     # ID
                     session.append("TUPC-RESPONDER")
                     # NAME
