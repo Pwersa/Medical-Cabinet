@@ -9,5 +9,5 @@
   'email': "example.email@email",
   'enable_camera': False,
   'enable_solenoid': False,
-  'allow_saving_csv': True,
+  'allow_saving_csv': False,
 }

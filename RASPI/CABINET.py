@@ -1,5 +1,6 @@
 import sys, cv2, datetime, time, re, csv, socket, tqdm, os, threading, ast, smtplib
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QSpinBox, QMessageBox, QScrollArea, QScroller, QScrollerProperties, QRadioButton, QLineEdit
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QSpinBox, QMessageBox, QScrollArea, QScroller, \
+                                QScrollerProperties, QRadioButton, QLineEdit, QPushButton, QWidget
 from PyQt5 import QtWidgets
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QMovie
@@ -24,8 +25,21 @@ face = ["Lips", "Nose", "Ears", "Cheeks", "Eyes", "Jaw", "Forehead", "Chin"]
 hand = ["Palm", "Wrist", "Knuckles", "Fingers"]
 gender_types = ["Male", "Female", "N/A"]
 
+# alphabets
+alphabet = [['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', "-", "Backspace"], 
+            ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+            ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+            ['Z', 'X', 'C', 'V', 'B', 'N', 'M', " "]]
+
+input_text = []
+input_name = []
+input_section = []
+
 # CSV FILE (DEBUG)
 data_qr = []
+
+# Check input Boxes
+name_section_focus = ["name"]
 
 # Used for checking if the 1st send (responder) is succesfull, if not, 
 # it will send again in the end with the last sending which is session
@@ -82,9 +96,8 @@ class Ui_scan_qr_code(QMainWindow):
                     break
                         
                 if (cv2.waitKey(1) == ord("r")):
-                    dt = datetime.datetime.now()
-                    x = dt.strftime("%Y-%m-%d %H:%M:%S")
-                    session.append(x)
+                    time.sleep(0.5)
+                    session.append("87897-12-31 23:23:59")
                     # ID
                     session.append("TUPC-RESPONDER")
                     # NAME
@@ -525,9 +538,494 @@ class Ui_enter_injury(QMainWindow):
     def __init__(self):
         super(Ui_enter_injury, self).__init__()
         loadUi("enter_injury.ui", self)
+        self.typed_injury = self.findChild(QLineEdit, "typed_injury")
         self.enter_button.clicked.connect(self.enter_injury)
         self.enter_injury_go_back_button.clicked.connect(self.go_back)
-        self.typed_injury = self.findChild(QLineEdit, "typed_injury")
+        self.text_clear.clicked.connect(self.clear_text)
+
+        # keyboard
+        self.number1_button = self.findChild(QPushButton, "number_1")
+        self.number1_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][0]))
+
+        self.number2_button = self.findChild(QPushButton, "number_2")
+        self.number2_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][1]))
+
+        self.number3_button = self.findChild(QPushButton, "number_3")
+        self.number3_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][2]))
+
+        self.number4_button = self.findChild(QPushButton, "number_4")
+        self.number4_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][3]))
+
+        self.number5_button = self.findChild(QPushButton, "number_5")
+        self.number5_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][4]))
+
+        self.number6_button = self.findChild(QPushButton, "number_6")
+        self.number6_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][5]))
+
+        self.number7_button = self.findChild(QPushButton, "number_7")
+        self.number7_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][6]))
+
+        self.number8_button = self.findChild(QPushButton, "number_8")
+        self.number8_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][7]))
+
+        self.number9_button = self.findChild(QPushButton, "number_9")
+        self.number9_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][8]))
+
+        self.number0_button = self.findChild(QPushButton, "number_0")
+        self.number0_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][9]))
+
+        self.a_button = self.findChild(QPushButton, "a_button")
+        self.a_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][0]))
+
+        self.b_button = self.findChild(QPushButton, "b_button")
+        self.b_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][4]))
+
+        self.c_button = self.findChild(QPushButton, "c_button")
+        self.c_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][2]))
+
+        self.d_button = self.findChild(QPushButton, "d_button")
+        self.d_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][2]))
+
+        self.e_button = self.findChild(QPushButton, "e_button")
+        self.e_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][2]))
+
+        self.f_button = self.findChild(QPushButton, "f_button")
+        self.f_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][3]))
+
+        self.g_button = self.findChild(QPushButton, "g_button")
+        self.g_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][4]))
+
+        self.h_button = self.findChild(QPushButton, "h_button")
+        self.h_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][5]))
+
+        self.i_button = self.findChild(QPushButton, "i_button")
+        self.i_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][7]))
+
+        self.j_button = self.findChild(QPushButton, "j_button")
+        self.j_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][6]))
+
+        self.k_button = self.findChild(QPushButton, "k_button")
+        self.k_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][7]))
+
+        self.l_button = self.findChild(QPushButton, "l_button")
+        self.l_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][8]))
+
+        self.m_button = self.findChild(QPushButton, "m_button")
+        self.m_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][6]))
+
+        self.n_button = self.findChild(QPushButton, "n_button")
+        self.n_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][5]))
+
+        self.o_button = self.findChild(QPushButton, "o_button")
+        self.o_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][8]))
+
+        self.p_button = self.findChild(QPushButton, "p_button")
+        self.p_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][9]))
+
+        self.q_button = self.findChild(QPushButton, "q_button")
+        self.q_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][0]))
+
+        self.r_button = self.findChild(QPushButton, "r_button")
+        self.r_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][3]))
+
+        self.s_button = self.findChild(QPushButton, "s_button")
+        self.s_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][1]))
+
+        self.t_button = self.findChild(QPushButton, "t_button")
+        self.t_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][4]))
+
+        self.u_button = self.findChild(QPushButton, "u_button")
+        self.u_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][6]))
+
+        self.v_button = self.findChild(QPushButton, "v_button")
+        self.v_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][3]))
+
+        self.w_button = self.findChild(QPushButton, "w_button")
+        self.w_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][1]))
+
+        self.x_button = self.findChild(QPushButton, "x_button")
+        self.x_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][1]))
+        
+        self.y_button = self.findChild(QPushButton, "y_button")
+        self.y_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][5]))
+
+        self.z_button = self.findChild(QPushButton, "z_button")
+        self.z_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][0]))
+
+        self.backspace_button = self.findChild(QPushButton, "backspace_button")
+        self.backspace_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][11]))
+
+        self.hypen_button = self.findChild(QPushButton, "hypen_button")
+        self.hypen_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][10]))
+
+        self.spacebar_button = self.findChild(QPushButton, "spacebar_button")
+        self.spacebar_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][7]))
+
+    def clear_text(self):
+        input_text.clear()
+        self.typed_injury.setText("")
+        self.typed_injury.setCursorPosition(0)
+
+    def input_keyboard(self, alphabet):
+        if alphabet == "Backspace":
+            print("BACKSPACE")
+            check = self.typed_injury.cursorPosition()
+            subtract = check - 1
+        
+            if len(input_text) >= 1:
+                input_text.pop(subtract)
+                new_string = "".join(input_text)
+                print(new_string)
+                print(self.typed_injury.cursorPosition())
+                self.typed_injury.setText(new_string)
+                self.typed_injury.setCursorPosition(subtract)
+                self.typed_injury.hasFocus()
+
+            else:
+                print("NO MORE ITEMS")
+                pass
+
+        elif alphabet == " ":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "1":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "2":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "3":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "4":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "5":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "6":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "7":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "8":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "9":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "0":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+        
+        elif alphabet == "-":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "Q":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "W":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "E":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "R":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "T":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "Y":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "U":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "I":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "O":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "P":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "A":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "S":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "D":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "F":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "G":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "H":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "J":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "K":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "L":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "Z":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "X":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "C":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "V":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "B":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "N":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
+
+        elif alphabet == "M":
+            check = self.typed_injury.cursorPosition()
+            input_text.insert(check, alphabet)
+            new_string = "".join(input_text)
+            print("ASDASD" + new_string)
+
+            self.typed_injury.setText(new_string)
+            self.typed_injury.setCursorPosition(check + 1)
 
     def enter_injury(self):
         if configuration_settings["allow_saving_csv"] == True:
@@ -703,12 +1201,858 @@ class Ui_guest_patient_window(QMainWindow):
         loadUi("guest_patient_info.ui", self)
         self.confirm_guest.clicked.connect(self.guest_info)
         
-        self.name_info = self.findChild(QTextEdit, "name_info")
-        self.section_info = self.findChild(QTextEdit, "section_info")
+        self.name_info = self.findChild(QLineEdit, "name_info")
+        self.section_info = self.findChild(QLineEdit, "section_info")
+        
+        app.focusChanged.connect(self.on_focusChaned)
+        self.name_info.setFocus()
+
+        # keyboard
+        self.number1_button = self.findChild(QPushButton, "number_1")
+        self.number1_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][0]))
+
+        self.number2_button = self.findChild(QPushButton, "number_2")
+        self.number2_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][1]))
+
+        self.number3_button = self.findChild(QPushButton, "number_3")
+        self.number3_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][2]))
+
+        self.number4_button = self.findChild(QPushButton, "number_4")
+        self.number4_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][3]))
+
+        self.number5_button = self.findChild(QPushButton, "number_5")
+        self.number5_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][4]))
+
+        self.number6_button = self.findChild(QPushButton, "number_6")
+        self.number6_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][5]))
+
+        self.number7_button = self.findChild(QPushButton, "number_7")
+        self.number7_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][6]))
+
+        self.number8_button = self.findChild(QPushButton, "number_8")
+        self.number8_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][7]))
+
+        self.number9_button = self.findChild(QPushButton, "number_9")
+        self.number9_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][8]))
+
+        self.number0_button = self.findChild(QPushButton, "number_0")
+        self.number0_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][9]))
+
+        self.a_button = self.findChild(QPushButton, "a_button")
+        self.a_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][0]))
+
+        self.b_button = self.findChild(QPushButton, "b_button")
+        self.b_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][4]))
+
+        self.c_button = self.findChild(QPushButton, "c_button")
+        self.c_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][2]))
+
+        self.d_button = self.findChild(QPushButton, "d_button")
+        self.d_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][2]))
+
+        self.e_button = self.findChild(QPushButton, "e_button")
+        self.e_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][2]))
+
+        self.f_button = self.findChild(QPushButton, "f_button")
+        self.f_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][3]))
+
+        self.g_button = self.findChild(QPushButton, "g_button")
+        self.g_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][4]))
+
+        self.h_button = self.findChild(QPushButton, "h_button")
+        self.h_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][5]))
+
+        self.i_button = self.findChild(QPushButton, "i_button")
+        self.i_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][7]))
+
+        self.j_button = self.findChild(QPushButton, "j_button")
+        self.j_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][6]))
+
+        self.k_button = self.findChild(QPushButton, "k_button")
+        self.k_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][7]))
+
+        self.l_button = self.findChild(QPushButton, "l_button")
+        self.l_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][8]))
+
+        self.m_button = self.findChild(QPushButton, "m_button")
+        self.m_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][6]))
+
+        self.n_button = self.findChild(QPushButton, "n_button")
+        self.n_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][5]))
+
+        self.o_button = self.findChild(QPushButton, "o_button")
+        self.o_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][8]))
+
+        self.p_button = self.findChild(QPushButton, "p_button")
+        self.p_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][9]))
+
+        self.q_button = self.findChild(QPushButton, "q_button")
+        self.q_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][0]))
+
+        self.r_button = self.findChild(QPushButton, "r_button")
+        self.r_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][3]))
+
+        self.s_button = self.findChild(QPushButton, "s_button")
+        self.s_button.clicked.connect(lambda: self.input_keyboard(alphabet[2][1]))
+
+        self.t_button = self.findChild(QPushButton, "t_button")
+        self.t_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][4]))
+
+        self.u_button = self.findChild(QPushButton, "u_button")
+        self.u_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][6]))
+
+        self.v_button = self.findChild(QPushButton, "v_button")
+        self.v_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][3]))
+
+        self.w_button = self.findChild(QPushButton, "w_button")
+        self.w_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][1]))
+
+        self.x_button = self.findChild(QPushButton, "x_button")
+        self.x_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][1]))
+        
+        self.y_button = self.findChild(QPushButton, "y_button")
+        self.y_button.clicked.connect(lambda: self.input_keyboard(alphabet[1][5]))
+
+        self.z_button = self.findChild(QPushButton, "z_button")
+        self.z_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][0]))
+
+        self.backspace_button = self.findChild(QPushButton, "backspace_button")
+        self.backspace_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][11]))
+
+        self.hypen_button = self.findChild(QPushButton, "hypen_button")
+        self.hypen_button.clicked.connect(lambda: self.input_keyboard(alphabet[0][10]))
+
+        self.spacebar_button = self.findChild(QPushButton, "spacebar_button")
+        self.spacebar_button.clicked.connect(lambda: self.input_keyboard(alphabet[3][7]))
+        
+    def on_focusChaned(self, widget):
+        self.lineEditFocused = widget
+        
+        if widget == self.name_info:
+            print("NAME IS FOCUSED")
+            name_section_focus.pop()
+            name_section_focus.append("name")
+            
+        elif widget == self.section_info:
+            name_section_focus.pop()
+            name_section_focus.append("section")
+
+    def input_keyboard(self, alphabet):
+        #if self.name_info.focus
+        if alphabet == "Backspace":
+            print("BACKSPACE")
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+            subtract_1 = check - 1
+            subtract_2 = check_cursor_section - 1
+            
+            if name_section_focus[0] == "name":
+                if len(input_name) >= 1:
+                    input_name.pop(subtract_1)
+                    new_string = "".join(input_name)
+                    self.name_info.setText(new_string)
+                    self.name_info.setCursorPosition(subtract_1)
+                    self.name_info.hasFocus()
+                else:
+                    pass
+                    
+            elif name_section_focus[0] == "section":
+                if len(input_section) >= 1:
+                    input_section.pop(subtract_2)
+                    new_string = "".join(input_section)
+                    self.section_info.setText(new_string)
+                    self.section_info.setCursorPosition(subtract_2)
+                    self.section_info.hasFocus()
+                else:
+                    pass
+
+        elif alphabet == " ":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "1":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "2":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "3":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "4":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "5":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "6":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "7":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "8":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "9":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "0":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+        
+        elif alphabet == "-":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "Q":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "W":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "E":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "R":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "T":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "Y":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "U":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "I":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "O":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "P":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "A":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "S":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "D":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "F":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "G":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "H":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "J":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "K":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "L":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "Z":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "X":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "C":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "V":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "B":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "N":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
+
+        elif alphabet == "M":
+            check = self.name_info.cursorPosition()
+            check_cursor_section = self.section_info.cursorPosition()
+                
+            if name_section_focus[0] == "name":
+                input_name.insert(check, alphabet)
+                new_string = "".join(input_name)
+                print("ASDASD" + new_string)
+                self.name_info.setText(new_string)
+                self.name_info.setCursorPosition(check + 1)
+                
+            elif name_section_focus[0] == "section":
+                input_section.insert(check_cursor_section, alphabet)
+                new_string = "".join(input_section)
+                print("ASDASD" + new_string)
+                self.section_info.setText(new_string)
+                self.section_info.setCursorPosition(check_cursor_section + 1)
         
     def guest_info(self):
-        session.insert(5, self.name_info.toPlainText())
-        session.insert(6, self.section_info.toPlainText())
+        session.insert(5, self.name_info.text())
+        session.insert(6, self.section_info.text())
         window.setCurrentIndex(8)
         
 class Ui_gender_patient_window(QMainWindow):
@@ -1560,8 +2904,6 @@ class Ui_step_3_laceration(QMainWindow):
         
 app = QApplication(sys.argv)
 window = QtWidgets.QStackedWidget()
-
-
 
 
 #############################  ADD CLASS HERE  /  ADDING THE WINDOWS IN THE WIDGETS FOR INDEXING  #############################
