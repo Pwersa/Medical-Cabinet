@@ -76,7 +76,7 @@ class Ui_scan_qr_code(QMainWindow):
                     regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
                     parsed_text = regexp.findall(data)
                     fullname = str(parsed_text[1]+" "+ parsed_text[2])
-                    #print(parsed_text)
+
                     # 1st QR CODE RESPONDER of COET
                     session.append(str(x))
                     # ID
@@ -233,41 +233,33 @@ class Ui_select_injury_type(QMainWindow):
     def injuries(self, injury_type_selection):
         if injury_type_selection == "Cut":
             injury_types_selected.append("CUT") 
-            print("Selected injury: " + injury_types_selected[-1])
             window.setCurrentIndex(1)
             
         elif injury_type_selection == "Poison":
             injury_types_selected.append("POISON") 
-            print("Selected injury: " + injury_types_selected[-1])
             window.setCurrentIndex(28)
         
         elif injury_type_selection == "Puncture":
             injury_types_selected.append("PUNCTURE") 
-            print("Selected injury: " + injury_types_selected[-1])
             window.setCurrentIndex(1)
         
         elif injury_type_selection == "Burn":
             injury_types_selected.append("BURN") 
-            print("Selected injury: " + injury_types_selected[-1])
             window.setCurrentIndex(1)
             
         elif injury_type_selection == "Electric":
             injury_types_selected.append("ELECTRIC") 
-            print("Selected injury: " + injury_types_selected[-1])
             window.setCurrentIndex(1)
             
         elif injury_type_selection == "Bruises":
             injury_types_selected.append("BRUISES") 
-            print("Selected injury: " + injury_types_selected[-1])
             window.setCurrentIndex(1)
             
         elif injury_type_selection == "Laceration":
             injury_types_selected.append("LACERATION") 
-            print("Selected injury: " + injury_types_selected[-1])
             window.setCurrentIndex(1)
             
         elif injury_type_selection == "Others":
-            print("Selected injury: OTHERS was selected.")
             window.setCurrentIndex(3)
             
 class Ui_select_body_part(QMainWindow):
@@ -288,62 +280,51 @@ class Ui_select_body_part(QMainWindow):
     def body_part_buttons(self, body_parts_list):
         if body_parts_list == "Neck":
             body_parts_selected.append("NECK") 
-            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
             
         elif body_parts_list == "Stomach":
             body_parts_selected.append("STOMACH")
-            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
                          
         elif body_parts_list == "Thigh":
             body_parts_selected.append("THIGH")
-            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
                         
         elif body_parts_list == "Crotch":
             body_parts_selected.append("CROTCH")
-            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
                 
         elif body_parts_list == "Legs":
             body_parts_selected.append("LEG")
-            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
             
         elif body_parts_list == "Knee":
             body_parts_selected.append("KNEE")
-            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
             
         elif body_parts_list == "Foot":
             body_parts_selected.append("FOOT")
-            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
             
         elif body_parts_list == "Head":
             body_parts_selected.append("HEAD")
-            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
             
         elif body_parts_list == "Arm":
-            print("ARM")
             body_parts_selected.append("ARM")
-            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
             
         elif body_parts_list == "Hand":
             body_parts_selected.append("HAND")
-            print("Selected body part was: " + body_parts_selected[-1])
             window.setCurrentIndex(1)
             self.injuries()
     
@@ -373,46 +354,37 @@ class Ui_select_body_part(QMainWindow):
             self.cabinet_notif.show()
 
         if injury_types_selected[-1] == "CUT":
-            print("Previous injury was: " + injury_types_selected[-1])
             window.setCurrentIndex(28)
             self.responder_csv_file()
             
         elif injury_types_selected[-1] == "POISON_CONTACT":
-            print("Previous injury was: " + injury_types_selected[-1])
             window.setCurrentIndex(27)
             self.responder_csv_file()
         
         elif injury_types_selected[-1] == "PUNCTURE":
-            print("Previous injury was: " + injury_types_selected[-1])
             window.setCurrentIndex(28)
             self.responder_csv_file()
         
         elif injury_types_selected[-1] == "BURN":
-            print("Previous injury was: " + injury_types_selected[-1])
             window.setCurrentIndex(28)
             self.responder_csv_file()
         
         elif injury_types_selected[-1] == "ELECTRIC":
-            print("Previous injury was: " + injury_types_selected[-1])
             window.setCurrentIndex(28)
             self.responder_csv_file()
             
         elif injury_types_selected[-1] == "BRUISES":
-            print("Previous injury was: " + injury_types_selected[-1])
             window.setCurrentIndex(28)
             self.responder_csv_file()
             
         elif injury_types_selected[-1] == "LACERATION":
-            print("Previous injury was: " + injury_types_selected[-1])
             window.setCurrentIndex(28)
             self.responder_csv_file()
             
         elif injury_type_selection == "Others":
-            print("Previous injury was: Others was selected.")
             window.setCurrentIndex(3)
             
         elif injury_type_selection == "Go back to window":
-            print("GO BACK A WINDOW")
             window.setCurrentIndex(window.currentIndex()-1) 
             
     def responder_csv_file(self):
@@ -459,20 +431,14 @@ class Ui_select_body_part(QMainWindow):
     def send_to_companion_responder(self):
         try:
             SEPARATOR = "<SEPARATOR>"
-            BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
-
-            # the ip address or hostname of the server, the receiver
-            print("ENTER HOST HERE")
+            BUFFER_SIZE = 4096
+            
             host = configuration_settings["companion_app_IP"]
-            # the port, let's use 5001
-            print("ENTER PORT HERE")
             port = configuration_settings["port_1st"]
-            # the name of file we want to send, make sure it exists
+            
             filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
-            # get the file size
             filesize = os.path.getsize(filename)
 
-            # create the client socket
             s = socket.socket()
 
             print(f"[+] Connecting to {host}:{port}")
@@ -480,7 +446,6 @@ class Ui_select_body_part(QMainWindow):
             s.connect((host, port))
             print("[+] Connected.")
 
-            # send the filename and filesize
             s.send(f"{filename}{SEPARATOR}{filesize}".encode())
 
             # start sending the file
@@ -668,28 +633,23 @@ class Ui_enter_injury(QMainWindow):
 
     def input_keyboard(self, alphabet):
         if alphabet == "Backspace":
-            print("BACKSPACE")
             check = self.typed_injury.cursorPosition()
             subtract = check - 1
         
             if len(input_text) >= 1:
                 input_text.pop(subtract)
                 new_string = "".join(input_text)
-                print(new_string)
-                print(self.typed_injury.cursorPosition())
                 self.typed_injury.setText(new_string)
                 self.typed_injury.setCursorPosition(subtract)
                 self.typed_injury.hasFocus()
 
             else:
-                print("NO MORE ITEMS")
                 pass
 
         elif alphabet == " ":
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -698,7 +658,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -707,7 +666,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -716,7 +674,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -725,7 +682,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -734,7 +690,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -743,7 +698,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -752,7 +706,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -761,7 +714,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -770,7 +722,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -779,7 +730,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -788,7 +738,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -797,7 +746,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -806,7 +754,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -815,7 +762,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -824,7 +770,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -833,7 +778,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -842,7 +786,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -851,7 +794,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -860,7 +802,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -869,7 +810,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -878,7 +818,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -887,7 +826,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -896,7 +834,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -905,7 +842,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -914,7 +850,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -923,7 +858,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -932,7 +866,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -941,7 +874,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -950,7 +882,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -959,7 +890,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -968,7 +898,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -977,7 +906,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -986,7 +914,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -995,7 +922,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -1004,7 +930,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -1013,7 +938,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -1022,7 +946,6 @@ class Ui_enter_injury(QMainWindow):
             check = self.typed_injury.cursorPosition()
             input_text.insert(check, alphabet)
             new_string = "".join(input_text)
-            print("ASDASD" + new_string)
 
             self.typed_injury.setText(new_string)
             self.typed_injury.setCursorPosition(check + 1)
@@ -1041,7 +964,9 @@ class Ui_enter_injury(QMainWindow):
                 writer = csv.writer(f)
                 writer.writerow(session)
             
+            input_text.clear()
             window.setCurrentIndex(4)
+            
             
         else:
             print("Disabled saving typed data to csv file")
@@ -1063,20 +988,14 @@ class Ui_enter_injury(QMainWindow):
     def send_injury(self):
         try:
             SEPARATOR = "<SEPARATOR>"
-            BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
+            BUFFER_SIZE = 4096
 
-            # the ip address or hostname of the server, the receiver
-            print("ENTER HOST HERE")
             host = configuration_settings["companion_app_IP"]
-            # the port, let's use 5001
-            print("ENTER PORT HERE")
             port = configuration_settings["port_1st"]
-            # the name of file we want to send, make sure it exists
+
             filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
-            # get the file size
             filesize = os.path.getsize(filename)
 
-            # create the client socket
             s = socket.socket()
 
             print(f"[+] Connecting to {host}:{port}")
@@ -1106,7 +1025,6 @@ class Ui_enter_injury(QMainWindow):
 
             # close the socket
             s.close()
-            dead = True
             
         except:
             self.send_injury()
@@ -1129,39 +1047,30 @@ class Ui_confirmation(QMainWindow):
 
     def no_confirmation(self):
         if injury_types_selected[-1] == "CUT":
-            print("CUT IS LAST")
             window.setCurrentIndex(28)
 
         elif injury_types_selected[-1] == "POISON_INHALATION":
-            print("POISON IS LAST")
             window.setCurrentIndex(26)
             
         elif injury_types_selected[-1] == "POISON_INGESTION":
-            print("POISON IS LAST")
             window.setCurrentIndex(23)
             
         elif injury_types_selected[-1] == "POISON_CONTACT":
-            print("POISON IS LAST")
             window.setCurrentIndex(27)
             
         elif injury_types_selected[-1] == "PUNCTURE":
-            print("PUNCTURE IS LAST")
             window.setCurrentIndex(28)
             
         elif injury_types_selected[-1] == "ELECTRIC":
-            print("ELECTRIC IS LAST")
             window.setCurrentIndex(28)
             
         elif injury_types_selected[-1] == "BRUISES":
-            print("BRUISES IS LAST")
             window.setCurrentIndex(28)
             
         elif injury_types_selected[-1] == "LACERATION":
-            print("BRUISES IS LAST")
             window.setCurrentIndex(28)
             
         elif injury_types_selected[-1] == "BURN":
-            print("BURN IS LAST")
             window.setCurrentIndex(28)
         
     def yes_confirmation(self):
@@ -1334,13 +1243,13 @@ class Ui_guest_patient_window(QMainWindow):
             name_section_focus.append("name")
             
         elif widget == self.section_info:
+            print("SECTION IS FOCUSED")
             name_section_focus.pop()
             name_section_focus.append("section")
 
     def input_keyboard(self, alphabet):
         #if self.name_info.focus
         if alphabet == "Backspace":
-            print("BACKSPACE")
             check = self.name_info.cursorPosition()
             check_cursor_section = self.section_info.cursorPosition()
             subtract_1 = check - 1
@@ -1373,14 +1282,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1391,14 +1300,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1409,14 +1318,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1427,14 +1336,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1445,14 +1354,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1463,14 +1372,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1481,14 +1390,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1499,14 +1408,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1517,14 +1426,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1535,14 +1444,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1553,14 +1462,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
         
@@ -1571,14 +1480,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1589,14 +1498,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1607,14 +1516,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1625,14 +1534,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1643,14 +1552,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1661,14 +1570,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1679,14 +1588,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1697,14 +1606,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1715,14 +1624,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1733,14 +1642,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1751,14 +1660,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1769,14 +1678,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1787,14 +1696,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1805,14 +1714,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1823,14 +1732,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1841,14 +1750,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1859,14 +1768,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1877,14 +1786,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1895,14 +1804,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1913,14 +1822,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1931,14 +1840,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1949,14 +1858,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1967,14 +1876,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -1985,14 +1894,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -2003,14 +1912,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -2021,14 +1930,14 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
 
@@ -2039,20 +1948,22 @@ class Ui_guest_patient_window(QMainWindow):
             if name_section_focus[0] == "name":
                 input_name.insert(check, alphabet)
                 new_string = "".join(input_name)
-                print("ASDASD" + new_string)
+
                 self.name_info.setText(new_string)
                 self.name_info.setCursorPosition(check + 1)
                 
             elif name_section_focus[0] == "section":
                 input_section.insert(check_cursor_section, alphabet)
                 new_string = "".join(input_section)
-                print("ASDASD" + new_string)
+
                 self.section_info.setText(new_string)
                 self.section_info.setCursorPosition(check_cursor_section + 1)
         
     def guest_info(self):
         session.insert(5, self.name_info.text())
         session.insert(6, self.section_info.text())
+        input_name.clear()
+        input_section.clear()
         window.setCurrentIndex(8)
         
 class Ui_gender_patient_window(QMainWindow):
@@ -2089,25 +2000,13 @@ class Ui_gender_patient_window(QMainWindow):
         self.respond = session[2] + " - " + session[3]
         self.patient = session[5] + " - " + session[6]
         self.date = session[0]
-
-        #self.ui.body_injured.setText(', ' .join(body_parts_selected))
-        #self.ui.type_of_injury.setText(', ' .join(injury_types_selected))
-        
-        # DEBUG DISPLAY ITEMS
-        #self.respond = "JR ANGELO IGNACIO INDAYA  -  COET-4A"
-        #self.patient = "ROGIE PRINZ DURAN  -  BET-COET-4A"
-        #self.date = "1234-44-44"
-        #self.body = ["HAND", "HAND"]
-        #self.injury = ["CUT", "PUNCTURE"]
         
         self.ui.qr_responder_name.setText(f"<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600;\">{self.respond}</span></p></body><html>")
         self.ui.qr_patient_name.setText(f"<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600;\">{self.patient}</span></p></body><html>")
         self.ui.date_session.setText(f"<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{self.date}</span></p></body></html>")
         self.ui.body_injured.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{}</span></p></body></html>".format(", ".join(body_parts_selected)))
         self.ui.type_of_injury.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{}</span></p></body></html>".format(", ".join(injury_types_selected[1:])))
-        
-        print("SESSION:")
-        print(session)
+
         data_qr.clear()
         
         body_parts_selected.clear()
@@ -2140,7 +2039,7 @@ class Ui_gender_patient_window(QMainWindow):
         else:
             print("RESPONDER WAS ALREADY NOTIFIED")
             check_connection_companion.clear()
-            #pass
+            pass
             
         if configuration_settings["connection_mode"] == True:
             self.session_threading()
@@ -2154,19 +2053,14 @@ class Ui_gender_patient_window(QMainWindow):
     def send_to_companion(self):
         try:
             SEPARATOR = "<SEPARATOR>"
-            BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
+            BUFFER_SIZE = 4096
 
-            # the ip address or hostname of the server, the receiver
-            print("ENTER HOST HERE")
             host = configuration_settings["companion_app_IP"]
-            # the port, let's use 5001
-            print("ENTER PORT HERE")
             port = configuration_settings["port_2nd"]
-            # the name of file we want to send, make sure it exists
+
             filename = "cabinet-history/session/recorded_session.csv"
             filesize = os.path.getsize(filename)
-
-            # create the client socket
+            
             s = socket.socket()
 
             print(f"[+] Connecting to {host}:{port}")
@@ -2209,20 +2103,14 @@ class Ui_gender_patient_window(QMainWindow):
     def send_to_companion_responder(self):
         try:
             SEPARATOR = "<SEPARATOR>"
-            BUFFER_SIZE = 4096 # send 4096 bytes each time stepr
+            BUFFER_SIZE = 4096
 
-            # the ip address or hostname of the server, the receiver
-            print("ENTER HOST HERE")
             host = configuration_settings["companion_app_IP"]
-            # the port, let's use 5001
-            print("ENTER PORT HERE")
             port = configuration_settings["port_1st"]
-            # the name of file we want to send, make sure it exists
-            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
-            # get the file size
-            filesize = os.path.getsize(filename)
 
-            # create the client socket
+            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+            filesize = os.path.getsize(filename)
+            
             s = socket.socket()
 
             print(f"[+] Connecting to {host}:{port}")
@@ -2269,44 +2157,33 @@ class Ui_before_procedures(QMainWindow):
         
     def injuries(self):
         if injury_types_selected[-1] == "CUT":
-            print(injury_types_selected[-1])
             window.setCurrentIndex(9)
         
         elif injury_types_selected[-1] == "PUNCTURE":
-            print(injury_types_selected[-1])
             window.setCurrentIndex(13)
 
         elif injury_types_selected[-1] == "BURN":
-            print(injury_types_selected[-1])
             window.setCurrentIndex(18)
             
         elif "POISON" in injury_types_selected: 
-            print("POISON IN LIST")
-            print(injury_types_selected[-1])
             window.setCurrentIndex(22)
             
         elif injury_types_selected[-1] == "POISON_INHALATION":
-            print("POISON IS LAST")
             window.setCurrentIndex(26)
             
         elif injury_types_selected[-1] == "POISON_INGESTION":
-            print("POISON IS LAST")
             window.setCurrentIndex(23)
             
         elif injury_types_selected[-1] == "POISON_CONTACT":
-            print("POISON IS LAST")
             window.setCurrentIndex(27)
                 
         elif injury_types_selected[-1] == "ELECTRIC":
-            print(injury_types_selected[-1])
             window.setCurrentIndex(30)
             
         elif injury_types_selected[-1] == "BRUISES":
-            print(injury_types_selected[-1])
             window.setCurrentIndex(34)
             
         elif injury_types_selected[-1] == "LACERATION":
-            print(injury_types_selected[-1])
             window.setCurrentIndex(35)
             
     def go_back(self):
@@ -2647,7 +2524,6 @@ class Ui_poison_types(QMainWindow):
     def inhalation_steps(self):
         body_parts_selected.append("NOSE")
         injury_types_selected.append("POISON_INHALATION")
-        print("NOSE")
         window.setCurrentIndex(26)
     
     def ingestion_steps(self):
