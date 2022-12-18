@@ -224,6 +224,7 @@ class Ui_scan_qr_patient(QMainWindow):
             # COURSE
             session.append("COET")
             window.setCurrentIndex(0)
+            
         
 class Ui_select_injury_type(QMainWindow):
     def __init__(self):
@@ -373,7 +374,7 @@ class Ui_select_body_part(QMainWindow):
             window.setCurrentIndex(28)
             self.responder_csv_file()
             
-        elif injury_types_selected[-1] == "POISON_CONTACT":
+        elif injury_types_selected[-1] == "POISON":
             window.setCurrentIndex(27)
             self.responder_csv_file()
         
@@ -1682,6 +1683,8 @@ class Ui_gender_patient_window(QMainWindow):
         self.ui = Ui_record_session()
         self.ui.setupUi(self.window_record_session)
         self.window_record_session.show()
+        
+        session.insert(6, "GUEST PATIENT")
 
         self.ui.qr_responder_name.setText(session[2] + " - " + session[3])
         self.ui.qr_patient_name.setText(session[5] + " - " + session[6])
@@ -1690,13 +1693,12 @@ class Ui_gender_patient_window(QMainWindow):
         self.respond = session[2] + " - " + session[3]
         self.patient = session[5] + " - " + session[6]
         self.date = session[0]
-        
-        injury_types_selected.remove("Placeholder")
+
         self.ui.qr_responder_name.setText(f"<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600;\">{self.respond}</span></p></body><html>")
         self.ui.qr_patient_name.setText(f"<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600;\">{self.patient}</span></p></body><html>")
         self.ui.date_session.setText(f"<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{self.date}</span></p></body></html>")
         self.ui.body_injured.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{}</span></p></body></html>".format(", ".join(body_parts_selected)))
-        self.ui.type_of_injury.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{}</span></p></body></html>".format(", ".join(injury_types_selected)))
+        self.ui.type_of_injury.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{}</span></p></body></html>".format(", ".join(injury_types_selected[1:])))
 
         data_qr.clear()
         
@@ -1945,7 +1947,9 @@ class Ui_before_procedures(QMainWindow):
             
     def go_back_injuries(self):
         injury_types_selected.pop()
+        body_parts_selected.pop()
         print(injury_types_selected)
+        print(body_parts_selected)
         window.setCurrentIndex(2)
         
 
@@ -2306,8 +2310,6 @@ class Ui_poison_types(QMainWindow):
             self.cabinet_notif.show()
             
         body_parts_selected.append("NOSE")
-        injury_types_selected.remove("POISON")
-        injury_types_selected.append("POISON_INHALATION")
         window.setCurrentIndex(26)
         self.save_to_csv()
         
@@ -2451,10 +2453,7 @@ class Ui_poison_types(QMainWindow):
             self.cabinet_notif.show()
             
         body_parts_selected.append("MOUTH")
-        injury_types_selected.remove("POISON")
-        injury_types_selected.append("POISON_INGESTION")
         window.setCurrentIndex(23)
-        
         self.save_to_csv()
         
     def save_to_csv(self):
@@ -2564,8 +2563,6 @@ class Ui_poison_types(QMainWindow):
             root.mainloop()
     
     def contact_steps(self):
-        injury_types_selected.remove("POISON")
-        injury_types_selected.append("POISON_CONTACT")
         window.setCurrentIndex(1)
     
     def go_back(self):
@@ -2583,6 +2580,7 @@ class Ui_step_1_poison(QMainWindow):
         window.setCurrentIndex(24)
     
     def go_back(self):
+        body_parts_selected.pop()
         window.setCurrentIndex(window.currentIndex()-1)
         
 class Ui_step_2_poison(QMainWindow):
@@ -2625,6 +2623,7 @@ class Ui_step_poison_inhalation(QMainWindow):
         window.setCurrentIndex(48)
     
     def go_back(self):
+        body_parts_selected.pop()
         window.setCurrentIndex(22)
         
 class Ui_step_poison_contact(QMainWindow):
@@ -2644,8 +2643,8 @@ class Ui_step_poison_contact(QMainWindow):
         window.setCurrentIndex(48)
     
     def go_back(self):
+        body_parts_selected.pop()
         window.setCurrentIndex(22)
-
 
 
 ######################  ELECTRIC SHOCK PROCEDURES STEPS (4 windows TOTAL)  ###################### 
@@ -2801,7 +2800,7 @@ class Ui_bruises_confirmation(QMainWindow):
         self.go_back.clicked.connect(self.go_back_button)
         
     def next_step(self):
-        window.setCurrentIndex(28)
+        window.setCurrentIndex(1)
             
     def go_back_button(self):
         injury_types_selected.pop()
@@ -2816,7 +2815,7 @@ class Ui_burn_confirmation(QMainWindow):
         self.go_back.clicked.connect(self.go_back_button)
         
     def next_step(self):
-        window.setCurrentIndex(28)
+        window.setCurrentIndex(1)
             
     def go_back_button(self):
         injury_types_selected.pop()
@@ -2831,7 +2830,7 @@ class Ui_cut_confirmation(QMainWindow):
         self.go_back.clicked.connect(self.go_back_button)
         
     def next_step(self):
-        window.setCurrentIndex(28)
+        window.setCurrentIndex(1)
             
     def go_back_button(self):
         injury_types_selected.pop()
@@ -2861,7 +2860,7 @@ class Ui_laceration_confirmation(QMainWindow):
         self.go_back.clicked.connect(self.go_back_button)
         
     def next_step(self):
-        window.setCurrentIndex(28)
+        window.setCurrentIndex(1)
             
     def go_back_button(self):
         injury_types_selected.pop()
@@ -2876,7 +2875,7 @@ class Ui_poison_confirmation(QMainWindow):
         self.go_back.clicked.connect(self.go_back_button)
         
     def next_step(self):
-        window.setCurrentIndex(28)
+        window.setCurrentIndex(22)
             
     def go_back_button(self):
         injury_types_selected.pop()
@@ -2891,7 +2890,7 @@ class Ui_puncture_confirmation(QMainWindow):
         self.go_back.clicked.connect(self.go_back_button)
         
     def next_step(self):
-        window.setCurrentIndex(28)
+        window.setCurrentIndex(1)
             
     def go_back_button(self):
         injury_types_selected.pop()
