@@ -30,7 +30,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>10</y>
+      <y>20</y>
       <width>1021</width>
       <height>261</height>
      </rect>
@@ -44,9 +44,7 @@
      </font>
     </property>
     <property name="text">
-     <string>New injury again 
- or 
- finished?</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;New injury again &lt;/p&gt;&lt;p align=&quot;center&quot;&gt;or &lt;/p&gt;&lt;p align=&quot;center&quot;&gt;finished?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>

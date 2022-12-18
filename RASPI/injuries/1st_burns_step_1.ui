@@ -54,25 +54,27 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>310</y>
+      <y>290</y>
       <width>981</width>
       <height>161</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>18</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;Hold &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;BURNED&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; skin under cool running &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;WATER&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; until the &lt;br/&gt;pain subsides.&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; use ice or ice water.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;Hold &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;BURNED&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt; skin under cool running &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;WATER&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;until the pain subsides.&lt;/span&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt; use ice or ice water.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label">
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>71</y>
+      <y>60</y>
       <width>360</width>
       <height>240</height>
      </rect>
@@ -114,7 +116,7 @@
     <property name="geometry">
      <rect>
       <x>780</x>
-      <y>450</y>
+      <y>440</y>
       <width>220</width>
       <height>120</height>
      </rect>
@@ -134,6 +136,9 @@
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="cursor">
@@ -163,7 +168,7 @@ border-color: black;
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>450</y>
+      <y>440</y>
       <width>220</width>
       <height>120</height>
      </rect>
@@ -183,6 +188,9 @@ border-color: black;
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">

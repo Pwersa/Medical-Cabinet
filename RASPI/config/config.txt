@@ -21,11 +21,11 @@
 # CONFIG MENU
 {
   'connection_mode': False,
-  'companion_app_IP': "192.168.254.103", 
+  'companion_app_IP': "172.16.18.53", 
   'port_1st': 4899, 
   'port_2nd': 4799, 
   'email_connection': False,
-  'email': "example.email@email",
+  'email': "rogieprinz.duran@gsfe.tupcavite.edu.ph",
   'enable_camera': False,
   'enable_solenoid': False,
   'allow_saving_csv': False,

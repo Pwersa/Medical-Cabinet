@@ -26,191 +26,22 @@
    <string>Step 1 Procedure</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="title_step">
-    <property name="geometry">
-     <rect>
-      <x>5</x>
-      <y>0</y>
-      <width>1011</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Unispace</family>
-      <pointsize>18</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;STEP 1: Separate the Person &lt;br/&gt;from the Electric Source&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
    <widget class="QLabel" name="text_steps">
     <property name="geometry">
      <rect>
-      <x>16</x>
-      <y>330</y>
-      <width>991</width>
-      <height>201</height>
+      <x>20</x>
+      <y>310</y>
+      <width>981</width>
+      <height>121</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <pointsize>14</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;UNPLUG&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt; the tool that is causing the &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;SHOCK&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;, if the plug is &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;UNDAMAGED&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;, shut off the power via the&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;CIRCUIT BREAKER&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;,&lt;br/&gt;fuse box or outside switch&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="gif_player_label">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>90</y>
-      <width>360</width>
-      <height>240</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>360</width>
-      <height>240</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>360</width>
-      <height>240</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <family>Unispace</family>
-      <pointsize>16</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
-    </property>
-    <property name="lineWidth">
-     <number>1</number>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="next_step_button">
-    <property name="geometry">
-     <rect>
-      <x>770</x>
-      <y>440</y>
-      <width>220</width>
-      <height>120</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>220</width>
-      <height>120</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>220</width>
-      <height>120</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>18</pointsize>
-      <weight>75</weight>
-      <italic>true</italic>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton:hover:!pressed
-{
-  background-color: rgb(195,30,60);
-}
-
-QPushButton
-{
-  background-color: white;
-color: black;
-border-style: outset;
-border-width: 3px;
-border-radius:10px;
-border-color: black;
-}</string>
-    </property>
-    <property name="text">
-     <string>NEXT STEP</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="go_back_button">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>440</y>
-      <width>220</width>
-      <height>120</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>220</width>
-      <height>120</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>220</width>
-      <height>120</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>18</pointsize>
-      <weight>75</weight>
-      <italic>true</italic>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton:hover:!pressed
-{
-  background-color: rgb(195,30,60);
-}
-
-QPushButton
-{
-  background-color: white;
-color: black;
-border-style: outset;
-border-width: 3px;
-border-radius:10px;
-border-color: black;
-}</string>
-    </property>
-    <property name="text">
-     <string>GO BACK</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -241,6 +72,178 @@ border-color: black;
      <pixmap>../pictures/program_pictures/main_wallpaper.png</pixmap>
     </property>
    </widget>
+   <widget class="QPushButton" name="go_back">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>430</y>
+      <width>260</width>
+      <height>120</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>260</width>
+      <height>120</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>260</width>
+      <height>120</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>NO, let me
+choose again</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="sure_button">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>430</y>
+      <width>260</width>
+      <height>120</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>260</width>
+      <height>120</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>260</width>
+      <height>120</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>YES, I'm
+sure</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="gif_player_label_2">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>190</y>
+      <width>360</width>
+      <height>240</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>360</width>
+      <height>240</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>360</width>
+      <height>240</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../pictures/body_parts/cut_display.png</pixmap>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TITLE">
+    <property name="geometry">
+     <rect>
+      <x>55</x>
+      <y>20</y>
+      <width>911</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>72</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:48pt;&quot;&gt;Are you sure that is&lt;br/&gt;the &lt;/span&gt;&lt;span style=&quot; font-size:48pt; text-decoration: underline;&quot;&gt;INJURY&lt;/span&gt;&lt;span style=&quot; font-size:48pt;&quot;&gt; type?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
@@ -266,16 +269,41 @@ border-color: black;
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../pictures/program_pictures/main_wallpaper.png</pixmap>
+     <pixmap>pictures/program_pictures/main_wallpaper.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="title_step_2">
+    <property name="geometry">
+     <rect>
+      <x>334</x>
+      <y>430</y>
+      <width>351</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>18</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;CUT&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <zorder>label_2</zorder>
    <zorder>label</zorder>
-   <zorder>title_step</zorder>
    <zorder>text_steps</zorder>
-   <zorder>gif_player_label</zorder>
-   <zorder>next_step_button</zorder>
-   <zorder>go_back_button</zorder>
+   <zorder>go_back</zorder>
+   <zorder>sure_button</zorder>
+   <zorder>gif_player_label_2</zorder>
+   <zorder>TITLE</zorder>
+   <zorder>title_step_2</zorder>
   </widget>
  </widget>
  <resources/>

@@ -65,7 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;While waiting for the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;CLINIC STAFF, &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; give the casualty anything to eat or drink &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;make them &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;VOMIT&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;, because the &lt;br/&gt;toxic product will &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;BURN&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt; the lining of the &lt;br/&gt;mouth and esophagus a &lt;br/&gt;second time on the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; text-decoration: underline; color:#000000;&quot;&gt;WAY UP&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:36pt; color:#000000;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;While waiting for the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;CLINIC STAFF, &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; give the casualty anything to eat or drink &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;make them &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;VOMIT&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;, because the &lt;br/&gt;toxic product will &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;BURN&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; the lining of the &lt;br/&gt;mouth and esophagus a &lt;br/&gt;second time on the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;WAY UP&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="next_step_button_3">
@@ -92,6 +92,9 @@
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="cursor">
@@ -141,6 +144,9 @@ border-color: black;
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">

@@ -54,7 +54,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>310</y>
+      <y>312</y>
       <width>981</width>
       <height>121</height>
      </rect>
@@ -65,7 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;Apply gentle &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;PRESSURE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt; with a clean &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;BANDAGE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt; or &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;CLOTH&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;.&lt;br/&gt;Keep that part of your body &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;ELEVATED&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt; above the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;HEART&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;, if possible.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;Apply gentle &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;PRESSURE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt; with a clean &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;BANDAGE&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;or &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;CLOTH&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;. Keep that part of your body &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;ELEVATED&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;above the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;HEART&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;, if possible.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label">
@@ -134,6 +134,9 @@
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="cursor">
@@ -183,6 +186,9 @@ border-color: black;
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">

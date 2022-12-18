@@ -62,10 +62,12 @@
     <property name="font">
      <font>
       <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:26pt; text-decoration: underline;&quot;&gt;WAIT&lt;/span&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt; for &lt;/span&gt;&lt;span style=&quot; font-size:26pt; text-decoration: underline;&quot;&gt;MEDICAL PERSONNEL&lt;/span&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:26pt; text-decoration: underline;&quot;&gt;LOOK&lt;/span&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt; for entry and exit of &lt;/span&gt;&lt;span style=&quot; font-size:26pt; text-decoration: underline;&quot;&gt;WOUNDS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;WAIT&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt; for &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;MEDICAL PERSONNEL&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;LOOK&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt; for entry and exit of &lt;/span&gt;&lt;span style=&quot; font-size:28pt; text-decoration: underline;&quot;&gt;WOUNDS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label">
@@ -134,6 +136,9 @@
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="cursor">
@@ -183,6 +188,9 @@ border-color: black;
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">

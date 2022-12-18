@@ -1,0 +1,4 @@
+echo 10s
+sleep 10
+echo running at boot
+sudo python3 /home/pi/Desktop/raspi/RASPI/CABINET_boot.py

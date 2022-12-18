@@ -61,21 +61,21 @@
     </property>
     <property name="font">
      <font>
-      <family>Unispace</family>
+      <family>PibotoLt</family>
       <pointsize>14</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:48pt; text-decoration: underline;&quot;&gt;Immediately&lt;/span&gt;&lt;span style=&quot; font-size:48pt;&quot;&gt; call &lt;br/&gt;your local clinic.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:72pt; text-decoration: underline;&quot;&gt;Immediately&lt;/span&gt;&lt;span style=&quot; font-size:72pt;&quot;&gt; call &lt;br/&gt;your local clinic.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="next_step_button">
     <property name="geometry">
      <rect>
       <x>745</x>
-      <y>420</y>
+      <y>410</y>
       <width>250</width>
       <height>140</height>
      </rect>
@@ -95,6 +95,9 @@
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="cursor">
@@ -127,7 +130,7 @@ border-color: black;
     <property name="geometry">
      <rect>
       <x>28</x>
-      <y>420</y>
+      <y>410</y>
       <width>250</width>
       <height>140</height>
      </rect>
@@ -147,6 +150,9 @@ border-color: black;
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">

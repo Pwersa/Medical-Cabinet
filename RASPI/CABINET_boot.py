@@ -1,6 +1,6 @@
 #! /usr/bin/env python
-import sys, cv2, datetime, time, re, csv, socket, os, threading, ast, smtplib, tqdm
-import http.client
+import sys, cv2, datetime, time, re, csv, socket, os, threading, ast, smtplib
+#import tqdm
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QSpinBox, QMessageBox, QScrollArea, QScroller, \
                                 QScrollerProperties, QRadioButton, QLineEdit, QPushButton, QWidget
 from PyQt5 import QtWidgets
@@ -10,10 +10,10 @@ from record_session import Ui_record_session
 from cabinet_notif import Ui_cabinet_notif
 from tkinter import *
 from email.mime.text import MIMEText
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 # OPEN CONFIGURATION FILES AS SOON PROGRAM RUNS (IP ADDRESS, PORT, EMAIL, etc.)
-with open("config/config.txt", "r") as data:
+with open("/home/pi/Desktop/raspi/RASPI/config/config.txt", "r") as data:
     configuration_settings = ast.literal_eval(data.read())
 
 # DATE AND TIME, RESPONDER ID, NAME, COURSE, PATIENT ID, NAME, COURSE, GENDER, INJURY TYPE (used are also for csv file)
@@ -49,10 +49,10 @@ check_connection_companion = [0]
 responder_notif = [0]
 
 # Always power off the solenoid
-#GPIO.setwarnings(False)
-#GPIO.setmode(GPIO.BCM)
-#GPIO.setup(18, GPIO.OUT)
-#GPIO.output(18, 1)
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18, GPIO.OUT)
+GPIO.output(18, 1)
 
 class Ui_scan_qr_code(QMainWindow):
     def __init__(self):
@@ -148,9 +148,6 @@ class Ui_scan_qr_patient(QMainWindow):
     def qr_camera(self):
         responder_notif.clear()
         responder_notif.append(0)
-        body_parts_selected.clear()
-        injury_types_selected.clear()
-        injury_types_selected.insert(0, "Placeholder")
         # Check config file for CAMERA
         if configuration_settings["enable_camera"] == True:
             print("CAMERA IS CONNECTED")
@@ -223,7 +220,7 @@ class Ui_scan_qr_patient(QMainWindow):
             session.append("JR ANGELO")
             # COURSE
             session.append("COET")
-            window.setCurrentIndex(0)
+            window.setCurrentIndex(2)
         
 class Ui_select_injury_type(QMainWindow):
     def __init__(self):
@@ -247,33 +244,33 @@ class Ui_select_injury_type(QMainWindow):
         self.scroll.setScrollerProperties(self.props)
         
     def injuries(self, injury_type_selection):
-        if injury_type_selection == "Bruises":
-            injury_types_selected.append("BRUISES") 
-            window.setCurrentIndex(41)
-            
-        elif injury_type_selection == "Burn":
-            injury_types_selected.append("BURN") 
-            window.setCurrentIndex(42)
-        
-        elif injury_type_selection == "Cut":
+        if injury_type_selection == "Cut":
             injury_types_selected.append("CUT") 
-            window.setCurrentIndex(43)
-        
-        elif injury_type_selection == "Electric":
-            injury_types_selected.append("ELECTRIC") 
-            window.setCurrentIndex(44)
-            
-        elif injury_type_selection == "Laceration":
-            injury_types_selected.append("LACERATION") 
-            window.setCurrentIndex(45)
+            window.setCurrentIndex(41)
             
         elif injury_type_selection == "Poison":
             injury_types_selected.append("POISON") 
-            window.setCurrentIndex(46)
-            
+            window.setCurrentIndex(41)
+        
         elif injury_type_selection == "Puncture":
             injury_types_selected.append("PUNCTURE") 
-            window.setCurrentIndex(47)
+            window.setCurrentIndex(41)
+        
+        elif injury_type_selection == "Burn":
+            injury_types_selected.append("BURN") 
+            window.setCurrentIndex(41)
+            
+        elif injury_type_selection == "Electric":
+            injury_types_selected.append("ELECTRIC") 
+            window.setCurrentIndex(41)
+            
+        elif injury_type_selection == "Bruises":
+            injury_types_selected.append("BRUISES") 
+            window.setCurrentIndex(41)
+            
+        elif injury_type_selection == "Laceration":
+            injury_types_selected.append("LACERATION") 
+            window.setCurrentIndex(41)
             
         elif injury_type_selection == "Others":
             window.setCurrentIndex(3)
@@ -454,14 +451,8 @@ class Ui_select_body_part(QMainWindow):
         x = threading.Thread(target=self.send_to_companion_responder)
         x.start()
         
-    def send_to_companion_responder(self):                           
+    def send_to_companion_responder(self):
         try:
-            print("TRYING TO CHECK INTERNET CONNECTION") 
-            conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
-            conn.close()
-            time.sleep(5)
-            
-            print("TRYING TO SEND DATA")
             SEPARATOR = "<SEPARATOR>"
             BUFFER_SIZE = 4096
             
@@ -499,11 +490,10 @@ class Ui_select_body_part(QMainWindow):
 
             # close the socket
             s.close()
-            print("SEND DATA SUCCESSS")
-
+            return True
+            
         except:
-            print("SEND DATA FAILED")
-            print("NO INTERNET CONNECTION")
+            print("HJGASDFJASFUASGUQYWTEUAJHFG")
             check_connection_companion.clear()
             check_connection_companion.append(1)
             #window.setCurrentIndex(41)
@@ -533,7 +523,6 @@ class Ui_select_body_part(QMainWindow):
             root.title("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
             root.configure(bg='gray')
             root.mainloop()
-            
             return False
         
 class Ui_enter_injury(QMainWindow):
@@ -1026,11 +1015,6 @@ class Ui_enter_injury(QMainWindow):
     
     def send_injury(self):
         try:
-            print("TRYING TO CHECK INTERNET CONNECTION") 
-            conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
-            conn.close()
-            time.sleep(5)
-            
             SEPARATOR = "<SEPARATOR>"
             BUFFER_SIZE = 4096
 
@@ -1070,39 +1054,7 @@ class Ui_enter_injury(QMainWindow):
             s.close()
             
         except:
-            print("SEND DATA FAILED")
-            print("NO INTERNET CONNECTION")
-            check_connection_companion.clear()
-            check_connection_companion.append(1)
-            #window.setCurrentIndex(41)
-
-            #TKINTER for window if connection to the companion app was failed
-
-            root = Tk()
-            root.geometry('800x600')
-
-            def delete_items():
-                root.destroy()
-
-            frame1 = Frame(root)
-            frame1.configure(bg='gray')
-            frame1.pack()
-
-            title = Label(frame1, text = "FAILED!!! TO SEND\nEMERGENCY\nNOTIFICATION", font=("Unispace", 48))
-            title.grid(row=0, column=0, pady=(20, 0))
-
-            title_2 = Label(frame1, text = "Please check the Clinic manually\nif the Nurse is PRESENT", font=("Unispace", 28))
-            title_2.grid(row=1, column=0, pady=(20, 10))
-
-            button_remove = Button(frame1, text = "CONFIRM", command = delete_items, font=("Unispace", 45, "bold", "underline"))
-            button_remove.config(height=1, width=10)
-            button_remove.grid(row=2, column=0)
-
-            root.title("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
-            root.configure(bg='gray')
-            root.mainloop()
-            
-            return False
+            self.send_injury()
 
 class Ui_request_nurse(QMainWindow):
     def __init__(self):
@@ -1137,7 +1089,7 @@ class Ui_confirmation(QMainWindow):
             window.setCurrentIndex(28)
             
         elif injury_types_selected[-1] == "ELECTRIC":
-            window.setCurrentIndex(30)
+            window.setCurrentIndex(28)
             
         elif injury_types_selected[-1] == "BRUISES":
             window.setCurrentIndex(28)
@@ -1640,8 +1592,11 @@ class Ui_guest_patient_window(QMainWindow):
         
     def guest_info(self):
         session.insert(5, self.name_info.text())
+        session.insert(6, self.section_info.text())
         self.name_info.setText("")
+        self.section_info.setText("")
         input_name.clear()
+        input_section.clear()
         window.setCurrentIndex(8)
         
 class Ui_gender_patient_window(QMainWindow):
@@ -1655,6 +1610,8 @@ class Ui_gender_patient_window(QMainWindow):
         self.female_radio = self.findChild(QRadioButton, "female_checkbox")
             
     def gender_and_age_submit(self):
+        print("QWERTYQWERTY")
+        print(name_section_focus)
         if self.male_checkbox.isChecked():
             session.append("MALE")
             session.append(self.age.value())
@@ -1662,10 +1619,8 @@ class Ui_gender_patient_window(QMainWindow):
             
             input_text.clear()
             input_name.clear()
-            body_parts_selected.clear()
-            injury_types_selected.clear()
-            injury_types_selected.insert(0, "Placeholder")
-            
+            input_section.clear()
+        
         elif self.female_checkbox.isChecked():
             session.append("FEMALE")
             session.append(self.age.value())
@@ -1673,9 +1628,7 @@ class Ui_gender_patient_window(QMainWindow):
             
             input_text.clear()
             input_name.clear()
-            body_parts_selected.clear()
-            injury_types_selected.clear()
-            injury_types_selected.insert(0, "Placeholder")
+            input_section.clear()
         
     def record_session_window(self):
         self.window_record_session = QtWidgets.QMainWindow()
@@ -1704,6 +1657,10 @@ class Ui_gender_patient_window(QMainWindow):
         self.save_session_tolocal()
 
     def save_session_tolocal(self):
+        
+        body_parts_selected.clear()
+        injury_types_selected.clear()
+        injury_types_selected.insert(0, "Placeholder")
         
         if configuration_settings["allow_saving_csv"] == True:
             filename = "cabinet-history/session/recorded_session.csv"
@@ -1741,11 +1698,6 @@ class Ui_gender_patient_window(QMainWindow):
         
     def send_to_companion(self):
         try:
-            print("TRYING TO CHECK INTERNET CONNECTION") 
-            conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_2nd"])                     
-            conn.close()
-            time.sleep(5)
-            
             SEPARATOR = "<SEPARATOR>"
             BUFFER_SIZE = 4096
 
@@ -1784,50 +1736,17 @@ class Ui_gender_patient_window(QMainWindow):
             # close the socket
             s.close()
             #check_connection_companion.clear()
+            dead = True
             
         except:
-            print("SEND DATA FAILED")
-            check_connection_companion.clear()
-            check_connection_companion.append(1)
-
-            #TKINTER for window if connection to the companion app was failed
-
-            root = Tk()
-            root.geometry('800x600')
-
-            def delete_items():
-                root.destroy()
-
-            frame1 = Frame(root)
-            frame1.configure(bg='gray')
-            frame1.pack()
-
-            title = Label(frame1, text = "FAILED!!! TO SEND\nEMERGENCY\nNOTIFICATION", font=("Unispace", 48))
-            title.grid(row=0, column=0, pady=(20, 0))
-
-            title_2 = Label(frame1, text = "Please check the Clinic manually\nif the Nurse is PRESENT", font=("Unispace", 28))
-            title_2.grid(row=1, column=0, pady=(20, 10))
-
-            button_remove = Button(frame1, text = "CONFIRM", command = delete_items, font=("Unispace", 45, "bold", "underline"))
-            button_remove.config(height=1, width=10)
-            button_remove.grid(row=2, column=0)
-
-            root.title("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
-            root.configure(bg='gray')
-            root.mainloop()
-            print("WINDOW POP")
-                
+            self.send_to_companion()
+        
     def responder_threading(self):   
         x = threading.Thread(target=self.send_to_companion_responder)
         x.start()
         
     def send_to_companion_responder(self):
         try:
-            print("TRYING TO CHECK INTERNET CONNECTION") 
-            conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
-            conn.close()
-            time.sleep(5)
-            
             SEPARATOR = "<SEPARATOR>"
             BUFFER_SIZE = 4096
 
@@ -1868,39 +1787,7 @@ class Ui_gender_patient_window(QMainWindow):
             
             
         except:
-            print("SEND DATA FAILED")
-            print("NO INTERNET CONNECTION")
-            check_connection_companion.clear()
-            check_connection_companion.append(1)
-            #window.setCurrentIndex(41)
-
-            #TKINTER for window if connection to the companion app was failed
-
-            root = Tk()
-            root.geometry('800x600')
-
-            def delete_items():
-                root.destroy()
-
-            frame1 = Frame(root)
-            frame1.configure(bg='gray')
-            frame1.pack()
-
-            title = Label(frame1, text = "FAILED!!! TO SEND\nEMERGENCY\nNOTIFICATION", font=("Unispace", 48))
-            title.grid(row=0, column=0, pady=(20, 0))
-
-            title_2 = Label(frame1, text = "Please check the Clinic manually\nif the Nurse is PRESENT", font=("Unispace", 28))
-            title_2.grid(row=1, column=0, pady=(20, 10))
-
-            button_remove = Button(frame1, text = "CONFIRM", command = delete_items, font=("Unispace", 45, "bold", "underline"))
-            button_remove.config(height=1, width=10)
-            button_remove.grid(row=2, column=0)
-
-            root.title("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
-            root.configure(bg='gray')
-            root.mainloop()
-            
-            return False    
+            self.send_to_companion_responder()      
         
         
 ####################### STEPS UI FOR EVERY INJURIES  #######################
@@ -1910,7 +1797,6 @@ class Ui_before_procedures(QMainWindow):
         super(Ui_before_procedures, self).__init__()
         loadUi("injuries/before_procedures_cautions.ui", self)
         self.goto_steps_button.clicked.connect(self.injuries)
-        self.go_back.clicked.connect(self.go_back_injuries)
     
     def injuries(self):
         if injury_types_selected[-1] == "CUT":
@@ -1942,11 +1828,6 @@ class Ui_before_procedures(QMainWindow):
             
         elif injury_types_selected[-1] == "LACERATION":
             window.setCurrentIndex(35)
-            
-    def go_back_injuries(self):
-        injury_types_selected.pop()
-        print(injury_types_selected)
-        window.setCurrentIndex(2)
         
 
 ######################  CUT PROCEDURES STEPS (4 windows TOTAL)  ###################### 
@@ -2023,7 +1904,7 @@ class Ui_step_4_cut(QMainWindow):
         self.cut_step4.start()
         
     def finish_step(self):
-        window.setCurrentIndex(48)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)
@@ -2041,7 +1922,7 @@ class Ui_step_1_puncture(QMainWindow):
         #self.gif_player_label = self.findChild(QLabel, "gif_player_label")
         
     def next_step(self):
-        window.setCurrentIndex(48)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         window.setCurrentIndex(28)
@@ -2104,7 +1985,7 @@ class Ui_step_4_puncture(QMainWindow):
         #self.cut_step3.start()
         
     def next_step(self):
-        window.setCurrentIndex(48)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         # GO BACK A WINDOW WHICH IS STEP 2
@@ -2203,7 +2084,7 @@ class Ui_step_3_1st_burn(QMainWindow):
         self.burn_step3.start()
         
     def next_step(self):
-        window.setCurrentIndex(48)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         window.setCurrentIndex(19)
@@ -2259,7 +2140,7 @@ class Ui_step_3_2nd_burn(QMainWindow):
         self.burn_step3.start()
         
     def next_step(self):
-        window.setCurrentIndex(48)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         window.setCurrentIndex(38)
@@ -2350,11 +2231,6 @@ class Ui_poison_types(QMainWindow):
         
     def send_to_companion_responder(self):
         try:
-            print("TRYING TO CHECK INTERNET CONNECTION") 
-            conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
-            conn.close()
-            time.sleep(5)
-            
             SEPARATOR = "<SEPARATOR>"
             BUFFER_SIZE = 4096
             
@@ -2490,10 +2366,6 @@ class Ui_poison_types(QMainWindow):
         
     def send_to_companion_responder(self):
         try:
-            print("TRYING TO CHECK INTERNET CONNECTION") 
-            conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
-            conn.close()
-            time.sleep(5)
             SEPARATOR = "<SEPARATOR>"
             BUFFER_SIZE = 4096
             
@@ -2608,7 +2480,7 @@ class Ui_step_3_poison(QMainWindow):
         self.go_back_injury_type_3.clicked.connect(self.go_back)
         
     def next_step(self):
-        window.setCurrentIndex(48)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)
@@ -2622,7 +2494,7 @@ class Ui_step_poison_inhalation(QMainWindow):
         self.go_back_injury_type_4.clicked.connect(self.go_back)
         
     def next_step(self):
-        window.setCurrentIndex(48)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         window.setCurrentIndex(22)
@@ -2641,7 +2513,7 @@ class Ui_step_poison_contact(QMainWindow):
         self.poison_spill_eyes.start()
         
     def next_step(self):
-        window.setCurrentIndex(48)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         window.setCurrentIndex(22)
@@ -2661,9 +2533,7 @@ class Ui_step_electric_shock_caution(QMainWindow):
         window.setCurrentIndex(31)
     
     def go_back(self):
-        injury_types_selected.pop()
-        print(injury_types_selected)
-        window.setCurrentIndex(2)
+        window.setCurrentIndex(28)
         
 class Ui_step_electric_seek_emergency(QMainWindow):
     def __init__(self):
@@ -2673,7 +2543,7 @@ class Ui_step_electric_seek_emergency(QMainWindow):
         self.go_back_button.clicked.connect(self.go_back)
         
     def next_step(self):
-        window.setCurrentIndex(48)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)
@@ -2699,7 +2569,7 @@ class Ui_step_2_electric(QMainWindow):
         self.go_back_button.clicked.connect(self.go_back)
         
     def next_step(self):
-        window.setCurrentIndex(48)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)
@@ -2725,7 +2595,7 @@ class Ui_step_1_bruises(QMainWindow):
         self.bruises_step1.start()
         
     def next_step(self):
-        window.setCurrentIndex(48)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         window.setCurrentIndex(28)
@@ -2785,130 +2655,27 @@ class Ui_step_3_laceration(QMainWindow):
         self.laceration_step3.start()
         
     def next_step(self):
-        window.setCurrentIndex(48)
+        window.setCurrentIndex(5)
     
     def go_back(self):
         window.setCurrentIndex(window.currentIndex()-1)
         
-        
-        
-######################################## INJURY SELECTION CONFIRMATION ###############################################
-class Ui_bruises_confirmation(QMainWindow):
+############## INJURY SELECTION CONFIRMATION ##############
+class Ui_injury_confirmation(QMainWindow):
     def __init__(self):
-        super(Ui_bruises_confirmation, self).__init__()
-        loadUi("confirmation_ui/injury_bruises_confirmation.ui", self)
+        super(Ui_injury_confirmation, self).__init__()
+        loadUi("injury_confirmation.ui", self)
         self.sure_button.clicked.connect(self.next_step)
         self.go_back.clicked.connect(self.go_back_button)
         
     def next_step(self):
-        window.setCurrentIndex(28)
+        if injury_types_selected[-1] == "POISON":
+            window.setCurrentIndex(28)
+        else:
+            window.setCurrentIndex(1)
             
     def go_back_button(self):
-        injury_types_selected.pop()
-        print(injury_types_selected)
         window.setCurrentIndex(2)
-        
-class Ui_burn_confirmation(QMainWindow):
-    def __init__(self):
-        super(Ui_burn_confirmation, self).__init__()
-        loadUi("confirmation_ui/injury_burn_confirmation.ui", self)
-        self.sure_button.clicked.connect(self.next_step)
-        self.go_back.clicked.connect(self.go_back_button)
-        
-    def next_step(self):
-        window.setCurrentIndex(28)
-            
-    def go_back_button(self):
-        injury_types_selected.pop()
-        print(injury_types_selected)
-        window.setCurrentIndex(2)
-        
-class Ui_cut_confirmation(QMainWindow):
-    def __init__(self):
-        super(Ui_cut_confirmation, self).__init__()
-        loadUi("confirmation_ui/injury_cut_confirmation.ui", self)
-        self.sure_button.clicked.connect(self.next_step)
-        self.go_back.clicked.connect(self.go_back_button)
-        
-    def next_step(self):
-        window.setCurrentIndex(28)
-            
-    def go_back_button(self):
-        injury_types_selected.pop()
-        print(injury_types_selected)
-        window.setCurrentIndex(2)
-    
-class Ui_electric_confirmation(QMainWindow):
-    def __init__(self):
-        super(Ui_electric_confirmation, self).__init__()
-        loadUi("confirmation_ui/injury_electric_confirmation.ui", self)
-        self.sure_button.clicked.connect(self.next_step)
-        self.go_back.clicked.connect(self.go_back_button)
-        
-    def next_step(self):
-        window.setCurrentIndex(30)
-            
-    def go_back_button(self):
-        injury_types_selected.pop()
-        print(injury_types_selected)
-        window.setCurrentIndex(2)
-        
-class Ui_laceration_confirmation(QMainWindow):
-    def __init__(self):
-        super(Ui_laceration_confirmation, self).__init__()
-        loadUi("confirmation_ui/injury_laceration_confirmation.ui", self)
-        self.sure_button.clicked.connect(self.next_step)
-        self.go_back.clicked.connect(self.go_back_button)
-        
-    def next_step(self):
-        window.setCurrentIndex(28)
-            
-    def go_back_button(self):
-        injury_types_selected.pop()
-        print(injury_types_selected)
-        window.setCurrentIndex(2)
-        
-class Ui_poison_confirmation(QMainWindow):
-    def __init__(self):
-        super(Ui_poison_confirmation, self).__init__()
-        loadUi("confirmation_ui/injury_poison_confirmation.ui", self)
-        self.sure_button.clicked.connect(self.next_step)
-        self.go_back.clicked.connect(self.go_back_button)
-        
-    def next_step(self):
-        window.setCurrentIndex(28)
-            
-    def go_back_button(self):
-        injury_types_selected.pop()
-        print(injury_types_selected)
-        window.setCurrentIndex(2)
-        
-class Ui_puncture_confirmation(QMainWindow):
-    def __init__(self):
-        super(Ui_puncture_confirmation, self).__init__()
-        loadUi("confirmation_ui/injury_puncture_confirmation.ui", self)
-        self.sure_button.clicked.connect(self.next_step)
-        self.go_back.clicked.connect(self.go_back_button)
-        
-    def next_step(self):
-        window.setCurrentIndex(28)
-            
-    def go_back_button(self):
-        injury_types_selected.pop()
-        print(injury_types_selected)
-        window.setCurrentIndex(2)
-
-
-class Ui_final_procedure(QMainWindow):
-    def __init__(self):
-        super(Ui_final_procedure, self).__init__()
-        loadUi("final_procedure.ui", self)
-        self.end_procedure_button.clicked.connect(self.reset_program)
-
-    def reset_program(self):
-        window.setCurrentIndex(5)
-        
-##################################################################################################################
     
 app = QApplication(sys.argv)
 window = QtWidgets.QStackedWidget()
@@ -2967,15 +2734,7 @@ window.addWidget(Ui_step_1_2nd_burn()) # INDEX 38
 window.addWidget(Ui_step_2_2nd_burn()) # INDEX 39
 window.addWidget(Ui_step_3_2nd_burn()) # INDEX 40
 
-window.addWidget(Ui_bruises_confirmation()) # INDEX 41
-window.addWidget(Ui_burn_confirmation()) # INDEX 42
-window.addWidget(Ui_cut_confirmation()) # INDEX 43
-window.addWidget(Ui_electric_confirmation()) # INDEX 44
-window.addWidget(Ui_laceration_confirmation()) # INDEX 45
-window.addWidget(Ui_poison_confirmation()) # INDEX 46
-window.addWidget(Ui_puncture_confirmation()) # INDEX 47
-
-window.addWidget(Ui_final_procedure()) # INDEX 48
+window.addWidget(Ui_injury_confirmation()) # INDEX 41
 
 #######################  PARAMETERS FOR THE WINDOW (EXACT FOR THE TOUCH SCREEN DISPLAY)  #######################
 

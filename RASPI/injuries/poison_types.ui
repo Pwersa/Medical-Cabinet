@@ -61,7 +61,11 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>36</pointsize>
+      <family>Century Schoolbook L</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="cursor">
@@ -99,6 +103,9 @@ border-color: black;
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -160,7 +167,10 @@ border-color: black;
     </property>
     <property name="font">
      <font>
-      <pointsize>28</pointsize>
+      <family>Century Schoolbook L</family>
+      <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="cursor">
@@ -197,7 +207,11 @@ border-color: black;
     </property>
     <property name="font">
      <font>
-      <pointsize>36</pointsize>
+      <family>Century Schoolbook L</family>
+      <pointsize>26</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="cursor">

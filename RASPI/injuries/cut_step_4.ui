@@ -65,7 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;Apply a &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;THIN LAYER&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; or &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;STERILIZED GAUZE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;, &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;DIRECTLY&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; over the wound.&lt;br/&gt;Secure with &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;MICROPORE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; tape &lt;br/&gt;on the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;SIDES&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; of the&lt;br/&gt;wound dressing.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;Apply a &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;THIN LAYER&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; or &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;STERILIZED GAUZE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;, &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;DIRECTLY&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; over the wound. Secure with&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;MICROPORE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; tape &lt;br/&gt;on the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;SIDES&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; of the&lt;br/&gt;wound dressing.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label_4">
@@ -137,6 +137,9 @@
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="cursor">
@@ -186,6 +189,9 @@ border-color: black;
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">

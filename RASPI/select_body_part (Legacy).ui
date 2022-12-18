@@ -52,7 +52,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>60</y>
+      <y>70</y>
       <width>1001</width>
       <height>521</height>
      </rect>
@@ -70,8 +70,8 @@
    <widget class="QPushButton" name="hand_button">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>280</y>
+      <x>610</x>
+      <y>380</y>
       <width>181</width>
       <height>81</height>
      </rect>
@@ -133,10 +133,10 @@ border-color: black;
      <pixmap>pictures/program_pictures/main_wallpaper.png</pixmap>
     </property>
    </widget>
-   <widget class="QPushButton" name="head_button">
+   <widget class="QPushButton" name="nose_button">
     <property name="geometry">
      <rect>
-      <x>630</x>
+      <x>580</x>
       <y>81</y>
       <width>181</width>
       <height>81</height>
@@ -168,14 +168,14 @@ border-color: black;
 }</string>
     </property>
     <property name="text">
-     <string>HEAD</string>
+     <string>NOSE</string>
     </property>
    </widget>
    <widget class="QPushButton" name="knee_button">
     <property name="geometry">
      <rect>
       <x>610</x>
-      <y>380</y>
+      <y>470</y>
       <width>181</width>
       <height>81</height>
      </rect>
@@ -209,11 +209,11 @@ border-color: black;
      <string>KNEE</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="stomach_button">
+   <widget class="QPushButton" name="ear_button">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>180</y>
+      <x>70</x>
+      <y>80</y>
       <width>181</width>
       <height>81</height>
      </rect>
@@ -221,7 +221,45 @@ border-color: black;
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>28</pointsize>
+      <pointsize>36</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+      <underline>true</underline>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>EAR</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="stomach_button">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>170</y>
+      <width>181</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>PibotoLt</family>
+      <pointsize>24</pointsize>
       <weight>75</weight>
       <bold>true</bold>
       <underline>true</underline>
@@ -247,11 +285,11 @@ border-color: black;
      <string>STOMACH</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="arm_button">
+   <widget class="QPushButton" name="eyes_button">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>180</y>
+      <x>260</x>
+      <y>80</y>
       <width>181</width>
       <height>81</height>
      </rect>
@@ -259,7 +297,7 @@ border-color: black;
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>48</pointsize>
+      <pointsize>36</pointsize>
       <weight>75</weight>
       <bold>true</bold>
       <underline>true</underline>
@@ -282,14 +320,130 @@ border-color: black;
 }</string>
     </property>
     <property name="text">
-     <string>ARM</string>
+     <string>EYES</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="neck_button">
+   <widget class="QPushButton" name="mouth_button">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>80</y>
+      <x>770</x>
+      <y>81</y>
+      <width>181</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>PibotoLt</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+      <underline>true</underline>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>MOUTH</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="upper_arm">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>170</y>
+      <width>181</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>24</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+      <underline>true</underline>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>UPPER
+ARM</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="lower_arm">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>260</y>
+      <width>181</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>24</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+      <underline>true</underline>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>LOWER
+ARM</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="crotch_button">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>260</y>
       <width>181</width>
       <height>81</height>
      </rect>
@@ -320,14 +474,14 @@ border-color: black;
 }</string>
     </property>
     <property name="text">
-     <string>NECK</string>
+     <string>CROTCH</string>
     </property>
    </widget>
    <widget class="QPushButton" name="foot_button">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>470</y>
+      <x>40</x>
+      <y>440</y>
       <width>181</width>
       <height>81</height>
      </rect>
@@ -365,7 +519,7 @@ border-color: black;
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>270</y>
+      <y>350</y>
       <width>181</width>
       <height>81</height>
      </rect>
@@ -399,11 +553,11 @@ border-color: black;
      <string>THIGH</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="legs_button">
+   <widget class="QPushButton" name="lower_leg">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>450</y>
+      <x>230</x>
+      <y>440</y>
       <width>181</width>
       <height>81</height>
      </rect>
@@ -411,7 +565,7 @@ border-color: black;
     <property name="font">
      <font>
       <family>Unispace</family>
-      <pointsize>36</pointsize>
+      <pointsize>24</pointsize>
       <weight>75</weight>
       <bold>true</bold>
       <underline>true</underline>
@@ -434,60 +588,26 @@ border-color: black;
 }</string>
     </property>
     <property name="text">
-     <string>LEGS</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="crotch_button">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>360</y>
-      <width>181</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Unispace</family>
-      <pointsize>28</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-      <underline>true</underline>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton:hover:!pressed
-{
-  background-color: rgb(195,30,60);
-}
-
-QPushButton
-{
-  background-color: white;
-color: black;
-border-style: outset;
-border-width: 3px;
-border-radius:10px;
-border-color: black;
-}</string>
-    </property>
-    <property name="text">
-     <string>CROTCH</string>
+     <string>LOWER
+LEG</string>
     </property>
    </widget>
    <zorder>label</zorder>
    <zorder>TITLE</zorder>
    <zorder>body_part</zorder>
    <zorder>hand_button</zorder>
-   <zorder>head_button</zorder>
+   <zorder>nose_button</zorder>
    <zorder>knee_button</zorder>
+   <zorder>ear_button</zorder>
    <zorder>stomach_button</zorder>
-   <zorder>arm_button</zorder>
-   <zorder>neck_button</zorder>
+   <zorder>eyes_button</zorder>
+   <zorder>mouth_button</zorder>
+   <zorder>upper_arm</zorder>
+   <zorder>lower_arm</zorder>
+   <zorder>crotch_button</zorder>
    <zorder>foot_button</zorder>
    <zorder>thigh_button</zorder>
-   <zorder>legs_button</zorder>
-   <zorder>crotch_button</zorder>
+   <zorder>lower_leg</zorder>
   </widget>
  </widget>
  <resources/>

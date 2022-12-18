@@ -54,18 +54,20 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>310</y>
+      <y>300</y>
       <width>981</width>
-      <height>141</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;Secure the &lt;/span&gt;&lt;span style=&quot; font-size:26pt; text-decoration: underline;&quot;&gt;LACERATED PART&lt;/span&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt; with &lt;/span&gt;&lt;span style=&quot; font-size:26pt; text-decoration: underline;&quot;&gt;STERILE STRIP&lt;/span&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt; to &lt;/span&gt;&lt;span style=&quot; font-size:26pt; text-decoration: underline;&quot;&gt;BIND&lt;/span&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;&lt;br/&gt;the skin together.&lt;br/&gt;Cover with &lt;/span&gt;&lt;span style=&quot; font-size:26pt; text-decoration: underline;&quot;&gt;STERIAL GAUZE&lt;/span&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt; under pressure.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;Secure the &lt;/span&gt;&lt;span style=&quot; font-size:26pt; text-decoration: underline;&quot;&gt;LACERATED PART&lt;/span&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt; with &lt;/span&gt;&lt;span style=&quot; font-size:26pt; text-decoration: underline;&quot;&gt;STERILE STRIP&lt;/span&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt; to &lt;/span&gt;&lt;span style=&quot; font-size:26pt; text-decoration: underline;&quot;&gt;BIND&lt;/span&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;&lt;br/&gt;the skin together. Cover with &lt;/span&gt;&lt;span style=&quot; font-size:26pt; text-decoration: underline;&quot;&gt;STERIAL GAUZE&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;under pressure.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label">
@@ -114,7 +116,7 @@
     <property name="geometry">
      <rect>
       <x>780</x>
-      <y>450</y>
+      <y>440</y>
       <width>220</width>
       <height>120</height>
      </rect>
@@ -134,6 +136,9 @@
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="cursor">
@@ -163,7 +168,7 @@ border-color: black;
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>450</y>
+      <y>440</y>
       <width>220</width>
       <height>120</height>
      </rect>
@@ -183,6 +188,9 @@ border-color: black;
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">

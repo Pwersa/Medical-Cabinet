@@ -56,7 +56,7 @@
       <x>19</x>
       <y>300</y>
       <width>981</width>
-      <height>141</height>
+      <height>211</height>
      </rect>
     </property>
     <property name="font">
@@ -65,7 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;Gently &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;FLUSH&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; the eye with cool or lukewarm water for &lt;br/&gt;20 minutes or until &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;HELP&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; arrives. &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt;use eye drops.&lt;br/&gt;Go to the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;CLINIC&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; or &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;WAIT&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; for the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; text-decoration: underline; color:#000000;&quot;&gt;MEDICALPERSONNEL&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:28pt; color:#000000;&quot;&gt; to arrive.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;Gently &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;FLUSH&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt; the eye with cool or lukewarm water&lt;br/&gt;for 20 minutes or until &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;HELP&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt; arrives. &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;use eye drops. Go to the &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;CLINIC&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt; or &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;WAIT&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt; for the &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; text-decoration: underline; color:#000000;&quot;&gt;MEDICAL PERSONNEL&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:26pt; color:#000000;&quot;&gt;to arrive.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label">
@@ -131,6 +131,9 @@
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="cursor">
@@ -180,6 +183,9 @@ border-color: black;
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">

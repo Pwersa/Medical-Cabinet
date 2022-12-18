@@ -61,11 +61,15 @@
     </property>
     <property name="font">
      <font>
+      <family>PibotoLt</family>
       <pointsize>14</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt;Dab a cold compress to the affected area to reduce the &lt;br/&gt;swelling for 10-15 minutes.&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:28pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT&lt;/span&gt;&lt;span style=&quot; font-size:28pt;&quot;&gt; put ice directly &lt;br/&gt;on the skin.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt; font-weight:600;&quot;&gt;Dab a cold compress to the affected area to reduce the &lt;br/&gt;swelling for 10-15 minutes.&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:28pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;DO NOT&lt;/span&gt;&lt;span style=&quot; font-size:28pt; font-weight:600;&quot;&gt; put ice directly &lt;br/&gt;on the skin.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label">
@@ -134,6 +138,9 @@
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="cursor">
@@ -183,6 +190,9 @@ border-color: black;
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">

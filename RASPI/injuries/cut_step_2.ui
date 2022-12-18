@@ -54,9 +54,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>320</y>
+      <y>310</y>
       <width>1001</width>
-      <height>121</height>
+      <height>161</height>
      </rect>
     </property>
     <property name="font">
@@ -65,7 +65,7 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; text-decoration: underline; color:#000000;&quot;&gt;RINSE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; color:#000000;&quot;&gt; the wound with water. Keep the wound under running tap water &lt;br/&gt;(if possible), this will &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; text-decoration: underline; color:#000000;&quot;&gt;REDUCE &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; color:#000000;&quot;&gt;the risk of infection.&lt;br/&gt;If water is not available, use &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; text-decoration: underline; color:#000000;&quot;&gt;POVIDONE IODONE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; color:#000000;&quot;&gt; solution to clean the wound.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; text-decoration: underline; color:#000000;&quot;&gt;RINSE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; color:#000000;&quot;&gt; the wound with water. Keep the wound under running&lt;br/&gt;tap water (if possible), this will &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; text-decoration: underline; color:#000000;&quot;&gt;REDUCE &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; color:#000000;&quot;&gt;the risk of infection.&lt;br/&gt;If water is not available, use &lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; text-decoration: underline; color:#000000;&quot;&gt;POVIDONE IODONE&lt;/span&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:24pt; color:#000000;&quot;&gt; solution &lt;br/&gt;to clean the wound.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="gif_player_label_2">
@@ -134,6 +134,9 @@
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="cursor">
@@ -183,6 +186,9 @@ border-color: black;
     <property name="font">
      <font>
       <pointsize>18</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
