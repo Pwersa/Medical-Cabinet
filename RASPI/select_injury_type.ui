@@ -75,8 +75,8 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>-72</y>
-       <width>986</width>
+       <y>0</y>
+       <width>982</width>
        <height>600</height>
       </rect>
      </property>
@@ -250,8 +250,8 @@ border-color: black;
 }</string>
         </property>
         <property name="text">
-         <string>ELECTRIC 
- SHOCK</string>
+         <string>ELECTRIC
+SHOCK</string>
         </property>
        </widget>
       </item>

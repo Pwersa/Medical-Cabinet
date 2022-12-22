@@ -92,7 +92,7 @@
    <widget class="QPushButton" name="goto_steps_button">
     <property name="geometry">
      <rect>
-      <x>560</x>
+      <x>330</x>
       <y>410</y>
       <width>360</width>
       <height>140</height>
@@ -170,63 +170,10 @@ GO to procedures</string>
      <pixmap>../pictures/program_pictures/main_wallpaper.png</pixmap>
     </property>
    </widget>
-   <widget class="QPushButton" name="go_back">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>410</y>
-      <width>360</width>
-      <height>140</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>360</width>
-      <height>140</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>360</width>
-      <height>140</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>24</pointsize>
-      <weight>75</weight>
-      <italic>true</italic>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton:hover:!pressed
-{
-  background-color: rgb(195,30,60);
-}
-
-QPushButton
-{
-  background-color: white;
-color: black;
-border-style: outset;
-border-width: 3px;
-border-radius:10px;
-border-color: black;
-}</string>
-    </property>
-    <property name="text">
-     <string>Go Back</string>
-    </property>
-   </widget>
    <zorder>label</zorder>
    <zorder>text_steps</zorder>
    <zorder>gif_player_label</zorder>
    <zorder>goto_steps_button</zorder>
-   <zorder>go_back</zorder>
   </widget>
  </widget>
  <resources/>

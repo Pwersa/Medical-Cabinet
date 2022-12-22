@@ -16,17 +16,3 @@
 # enable_camera ---> Enable the camera to scan QR Code (if this is disabled, a static data will be sent)
 # enable_solenoid ---> Enable the solenoid to lock and unlock (for the window of the cabinet)
 # allow_saving_csv ---> Enable to save the data of ever session (will overite existing file)
-
-
-# CONFIG MENU
-{
-  'connection_mode': False,
-  'companion_app_IP': "172.16.18.53", 
-  'port_1st': 4899, 
-  'port_2nd': 4799, 
-  'email_connection': False,
-  'email': "rogieprinz.duran@gsfe.tupcavite.edu.ph",
-  'enable_camera': False,
-  'enable_solenoid': False,
-  'allow_saving_csv': False,
-}

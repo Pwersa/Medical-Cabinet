@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-import sys, cv2, datetime, time, re, csv, socket, os, threading, ast, smtplib, tqdm
+import sys, cv2, datetime, time, re, csv, socket, os, threading, ast, smtplib, tqdm, json, glob
 import http.client
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QSpinBox, QMessageBox, QScrollArea, QScroller, \
                                 QScrollerProperties, QRadioButton, QLineEdit, QPushButton, QWidget
@@ -10,13 +10,11 @@ from record_session import Ui_record_session
 from cabinet_notif import Ui_cabinet_notif
 from tkinter import *
 from email.mime.text import MIMEText
-#import RPi.GPIO as GPIO
-
-# OPEN CONFIGURATION FILES AS SOON PROGRAM RUNS (IP ADDRESS, PORT, EMAIL, etc.)
-with open("config/config.txt", "r") as data:
-    configuration_settings = ast.literal_eval(data.read())
 
 # DATE AND TIME, RESPONDER ID, NAME, COURSE, PATIENT ID, NAME, COURSE, GENDER, INJURY TYPE (used are also for csv file)
+session_time = []
+responder_time = []
+
 session = []
 body_parts_selected = []
 injury_types_selected = ["Placeholder"]
@@ -48,11 +46,20 @@ check_connection_companion = [0]
 # CHeck if responder notification was activated (0 by default which means its not)
 responder_notif = [0]
 
-# Always power off the solenoid
-#GPIO.setwarnings(False)
-#GPIO.setmode(GPIO.BCM)
-#GPIO.setup(18, GPIO.OUT)
-#GPIO.output(18, 1)
+# OPEN CONFIGURATION FILES AS SOON PROGRAM RUNS (IP ADDRESS, PORT, EMAIL, etc.)
+with open("config/config.json", "r") as data:
+    configuration_settings = json.load(data)
+
+# UPDATE DYNAMIC LIST IN ORDER TO FOLLOW THE NOT SENT FILES
+for i in configuration_settings["files_not_sent_responder"]:
+    responder_time.append(i)
+
+for i in configuration_settings["files_not_sent_session"]:
+    session_time.append(i)
+    
+print("NOT SENT DATA")
+print(responder_time)
+print(session_time)
 
 class Ui_scan_qr_code(QMainWindow):
     def __init__(self):
@@ -61,7 +68,6 @@ class Ui_scan_qr_code(QMainWindow):
         self.scan_button.clicked.connect(self.qr_camera)
     
     def qr_camera(self):
-        
         # Check config file for CAMERA
         if configuration_settings["enable_camera"] == True:
             print("CAMERA IS CONNECTED")
@@ -81,7 +87,7 @@ class Ui_scan_qr_code(QMainWindow):
 
                 if data:
                     dt = datetime.datetime.now()
-                    x = dt.strftime("%Y-%m-%d %H:%M:%S")
+                    x = dt.strftime("%Y-%m-%d %H-%M-%S")
                     regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
                     parsed_text = regexp.findall(data)
                     fullname = str(parsed_text[1]+" "+ parsed_text[2])
@@ -106,7 +112,9 @@ class Ui_scan_qr_code(QMainWindow):
                         
                 if (cv2.waitKey(1) == ord("r")):
                     time.sleep(0.5)
-                    session.append("87897-12-31 23:23:59")
+                    dt = datetime.datetime.now()
+                    x = dt.strftime("%Y-%m-%d %H-%M-%S")
+                    session.append(str(x))
                     # ID
                     session.append("TUPC-RESPONDER")
                     # NAME
@@ -122,8 +130,8 @@ class Ui_scan_qr_code(QMainWindow):
         else:
             print("CAMERA IS NOT CONNECTED")
             dt = datetime.datetime.now()
-            x = dt.strftime("%Y-%m-%d %H:%M:%S")
-            session.append(x)
+            x = dt.strftime("%Y-%m-%d %H-%M-%S")
+            session.append(str(x))
             # ID
             session.append("TUPC-RESPONDER")
             # NAME
@@ -173,13 +181,13 @@ class Ui_scan_qr_patient(QMainWindow):
                     dt = datetime.datetime.now()
     
                     # Format datetime string
-                    #x = dt.strftime("%Y-%m-%d %H:%M:%S")
+                    x = dt.strftime("%Y-%m-%d %H-%M-%S")
                     regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
                     parsed_text = regexp.findall(data)
                     fullname = str(parsed_text[1]+" "+ parsed_text[2])
 
                     # 1st QR CODE Patient
-                    #session.append(str(x))
+                    session.append(str(x))
                     # ID
                     session.insert(4, parsed_text[0])
                     # NAME
@@ -215,8 +223,8 @@ class Ui_scan_qr_patient(QMainWindow):
         else:
             print("CAMERA IS NOT CONNECTED")
             dt = datetime.datetime.now()
-            x = dt.strftime("%Y-%m-%d %H:%M:%S")
-            session.append(x)
+            x = dt.strftime("%Y-%m-%d %H-%M-%S")
+            session.append(str(x))
             # ID
             session.append("TUPC-RESPONDER")
             # NAME
@@ -356,7 +364,8 @@ class Ui_select_body_part(QMainWindow):
             GPIO.setmode(GPIO.BCM)
             GPIO.setup(18, GPIO.OUT)
             GPIO.output(18, 0)
-            #GPIO.output(18, 0)
+            time.sleep(10)
+            #GPIO.output(18, 1)
             
             self.cabinet_notif = QtWidgets.QMainWindow()
             self.ui = Ui_cabinet_notif()
@@ -411,11 +420,12 @@ class Ui_select_body_part(QMainWindow):
             session.append(injury_types_selected[-1])
             session.append(body_parts_selected[-1])
             
-            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+            print(session)
+            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
             f = open(filename, "w+")
             f.close()
             
-            with open('cabinet-history/accessed-responder/recorded_accessed_responder.csv', 'w', encoding='UTF8', newline='') as f:
+            with open("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv", 'w', encoding='UTF8', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(session)
                 
@@ -460,7 +470,7 @@ class Ui_select_body_part(QMainWindow):
             print("TRYING TO CHECK INTERNET CONNECTION") 
             conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
             conn.close()
-            time.sleep(5)
+            time.sleep(3)
             
             print("TRYING TO SEND DATA")
             SEPARATOR = "<SEPARATOR>"
@@ -469,7 +479,7 @@ class Ui_select_body_part(QMainWindow):
             host = configuration_settings["companion_app_IP"]
             port = configuration_settings["port_1st"]
             
-            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
             filesize = os.path.getsize(filename)
 
             s = socket.socket()
@@ -498,11 +508,26 @@ class Ui_select_body_part(QMainWindow):
                     # update the progress bar
                     progress.update(len(bytes_read))
 
+            os.remove("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv")
+            
             # close the socket
             s.close()
-            print("SEND DATA SUCCESSS")
 
         except:
+            
+            # VERY IMPORTANT TO ADD THE SESSION TIME IN THIS LIST WHEN IT ERRORS... TRUST ME.
+            responder_time.append(session[0])
+            
+            # UPDATING THE CONFIG FILE ASAP
+            with open("config/config.json", "r") as jsonFile:
+                data = json.load(jsonFile)
+
+            data["files_not_sent_responder"].append(responder_time[-1])
+
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+                print("WRITE TO CONFIG SUCCESS")
+                
             print("SEND DATA FAILED")
             print("NO INTERNET CONNECTION")
             check_connection_companion.clear()
@@ -990,21 +1015,37 @@ class Ui_enter_injury(QMainWindow):
 
     def enter_injury(self):
         if configuration_settings["allow_saving_csv"] == True:
-            print("Saving typed data to csv file")
+            print("SAVING ALL IN A CSV FILE...")
             session.append(self.typed_injury.text())
-            session.append("Emergency Seek")
+            session.append("OTHER is selected")
             
-            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+            print(session)
+            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
             f = open(filename, "w+")
             f.close()
             
-            with open('cabinet-history/accessed-responder/recorded_accessed_responder.csv', 'w', encoding='UTF8', newline='') as f:
+            with open("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv", 'w', encoding='UTF8', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(session)
             
             input_text.clear()
             window.setCurrentIndex(4)
             
+            # VERY IMPORTANT TO ADD THE SESSION TIME... TRUST ME.
+            responder_time.append(session[0])
+            
+            # UPDATING THE CONFIG FILE ASAP
+            with open("config/config.json", "r") as jsonFile:
+                data = json.load(jsonFile)
+
+            data["files_not_sent_responder"].append(responder_time[-1])
+
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+                print("WRITE TO CONFIG SUCCESS")
+                
+            # CLEAR LIST FOR NEW DATA TO SAVE
+            session.clear()
             
         else:
             print("Disabled saving typed data to csv file")
@@ -1014,6 +1055,7 @@ class Ui_enter_injury(QMainWindow):
         if configuration_settings["connection_mode"] == True:
             self.enter_injury_threading()
         else:
+            print("DISABLED CONNECTIONG TO COMPANION APP")
             pass
         
         window.setCurrentIndex(4)
@@ -1030,23 +1072,24 @@ class Ui_enter_injury(QMainWindow):
             print("TRYING TO CHECK INTERNET CONNECTION") 
             conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
             conn.close()
-            time.sleep(5)
+            time.sleep(1)
             
+            print("TRYING TO SEND DATA")
             SEPARATOR = "<SEPARATOR>"
             BUFFER_SIZE = 4096
-
+            
             host = configuration_settings["companion_app_IP"]
             port = configuration_settings["port_1st"]
-
-            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+            
+            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + responder_time[-1] + ".csv"
             filesize = os.path.getsize(filename)
 
             s = socket.socket()
 
+            s.settimeout(3)
             s.connect((host, port))
             print("[+] Connected.")
 
-            # send the filename and filesize
             s.send(f"{filename}{SEPARATOR}{filesize}".encode())
 
             # start sending the file
@@ -1066,16 +1109,25 @@ class Ui_enter_injury(QMainWindow):
                 
                     # update the progress bar
                     progress.update(len(bytes_read))
+            
+            with open("config/config.json", "r") as jsonFile:
+                data = json.load(jsonFile)
 
+            data["files_not_sent_responder"] = responder_time
+
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+                print("WRITE TO CONFIG SUCCESS")
+
+            os.remove("cabinet-history/responder/recorded_accessed_responder" + " " + responder_time[-1] + ".csv")
+            
             # close the socket
             s.close()
-            
+
         except:
+                
             print("SEND DATA FAILED")
             print("NO INTERNET CONNECTION")
-            check_connection_companion.clear()
-            check_connection_companion.append(1)
-            #window.setCurrentIndex(41)
 
             #TKINTER for window if connection to the companion app was failed
 
@@ -1708,29 +1760,30 @@ class Ui_gender_patient_window(QMainWindow):
     def save_session_tolocal(self):
         
         if configuration_settings["allow_saving_csv"] == True:
-            filename = "cabinet-history/session/recorded_session.csv"
+            filename = "cabinet-history/session/recorded_session" + " " + session[0] + ".csv"
             f = open(filename, "w+")
             f.close()
             
-            with open('cabinet-history/session/recorded_session.csv', 'w', encoding='UTF8', newline='') as f:
+            with open("cabinet-history/session/recorded_session" + " " + session[0] + ".csv", 'w', encoding='UTF8', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(session)
         
         else:
             pass
-            
-        session.clear()
         
-        # SEND TO COMPANION APP AFTER SAVING LOCALLY
-        # CHECK IF RESPONDER NOTIF FAILED TO SENT, IF YES, IT WILL NOW CONTINUOSLY SEND UNTIL A CONNECTION IS RECEIVED
-        if check_connection_companion[-1] == 1:
-            print("RESPONDER WAS NOT NOTIFIED")
-            self.responder_threading()     
-        else:
-            print("RESPONDER WAS ALREADY NOTIFIED")
-            check_connection_companion.clear()
-            check_connection_companion.append(0)
-            pass
+        # VERY IMPORTANT TO SAVE THE TIME BEFORE CLEARING OUT
+        session_time.append(session[0])
+        
+        print("UPDATING THE CONFIG FILE")
+        with open("config/config.json", "r") as jsonFile:
+            data = json.load(jsonFile)
+            
+        data["files_not_sent_session"] = session_time
+        
+        with open("config/config.json", "w") as jsonFile:
+            json.dump(data, jsonFile)
+                    
+        session.clear()
             
         if configuration_settings["connection_mode"] == True:
             self.session_threading()
@@ -1743,166 +1796,187 @@ class Ui_gender_patient_window(QMainWindow):
         
     def send_to_companion(self):
         try:
-            print("TRYING TO CHECK INTERNET CONNECTION") 
-            conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_2nd"])                     
-            conn.close()
-            time.sleep(5)
+            # CHECK IF THERE ARE STILL FILES NOT SENT
+            print("CHECK FOR SESSION FILES ")
+            if len(session_time) == 0:
+                pass
             
-            SEPARATOR = "<SEPARATOR>"
-            BUFFER_SIZE = 4096
+            else:
+                print("TRYING TO CHECK INTERNET CONNECTION") 
+                conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
+                conn.close()
+                time.sleep(3)
 
-            host = configuration_settings["companion_app_IP"]
-            port = configuration_settings["port_2nd"]
+                HOST = configuration_settings["companion_app_IP"]
+                PORT = configuration_settings["port_2nd"]
+                SIZE = 1024
+                FORMAT = "utf"
+                CLIENT_FOLDER = "cabinet-history"
 
-            filename = "cabinet-history/session/recorded_session.csv"
-            filesize = os.path.getsize(filename)
-            
-            s = socket.socket()
+                # Starting a tcp socket
+                client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                client.connect((HOST, PORT))
 
-            s.connect((host, port))
-            print("[+] Connected.")
+                # Folder path 
+                path = os.path.join(CLIENT_FOLDER, "session")
+                folder_name = path.split("/")[-1]
 
-            # send the filename and filesize
-            s.send(f"{filename}{SEPARATOR}{filesize}".encode())
+                # Sending the folder name """
+                msg = f"{folder_name}"
+                print(f"[CLIENT] Sending folder name: {folder_name}")
+                client.send(msg.encode(FORMAT))
 
-            # start sending the file
-            progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
-            with open(filename, "rb") as f:
-                while True:
+                # Receiving the reply from the server """
+                msg = client.recv(SIZE).decode(FORMAT)
+                print(f"[SERVER] {msg}\n")
+
+                # Sending files """
+                files = sorted(os.listdir(path))
+
+                for file_name in files:
                     
-                    # read the bytes from the file
-                    bytes_read = f.read(BUFFER_SIZE)
-                    if not bytes_read:
-                        # file transmitting is done
-                        break
+                    # Send the file name """
+                    msg = f"FILENAME:{file_name}"
+                    print(f"[CLIENT] Sending file name: {file_name}")
+                    client.send(msg.encode(FORMAT))
+                    
+                    # CHECK IF LIST WAS UPDATED
+                    print("SESSION BEFORE POP")
+                    session_time.pop()
+                    print("SESSIOBN AFTER POP")
+                    print(session_time)
+                    
+                    # UPDATE THE CONFIG FILE
+                    print("UPDATING THE CONFIG FILE")
+                    with open("config/config.json", "r") as jsonFile:
+                        data = json.load(jsonFile)
+                        
+                    data["files_not_sent_session"] = session_time
+                    
+                    with open("config/config.json", "w") as jsonFile:
+                        json.dump(data, jsonFile)
 
-                    # we use sendall to assure transimission in 
-                    # busy networks
-                    s.sendall(bytes_read)
+                    # Recv the reply from the server 
+                    msg = client.recv(SIZE).decode(FORMAT)
+                    print(f"[SERVER] {msg}")
+
+                    # Send the data 
+                    file = open(os.path.join(path, file_name), "r")
+                    file_data = file.read()
+
+                    msg = f"DATA:{file_data}"
+                    client.send(msg.encode(FORMAT))
+                    msg = client.recv(SIZE).decode(FORMAT)
+                    print(f"[SERVER] {msg}")
+                    
+                    
+                    # Sending the close command 
+                    msg = f"FINISH:Complete data send"
+                    client.send(msg.encode(FORMAT))
+                    msg = client.recv(SIZE).decode(FORMAT)
+                    print(f"[SERVER] {msg}")
+
+                # Closing the connection from the server 
+                msg = f"CLOSE:File transfer is completed"
+                client.send(msg.encode(FORMAT))
+                client.close()
                 
-                    # update the progress bar
-                    progress.update(len(bytes_read))
+            # ADD TIMER SO THE COMPANION APP WILL NOT BE CONFUSED
+            time.sleep(5)    
+                
+            # CHECK IF THERE ARE STILL FILES NOT SENT
+            print("CHECK FOR RESPONDER FILES ")
+            if len(responder_time) == 0:
+                print("(RESPONDER) NO FILES WHERE NEEDED TO SEND")
+                pass
+            else:
+                print("(RESPONDER) THERE ARE FILES NEEDED TO SEND")
+                print("TRYING TO CHECK INTERNET CONNECTION") 
+                conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
+                conn.close()
+                time.sleep(3)
 
-            # close the socket
-            s.close()
-            #check_connection_companion.clear()
-            
+                HOST = configuration_settings["companion_app_IP"]
+                PORT = configuration_settings["port_3rd"]
+                SIZE = 1024
+                FORMAT = "utf"
+                CLIENT_FOLDER = "cabinet-history"
+
+                # Starting a tcp socket
+                client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                client.connect((HOST, PORT))
+
+                # Folder path 
+                path = os.path.join(CLIENT_FOLDER, "responder")
+                folder_name = path.split("/")[-1]
+
+                # Sending the folder name 
+                msg = f"{folder_name}"
+                print(f"[CLIENT] Sending folder name: {folder_name}")
+                client.send(msg.encode(FORMAT))
+
+                # Receiving the reply from the server 
+                msg = client.recv(SIZE).decode(FORMAT)
+                print(f"[SERVER] {msg}\n")
+
+                # Sending files 
+                files = sorted(os.listdir(path))
+
+                for file_name in files:
+                    
+                    # Send the file name 
+                    msg = f"FILENAME:{file_name}"
+                    print(f"[CLIENT] Sending file name: {file_name}")
+                    client.send(msg.encode(FORMAT))
+                    
+                    # CHECK IF LIST WAS UPDATED
+                    print("RESPONDER BEFORE POP")
+                    responder_time.pop()
+                    print("RESPONDER AFTER POP")
+                    print(responder_time)
+                    
+                    # UPDATE THE CONFIG FILE
+                    print("UPDATING THE CONFIG FILE")
+                    with open("config/config.json", "r") as jsonFile:
+                        data = json.load(jsonFile)
+                        
+                    data["files_not_sent_responder"] = responder_time
+                    
+                    with open("config/config.json", "w") as jsonFile:
+                        json.dump(data, jsonFile)
+
+                    # Recv the reply from the server 
+                    msg = client.recv(SIZE).decode(FORMAT)
+                    print(f"[SERVER] {msg}")
+
+                    # Send the data 
+                    file = open(os.path.join(path, file_name), "r")
+                    file_data = file.read()
+
+                    msg = f"DATA:{file_data}"
+                    client.send(msg.encode(FORMAT))
+                    msg = client.recv(SIZE).decode(FORMAT)
+                    print(f"[SERVER] {msg}")
+
+                    # Sending the close command 
+                    msg = f"FINISH:Complete data send"
+                    client.send(msg.encode(FORMAT))
+                    msg = client.recv(SIZE).decode(FORMAT)
+                    print(f"[SERVER] {msg}")
+
+                # Closing the connection from the server 
+                msg = f"CLOSE:File transfer is completed"
+                client.send(msg.encode(FORMAT))
+                client.close()
+         
         except:
             print("SEND DATA FAILED")
+            print("NO INTERNET CONNECTION OR COMPANION APP IS NOT AVAILABLE")
             check_connection_companion.clear()
             check_connection_companion.append(1)
-
-            #TKINTER for window if connection to the companion app was failed
-
-            root = Tk()
-            root.geometry('800x600')
-
-            def delete_items():
-                root.destroy()
-
-            frame1 = Frame(root)
-            frame1.configure(bg='gray')
-            frame1.pack()
-
-            title = Label(frame1, text = "FAILED!!! TO SEND\nEMERGENCY\nNOTIFICATION", font=("Unispace", 48))
-            title.grid(row=0, column=0, pady=(20, 0))
-
-            title_2 = Label(frame1, text = "Please check the Clinic manually\nif the Nurse is PRESENT", font=("Unispace", 28))
-            title_2.grid(row=1, column=0, pady=(20, 10))
-
-            button_remove = Button(frame1, text = "CONFIRM", command = delete_items, font=("Unispace", 45, "bold", "underline"))
-            button_remove.config(height=1, width=10)
-            button_remove.grid(row=2, column=0)
-
-            root.title("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
-            root.configure(bg='gray')
-            root.mainloop()
-            print("WINDOW POP")
-                
-    def responder_threading(self):   
-        x = threading.Thread(target=self.send_to_companion_responder)
-        x.start()
-        
-    def send_to_companion_responder(self):
-        try:
-            print("TRYING TO CHECK INTERNET CONNECTION") 
-            conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
-            conn.close()
-            time.sleep(5)
             
-            SEPARATOR = "<SEPARATOR>"
-            BUFFER_SIZE = 4096
 
-            host = configuration_settings["companion_app_IP"]
-            port = configuration_settings["port_1st"]
-
-            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
-            filesize = os.path.getsize(filename)
-            
-            s = socket.socket()
-
-            s.connect((host, port))
-            print("[+] Connected.")
-
-            # send the filename and filesize
-            s.send(f"{filename}{SEPARATOR}{filesize}".encode())
-
-            # start sending the file
-            progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
-            with open(filename, "rb") as f:
-                while True:
-                    
-                    # read the bytes from the file
-                    bytes_read = f.read(BUFFER_SIZE)
-                    if not bytes_read:
-                        # file transmitting is done
-                        break
-
-                    # we use sendall to assure transimission in 
-                    # busy networks
-                    s.sendall(bytes_read)
-                
-                    # update the progress bar
-                    progress.update(len(bytes_read))
-
-            # close the socket
-            s.close()
-            
-            
-        except:
-            print("SEND DATA FAILED")
-            print("NO INTERNET CONNECTION")
-            check_connection_companion.clear()
-            check_connection_companion.append(1)
             #window.setCurrentIndex(41)
-
-            #TKINTER for window if connection to the companion app was failed
-
-            root = Tk()
-            root.geometry('800x600')
-
-            def delete_items():
-                root.destroy()
-
-            frame1 = Frame(root)
-            frame1.configure(bg='gray')
-            frame1.pack()
-
-            title = Label(frame1, text = "FAILED!!! TO SEND\nEMERGENCY\nNOTIFICATION", font=("Unispace", 48))
-            title.grid(row=0, column=0, pady=(20, 0))
-
-            title_2 = Label(frame1, text = "Please check the Clinic manually\nif the Nurse is PRESENT", font=("Unispace", 28))
-            title_2.grid(row=1, column=0, pady=(20, 10))
-
-            button_remove = Button(frame1, text = "CONFIRM", command = delete_items, font=("Unispace", 45, "bold", "underline"))
-            button_remove.config(height=1, width=10)
-            button_remove.grid(row=2, column=0)
-
-            root.title("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
-            root.configure(bg='gray')
-            root.mainloop()
-            
-            return False    
         
         
 ####################### STEPS UI FOR EVERY INJURIES  #######################
@@ -1912,7 +1986,6 @@ class Ui_before_procedures(QMainWindow):
         super(Ui_before_procedures, self).__init__()
         loadUi("injuries/before_procedures_cautions.ui", self)
         self.goto_steps_button.clicked.connect(self.injuries)
-        self.go_back.clicked.connect(self.go_back_injuries)
     
     def injuries(self):
         if injury_types_selected[-1] == "CUT":
@@ -1944,14 +2017,6 @@ class Ui_before_procedures(QMainWindow):
             
         elif injury_types_selected[-1] == "LACERATION":
             window.setCurrentIndex(35)
-            
-    def go_back_injuries(self):
-        injury_types_selected.pop()
-        body_parts_selected.pop()
-        print(injury_types_selected)
-        print(body_parts_selected)
-        window.setCurrentIndex(2)
-        
 
 ######################  CUT PROCEDURES STEPS (4 windows TOTAL)  ###################### 
 class Ui_step_1_cut(QMainWindow):
@@ -2320,18 +2385,35 @@ class Ui_poison_types(QMainWindow):
             session.append(injury_types_selected[-1])
             session.append(body_parts_selected[-1])
             
-            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+            print(session)
+            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
             f = open(filename, "w+")
             f.close()
             
-            with open('cabinet-history/accessed-responder/recorded_accessed_responder.csv', 'w', encoding='UTF8', newline='') as f:
+            with open("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv", 'w', encoding='UTF8', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(session)
+                
+                
                 
         else:
             print("CSV FILE WAS NOT CREATED.")
             session.append(injury_types_selected[-1])
             session.append(body_parts_selected[-1])
+        
+        # Check config file for sending email
+        # EMAIL ALSO SENT TO THE NURSE
+        if configuration_settings["email_connection"] == True:
+            try:
+                server = smtplib.SMTP('smtp.gmail.com', 587)
+                server.starttls()
+            
+                server.login("coetmedicalcabinet.2022@gmail.com", "bovcsjaynaszeels")
+                server.sendmail("coetmedicalcabinet.2022@gmail.com", configuration_settings["email"], "EMERGENCY RECEIVED FROM THE MEDICAL CABINET!")
+            except:
+                pass    
+        else:
+            pass
         
         # Check config file if program will connect to the companion app
         if configuration_settings["connection_mode"] == True:
@@ -2350,20 +2432,21 @@ class Ui_poison_types(QMainWindow):
         x = threading.Thread(target=self.send_to_companion_responder)
         x.start()
         
-    def send_to_companion_responder(self):
+    def send_to_companion_responder(self):                           
         try:
             print("TRYING TO CHECK INTERNET CONNECTION") 
             conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
             conn.close()
-            time.sleep(5)
+            time.sleep(3)
             
+            print("TRYING TO SEND DATA")
             SEPARATOR = "<SEPARATOR>"
             BUFFER_SIZE = 4096
             
             host = configuration_settings["companion_app_IP"]
             port = configuration_settings["port_1st"]
             
-            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
             filesize = os.path.getsize(filename)
 
             s = socket.socket()
@@ -2392,10 +2475,28 @@ class Ui_poison_types(QMainWindow):
                     # update the progress bar
                     progress.update(len(bytes_read))
 
+            os.remove("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv")
+            
             # close the socket
             s.close()
-            
+
         except:
+            
+            # VERY IMPORTANT TO ADD THE SESSION TIME IN THIS LIST WHEN IT ERRORS... TRUST ME.
+            responder_time.append(session[0])
+            
+            # UPDATING THE CONFIG FILE ASAP
+            with open("config/config.json", "r") as jsonFile:
+                data = json.load(jsonFile)
+
+            data["files_not_sent_responder"].append(responder_time[-1])
+
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+                print("WRITE TO CONFIG SUCCESS")
+                
+            print("SEND DATA FAILED")
+            print("NO INTERNET CONNECTION")
             check_connection_companion.clear()
             check_connection_companion.append(1)
             #window.setCurrentIndex(41)
@@ -2425,6 +2526,8 @@ class Ui_poison_types(QMainWindow):
             root.title("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
             root.configure(bg='gray')
             root.mainloop()
+            
+            return False
     
     def ingestion_steps(self):
         if configuration_settings["enable_solenoid"] == True:
@@ -2463,11 +2566,12 @@ class Ui_poison_types(QMainWindow):
             session.append(injury_types_selected[-1])
             session.append(body_parts_selected[-1])
             
-            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+            print(session)
+            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
             f = open(filename, "w+")
             f.close()
             
-            with open('cabinet-history/accessed-responder/recorded_accessed_responder.csv', 'w', encoding='UTF8', newline='') as f:
+            with open("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv", 'w', encoding='UTF8', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(session)
                 
@@ -2476,10 +2580,30 @@ class Ui_poison_types(QMainWindow):
             session.append(injury_types_selected[-1])
             session.append(body_parts_selected[-1])
         
+        # Check config file for sending email
+        # EMAIL ALSO SENT TO THE NURSE
+        if configuration_settings["email_connection"] == True:
+            try:
+                server = smtplib.SMTP('smtp.gmail.com', 587)
+                server.starttls()
+            
+                server.login("coetmedicalcabinet.2022@gmail.com", "bovcsjaynaszeels")
+                server.sendmail("coetmedicalcabinet.2022@gmail.com", configuration_settings["email"], "EMERGENCY RECEIVED FROM THE MEDICAL CABINET!")
+            except:
+                pass    
+        else:
+            pass
+        
         # Check config file if program will connect to the companion app
         if configuration_settings["connection_mode"] == True:
-            print("Will try to connecto to Companion APP")
-            self.responder_threading()
+            if responder_notif[0] == 0:
+                print("Will try to connect to to Companion APP")
+                self.responder_threading()
+                responder_notif.clear()
+                responder_notif.append(1)
+            else:
+                pass
+                
         else:
             pass
         
@@ -2487,19 +2611,21 @@ class Ui_poison_types(QMainWindow):
         x = threading.Thread(target=self.send_to_companion_responder)
         x.start()
         
-    def send_to_companion_responder(self):
+    def send_to_companion_responder(self):                           
         try:
             print("TRYING TO CHECK INTERNET CONNECTION") 
             conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
             conn.close()
-            time.sleep(5)
+            time.sleep(3)
+            
+            print("TRYING TO SEND DATA")
             SEPARATOR = "<SEPARATOR>"
             BUFFER_SIZE = 4096
             
             host = configuration_settings["companion_app_IP"]
             port = configuration_settings["port_1st"]
             
-            filename = "cabinet-history/accessed-responder/recorded_accessed_responder.csv"
+            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
             filesize = os.path.getsize(filename)
 
             s = socket.socket()
@@ -2528,10 +2654,28 @@ class Ui_poison_types(QMainWindow):
                     # update the progress bar
                     progress.update(len(bytes_read))
 
+            os.remove("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv")
+            
             # close the socket
             s.close()
-            
+
         except:
+            
+            # VERY IMPORTANT TO ADD THE SESSION TIME IN THIS LIST WHEN IT ERRORS... TRUST ME.
+            responder_time.append(session[0])
+            
+            # UPDATING THE CONFIG FILE ASAP
+            with open("config/config.json", "r") as jsonFile:
+                data = json.load(jsonFile)
+
+            data["files_not_sent_responder"].append(responder_time[-1])
+
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+                print("WRITE TO CONFIG SUCCESS")
+                
+            print("SEND DATA FAILED")
+            print("NO INTERNET CONNECTION")
             check_connection_companion.clear()
             check_connection_companion.append(1)
             #window.setCurrentIndex(41)
@@ -2561,12 +2705,14 @@ class Ui_poison_types(QMainWindow):
             root.title("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
             root.configure(bg='gray')
             root.mainloop()
+            
+            return False
     
     def contact_steps(self):
         window.setCurrentIndex(1)
     
     def go_back(self):
-        window.setCurrentIndex(2)
+        window.setCurrentIndex(28)
         
 class Ui_step_1_poison(QMainWindow):
     def __init__(self):
@@ -2660,9 +2806,9 @@ class Ui_step_electric_shock_caution(QMainWindow):
         window.setCurrentIndex(31)
     
     def go_back(self):
-        injury_types_selected.pop()
+        #injury_types_selected.pop()
         print(injury_types_selected)
-        window.setCurrentIndex(2)
+        window.setCurrentIndex(28)
         
 class Ui_step_electric_seek_emergency(QMainWindow):
     def __init__(self):
@@ -2845,7 +2991,157 @@ class Ui_electric_confirmation(QMainWindow):
         self.go_back.clicked.connect(self.go_back_button)
         
     def next_step(self):
-        window.setCurrentIndex(30)
+        window.setCurrentIndex(28)
+        self.save_to_csv()
+        
+    def save_to_csv(self):
+        # Check config file for saving csv (record data)
+        if configuration_settings["allow_saving_csv"] == True:
+            print("SAVING ALL IN A CSV FILE...")
+            session.append(injury_types_selected[-1])
+            session.append("FULL BODY")
+            
+            print(session)
+            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
+            f = open(filename, "w+")
+            f.close()
+            
+            with open("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv", 'w', encoding='UTF8', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(session)
+                
+        else:
+            print("CSV FILE WAS NOT CREATED.")
+            session.append(injury_types_selected[-1])
+            session.append(body_parts_selected[-1])
+        
+        # Check config file for sending email
+        # EMAIL ALSO SENT TO THE NURSE
+        if configuration_settings["email_connection"] == True:
+            try:
+                server = smtplib.SMTP('smtp.gmail.com', 587)
+                server.starttls()
+            
+                server.login("coetmedicalcabinet.2022@gmail.com", "bovcsjaynaszeels")
+                server.sendmail("coetmedicalcabinet.2022@gmail.com", configuration_settings["email"], "EMERGENCY RECEIVED FROM THE MEDICAL CABINET!")
+            except:
+                pass    
+        else:
+            pass
+        
+        # Check config file if program will connect to the companion app
+        if configuration_settings["connection_mode"] == True:
+            if responder_notif[0] == 0:
+                print("Will try to connect to to Companion APP")
+                self.responder_threading()
+                responder_notif.clear()
+                responder_notif.append(1)
+            else:
+                pass
+                
+        else:
+            pass
+        
+    def responder_threading(self):   
+        x = threading.Thread(target=self.send_to_companion_responder)
+        x.start()
+        
+    def send_to_companion_responder(self):                           
+        try:
+            print("TRYING TO CHECK INTERNET CONNECTION") 
+            conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
+            conn.close()
+            time.sleep(3)
+            
+            print("TRYING TO SEND DATA")
+            SEPARATOR = "<SEPARATOR>"
+            BUFFER_SIZE = 4096
+            
+            host = configuration_settings["companion_app_IP"]
+            port = configuration_settings["port_1st"]
+            
+            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
+            filesize = os.path.getsize(filename)
+
+            s = socket.socket()
+
+            s.settimeout(5)
+            s.connect((host, port))
+            print("[+] Connected.")
+
+            s.send(f"{filename}{SEPARATOR}{filesize}".encode())
+
+            # start sending the file
+            progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
+            with open(filename, "rb") as f:
+                while True:
+                    
+                    # read the bytes from the file
+                    bytes_read = f.read(BUFFER_SIZE)
+                    if not bytes_read:
+                        # file transmitting is done
+                        break
+
+                    # we use sendall to assure transimission in 
+                    # busy networks
+                    s.sendall(bytes_read)
+                
+                    # update the progress bar
+                    progress.update(len(bytes_read))
+
+            os.remove("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv")
+            
+            # close the socket
+            s.close()
+
+        except:
+            
+            # VERY IMPORTANT TO ADD THE SESSION TIME IN THIS LIST WHEN IT ERRORS... TRUST ME.
+            responder_time.append(session[0])
+            
+            # UPDATING THE CONFIG FILE ASAP
+            with open("config/config.json", "r") as jsonFile:
+                data = json.load(jsonFile)
+
+            data["files_not_sent_responder"].append(responder_time[-1])
+
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+                print("WRITE TO CONFIG SUCCESS")
+                
+            print("SEND DATA FAILED")
+            print("NO INTERNET CONNECTION")
+            check_connection_companion.clear()
+            check_connection_companion.append(1)
+            #window.setCurrentIndex(41)
+
+            #TKINTER for window if connection to the companion app was failed
+
+            root = Tk()
+            root.geometry('800x600')
+
+            def delete_items():
+                root.destroy()
+
+            frame1 = Frame(root)
+            frame1.configure(bg='gray')
+            frame1.pack()
+
+            title = Label(frame1, text = "FAILED!!! TO SEND\nEMERGENCY\nNOTIFICATION", font=("Unispace", 48))
+            title.grid(row=0, column=0, pady=(20, 0))
+
+            title_2 = Label(frame1, text = "Please check the Clinic manually\nif the Nurse is PRESENT", font=("Unispace", 28))
+            title_2.grid(row=1, column=0, pady=(20, 10))
+
+            button_remove = Button(frame1, text = "CONFIRM", command = delete_items, font=("Unispace", 45, "bold", "underline"))
+            button_remove.config(height=1, width=10)
+            button_remove.grid(row=2, column=0)
+
+            root.title("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
+            root.configure(bg='gray')
+            root.mainloop()
+            
+            return False
             
     def go_back_button(self):
         injury_types_selected.pop()
