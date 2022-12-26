@@ -159,55 +159,6 @@ border-color: black;
      <string>NEXT STEP</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="go_back_injury_type">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>440</y>
-      <width>220</width>
-      <height>120</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>220</width>
-      <height>120</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>220</width>
-      <height>120</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>18</pointsize>
-      <weight>75</weight>
-      <italic>true</italic>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton:hover:!pressed
-{
-  background-color: rgb(195,30,60);
-}
-
-QPushButton
-{
-  background-color: white;
-color: black;
-border-style: outset;
-border-width: 3px;
-border-radius:10px;
-border-color: black;
-}</string>
-    </property>
-    <property name="text">
-     <string>GO BACK</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -241,7 +192,6 @@ border-color: black;
    <zorder>title_step</zorder>
    <zorder>gif_player_label</zorder>
    <zorder>next_step_button</zorder>
-   <zorder>go_back_injury_type</zorder>
   </widget>
  </widget>
  <resources/>

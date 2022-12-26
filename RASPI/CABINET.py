@@ -2,19 +2,20 @@
 import sys, cv2, datetime, time, re, csv, socket, os, threading, ast, smtplib, tqdm, json, glob
 import http.client
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QSpinBox, QMessageBox, QScrollArea, QScroller, \
-                                QScrollerProperties, QRadioButton, QLineEdit, QPushButton, QWidget
-from PyQt5 import QtWidgets
+                                QScrollerProperties, QRadioButton, QLineEdit, QPushButton, QWidget, QComboBox
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QMovie
 from record_session import Ui_record_session
 from cabinet_notif import Ui_cabinet_notif
+from confirm_name import Ui_whitelist_confirm
+from whitelist_error import Ui_whitelist_error
 from tkinter import *
 from email.mime.text import MIMEText
 
 # DATE AND TIME, RESPONDER ID, NAME, COURSE, PATIENT ID, NAME, COURSE, GENDER, INJURY TYPE (used are also for csv file)
 session_time = []
 responder_time = []
-
 session = []
 body_parts_selected = []
 injury_types_selected = ["Placeholder"]
@@ -36,8 +37,8 @@ alphabet = [['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', "Backspace"]
 input_text = []
 input_name = []
 
-# CSV FILE (DEBUG)
-data_qr = []
+# Used for adding whitelist data (DEBUG)
+scanned_data = []
 
 # Used for checking if the 1st send (responder) is succesfull, if not, 
 # it will send again in the end with the last sending which is session
@@ -61,13 +62,20 @@ print("NOT SENT DATA")
 print(responder_time)
 print(session_time)
 
+# DEBUG
+checked_button = []
+restart_button = []
+
 class Ui_scan_qr_code(QMainWindow):
     def __init__(self):
         super(Ui_scan_qr_code, self).__init__()
         loadUi("scan_qr_code.ui", self)
         self.scan_button.clicked.connect(self.qr_camera)
+        self.hidden_button.clicked.connect(self.hidden_settings)
+        self.restart_button.clicked.connect(self.restart_program)
     
     def qr_camera(self):
+        
         # Check config file for CAMERA
         if configuration_settings["enable_camera"] == True:
             print("CAMERA IS CONNECTED")
@@ -85,31 +93,56 @@ class Ui_scan_qr_code(QMainWindow):
 
                 cv2.imshow("Scan QR CODE", img)
 
-                if data:
-                    dt = datetime.datetime.now()
-                    x = dt.strftime("%Y-%m-%d %H-%M-%S")
-                    regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
-                    parsed_text = regexp.findall(data)
-                    fullname = str(parsed_text[1]+" "+ parsed_text[2])
+                # ID_Identifier
+                id_identify = configuration_settings["id_identifier"]
+                
+                # Whitelist
+                whitelisted_name = configuration_settings["whitelisted"]
+                
+                if data:      
+                    if id_identify in data:
+                        print("TUPC ID IS SCANNED")
+            
+                        dt = datetime.datetime.now()
+                        time_now = dt.strftime("%Y-%m-%d %H-%M-%S")
+                        regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
+                        parsed_text = regexp.findall(data)
+                        fullname = str(parsed_text[1]+" "+ parsed_text[2])
 
-                    # 1st QR CODE RESPONDER of COET
-                    session.append(str(x))
-                    # ID
-                    session.append(parsed_text[0])
-                    # NAME
-                    session.append(fullname)
-                    # COURSE
-                    session.append(parsed_text[-2])
+                        # 1st QR CODE RESPONDER of COET
+                        session.append(str(time_now))
+                        # ID
+                        session.append(parsed_text[0])
+                        # NAME
+                        session.append(fullname)
+                        # COURSE
+                        session.append(parsed_text[-2])
+                
+                        cap.release()
+                        cv2.destroyAllWindows()
+                        window.setCurrentIndex(2)
+                        break
                     
-                    # Same situation but for CSV File (DEBUG)
-                    #data_qr.append(str(x))
-                    #data_qr.append(parsed_text[0])
-                    #data_qr.append(fullname)
-                    #data_qr.append(parsed_text[-2])
-
-                    time.sleep(0.5)
-                    break
+                    result = any(item in data for item in whitelisted_name)
+                    
+                    if result == True:
+                        print("OTHERS IS SCANNED")
+                
+                        dt = datetime.datetime.now()
+                        time_now = dt.strftime("%Y-%m-%d %H-%M-%S")
+                        regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
+                        parsed_text = regexp.findall(data)
+                        fullname = str(parsed_text[0]+" "+ parsed_text[1])
                         
+                        session.append(str(time_now))
+                        session.append("Teacher")
+                        session.append(fullname)
+
+                        cap.release()
+                        cv2.destroyAllWindows()
+                        window.setCurrentIndex(2)
+                        break
+    
                 if (cv2.waitKey(1) == ord("r")):
                     time.sleep(0.5)
                     dt = datetime.datetime.now()
@@ -121,11 +154,24 @@ class Ui_scan_qr_code(QMainWindow):
                     session.append("JR ANGELO")
                     # COURSE
                     session.append("COET")
+
+                    cap.release()
+                    cv2.destroyAllWindows()
+                    window.setCurrentIndex(2)
+
                     break
 
-            cap.release()
-            cv2.destroyAllWindows()
-            window.setCurrentIndex(2)
+                if (cv2.waitKey(2) == ord("y")):
+                    if configuration_settings["enable_debug_window"] == True:
+                        
+                        cap.release()
+                        cv2.destroyAllWindows()
+                        window.setCurrentIndex(50)
+                        break
+
+                    else:
+                    
+                        break            
 
         else:
             print("CAMERA IS NOT CONNECTED")
@@ -139,6 +185,19 @@ class Ui_scan_qr_code(QMainWindow):
             # COURSE
             session.append("COET")
             window.setCurrentIndex(2)
+            
+    def hidden_settings(self):
+        if len(checked_button) >= 5:
+            print("ITS UP")
+            window.setCurrentIndex(50)
+            checked_button.clear()
+            
+        else:
+            checked_button.append(1)
+            print("HIDDEN >>>>")
+            
+    def restart_program(self):
+        window.refresh()
 
 class Ui_scan_qr_patient(QMainWindow):
     def __init__(self):
@@ -159,6 +218,7 @@ class Ui_scan_qr_patient(QMainWindow):
         body_parts_selected.clear()
         injury_types_selected.clear()
         injury_types_selected.insert(0, "Placeholder")
+        
         # Check config file for CAMERA
         if configuration_settings["enable_camera"] == True:
             print("CAMERA IS CONNECTED")
@@ -173,38 +233,61 @@ class Ui_scan_qr_patient(QMainWindow):
                     for i in range(len(bbox)):
                         cv2.line(img, tuple(bbox[i][0]), tuple(bbox[(i+1) % len(bbox)][0]), color=(255, 0, 0), thickness=2)
                         cv2.putText(img, data, (int(bbox[0][0][0]), int(bbox[0][0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 250, 120), 2)
-                        
 
-                cv2.imshow("Scan QR CODE to CONTINUE", img)
+                cv2.imshow("Scan QR CODE", img)
 
-                if data:
-                    dt = datetime.datetime.now()
-    
-                    # Format datetime string
-                    x = dt.strftime("%Y-%m-%d %H-%M-%S")
-                    regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
-                    parsed_text = regexp.findall(data)
-                    fullname = str(parsed_text[1]+" "+ parsed_text[2])
+                # ID_Identifier
+                id_identify = configuration_settings["id_identifier"]
+                
+                # Whitelist
+                whitelisted_name = configuration_settings["whitelisted"]
+                
+                if data:      
+                    if id_identify in data:
+                        print("TUPC ID IS SCANNED")
+            
+                        dt = datetime.datetime.now()
+                        time_now = dt.strftime("%Y-%m-%d %H-%M-%S")
+                        regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
+                        parsed_text = regexp.findall(data)
+                        fullname = str(parsed_text[1]+" "+ parsed_text[2])
 
-                    # 1st QR CODE Patient
-                    session.append(str(x))
-                    # ID
-                    session.insert(4, parsed_text[0])
-                    # NAME
-                    session.insert(5, fullname)
-                    # COURSE
-                    session.insert(6, parsed_text[-2])
-                    # CHECK IF ADDED DATA IN LIST IS CORRECT
+                        # 1st QR CODE RESPONDER of COET
+                        session.append(str(time_now))
+                        # ID
+                        session.append(parsed_text[0])
+                        # NAME
+                        session.append(fullname)
+                        # COURSE
+                        session.append(parsed_text[-2])
+                
+                        cap.release()
+                        cv2.destroyAllWindows()
+                        window.setCurrentIndex(8)
+
+                        break
                     
-                    # Same situation but for CSV File
-                    #data_qr.append(4, parsed_text[0])
-                    # NAME
-                    #data_qr.append(5, fullname)
-                    # COURSE
-                    #data_qr.append(6, parsed_text[-2])
+                    
+                    result = any(item in data for item in whitelisted_name)
+                    
+                    if result == True:
+                        print("OTHERS IS SCANNED")
+                
+                        dt = datetime.datetime.now()
+                        time_now = dt.strftime("%Y-%m-%d %H-%M-%S")
+                        regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
+                        parsed_text = regexp.findall(data)
+                        fullname = str(parsed_text[0]+" "+ parsed_text[1])
+                        
+                        session.append(str(time_now))
+                        session.append("Teacher")
+                        session.append(fullname)
 
-                    time.sleep(0.5)
-                    break
+                        cap.release()
+                        cv2.destroyAllWindows()
+                        window.setCurrentIndex(8)
+
+                        break
                         
                 if (cv2.waitKey(1) == ord("p")):
                     session.insert(4, "TUPC-PATIENT")
@@ -213,12 +296,12 @@ class Ui_scan_qr_patient(QMainWindow):
                     # COURSE
                     session.insert(6, "COET")
                     time.sleep(0.5)
+
+                    cap.release()
+                    cv2.destroyAllWindows()
+                    window.setCurrentIndex(8)
                     
                     break
-
-            cap.release()
-            cv2.destroyAllWindows()
-            window.setCurrentIndex(8)
             
         else:
             print("CAMERA IS NOT CONNECTED")
@@ -232,7 +315,6 @@ class Ui_scan_qr_patient(QMainWindow):
             # COURSE
             session.append("COET")
             window.setCurrentIndex(0)
-            
         
 class Ui_select_injury_type(QMainWindow):
     def __init__(self):
@@ -252,7 +334,7 @@ class Ui_select_injury_type(QMainWindow):
         self.scroll = QScroller.scroller(self.scroll_area.viewport())
         self.scroll.grabGesture(self.scrollArea.viewport(), QScroller.LeftMouseButtonGesture)
         self.props = self.scroll.scrollerProperties()
-        self.props.setScrollMetric(QScrollerProperties.VerticalOvershootPolicy, QScrollerProperties.OvershootAlwaysOff)
+        #self.props.setScrollMetric(QScrollerProperties.VerticalOvershootPolicy, QScrollerProperties.OvershootAlwaysOff)
         self.scroll.setScrollerProperties(self.props)
         
     def injuries(self, injury_type_selection):
@@ -352,32 +434,21 @@ class Ui_select_body_part(QMainWindow):
             self.injuries()
     
     def injuries(self):
-        
         # RASPBERRY PI SOLENOID SETTINGS
         # UNLOCK THE CABINET IF IN CONFIG IS TRUE, else no
-        if configuration_settings["enable_solenoid"] == True:
-            print("SOLENOID FEATURE IS ON")
-            
-            import RPi.GPIO as GPIO
-            
-            GPIO.setwarnings(False)
-            GPIO.setmode(GPIO.BCM)
-            GPIO.setup(18, GPIO.OUT)
-            GPIO.output(18, 0)
-            time.sleep(10)
-            #GPIO.output(18, 1)
-            
-            self.cabinet_notif = QtWidgets.QMainWindow()
-            self.ui = Ui_cabinet_notif()
-            self.ui.setupUi(self.cabinet_notif)
-            self.cabinet_notif.show()
+        self.solenoid_threading()
         
-        else:
-            print("SOLENOID FEATURE IS OFF")
+        # DISPLAY THE WINDOW TELLING THAT THE SOLENOID IS UNLOCKED
+        if configuration_settings["enable_solenoid"] == True:
+            print("SOLENOID FEATURE IS ON (1)")
             self.cabinet_notif = QtWidgets.QMainWindow()
             self.ui = Ui_cabinet_notif()
             self.ui.setupUi(self.cabinet_notif)
             self.cabinet_notif.show()
+            
+        else:
+            print("SOLENOID FEATURE IS OFF (1)")
+            pass
 
         if injury_types_selected[-1] == "CUT":
             window.setCurrentIndex(28)
@@ -413,6 +484,32 @@ class Ui_select_body_part(QMainWindow):
         elif injury_type_selection == "Go back to window":
             window.setCurrentIndex(window.currentIndex()-1) 
             
+    def solenoid_threading(self):
+        x = threading.Thread(target=self.open_close_solenoid)
+        x.start()
+            
+    def open_close_solenoid(self):
+        print("CALLED SOLENOID >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+        if configuration_settings["enable_solenoid"] == True:
+            print("SOLENOID FEATURE IS ON (2)")
+            
+            import RPi.GPIO as GPIO
+            
+            GPIO.setwarnings(False)
+            GPIO.setmode(GPIO.BCM)
+            GPIO.setup(18, GPIO.OUT)
+            print("GPIO SOLENOID OPEN")
+            GPIO.output(18, 0)
+            time.sleep(10)
+            print("GPIO SOLENOID CLOSE")
+            GPIO.output(18, 1)
+            #GPIO.output(18, 1)
+            
+        else:
+            print("SOLENOID FEATURE IS OFF (2)")
+            pass 
+            
+            
     def responder_csv_file(self):
         # Check config file for saving csv (record data)
         if configuration_settings["allow_saving_csv"] == True:
@@ -445,6 +542,7 @@ class Ui_select_body_part(QMainWindow):
                 server.sendmail("coetmedicalcabinet.2022@gmail.com", configuration_settings["email"], "EMERGENCY RECEIVED FROM THE MEDICAL CABINET!")
             except:
                 pass    
+            
         else:
             pass
         
@@ -508,9 +606,7 @@ class Ui_select_body_part(QMainWindow):
                     # update the progress bar
                     progress.update(len(bytes_read))
 
-            os.remove("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv")
-            
-            # close the socket
+            #os.remove("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv")
             s.close()
 
         except:
@@ -535,7 +631,6 @@ class Ui_select_body_part(QMainWindow):
             #window.setCurrentIndex(41)
 
             #TKINTER for window if connection to the companion app was failed
-
             root = Tk()
             root.geometry('800x600')
 
@@ -1055,7 +1150,7 @@ class Ui_enter_injury(QMainWindow):
         if configuration_settings["connection_mode"] == True:
             self.enter_injury_threading()
         else:
-            print("DISABLED CONNECTIONG TO COMPANION APP")
+            print("DISABLED CONNECTING TO COMPANION APP")
             pass
         
         window.setCurrentIndex(4)
@@ -1109,6 +1204,8 @@ class Ui_enter_injury(QMainWindow):
                 
                     # update the progress bar
                     progress.update(len(bytes_read))
+                    
+            responder_time.pop()
             
             with open("config/config.json", "r") as jsonFile:
                 data = json.load(jsonFile)
@@ -1119,18 +1216,12 @@ class Ui_enter_injury(QMainWindow):
                 json.dump(data, jsonFile)
                 print("WRITE TO CONFIG SUCCESS")
 
-            os.remove("cabinet-history/responder/recorded_accessed_responder" + " " + responder_time[-1] + ".csv")
-            
-            # close the socket
+            #os.remove("cabinet-history/responder/recorded_accessed_responder" + " " + responder_time[-1] + ".csv")
             s.close()
 
         except:
-                
-            print("SEND DATA FAILED")
-            print("NO INTERNET CONNECTION")
 
             #TKINTER for window if connection to the companion app was failed
-
             root = Tk()
             root.geometry('800x600')
 
@@ -1216,21 +1307,6 @@ class Ui_confirmation_again(QMainWindow):
     
     # GOING TO SCAN QR CODE AGAIN BUT FOR THE PATIENT
     def done_procedure(self):
-        if configuration_settings["enable_solenoid"] == True:
-            print("SOLENOID FEATURE IS ON")
-            
-            import RPi.GPIO as GPIO
-
-            GPIO.setwarnings(False)
-            GPIO.setmode(GPIO.BCM)
-            GPIO.setup(18, GPIO.OUT)
-            GPIO.output(18, 1)
-            #GPIO.output(18, 0)
-        
-        else:
-            print("SOLENOID FEATURE IS OFF")
-            pass
-        
         window.setCurrentIndex(7)
         
 class Ui_guest_patient_window(QMainWindow):
@@ -1752,7 +1828,7 @@ class Ui_gender_patient_window(QMainWindow):
         self.ui.body_injured.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{}</span></p></body></html>".format(", ".join(body_parts_selected)))
         self.ui.type_of_injury.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">{}</span></p></body></html>".format(", ".join(injury_types_selected[1:])))
 
-        data_qr.clear()
+        #data_qr.clear()
         
         window.setCurrentIndex(0)
         self.save_session_tolocal()
@@ -1882,7 +1958,9 @@ class Ui_gender_patient_window(QMainWindow):
                 client.close()
                 
             # ADD TIMER SO THE COMPANION APP WILL NOT BE CONFUSED
-            time.sleep(5)    
+            time_send_next_data = configuration_settings["debug_time_send"]
+            print(time_send_next_data)
+            time.sleep(time_send_next_data)    
                 
             # CHECK IF THERE ARE STILL FILES NOT SENT
             print("CHECK FOR RESPONDER FILES ")
@@ -2347,380 +2425,204 @@ class Ui_poison_types(QMainWindow):
         self.contact_button.clicked.connect(self.contact_steps)
         self.go_back_injury_type.clicked.connect(self.go_back)
         
-    def inhalation_steps(self):
-        if configuration_settings["enable_solenoid"] == True:
-            print("SOLENOID FEATURE IS ON")
-            
-            import RPi.GPIO as GPIO
-            
-            GPIO.setwarnings(False)
-            GPIO.setmode(GPIO.BCM)
-            GPIO.setup(18, GPIO.OUT)
-            GPIO.output(18, 0)
-            #GPIO.output(18, 0)
-            
-            self.cabinet_notif = QtWidgets.QMainWindow()
-            self.ui = Ui_cabinet_notif()
-            self.ui.setupUi(self.cabinet_notif)
-            self.cabinet_notif.show()
-            
-            window.setCurrentIndex(26)
-        
-        else:
-            
-            print("SOLENOID FEATURE IS OFF")
-            self.cabinet_notif = QtWidgets.QMainWindow()
-            self.ui = Ui_cabinet_notif()
-            self.ui.setupUi(self.cabinet_notif)
-            self.cabinet_notif.show()
-            
-        body_parts_selected.append("NOSE")
-        window.setCurrentIndex(26)
-        self.save_to_csv()
-        
-    def save_to_csv(self):
-        # Check config file for saving csv (record data)
-        if configuration_settings["allow_saving_csv"] == True:
-            print("SAVING ALL IN A CSV FILE...")
-            session.append(injury_types_selected[-1])
-            session.append(body_parts_selected[-1])
-            
-            print(session)
-            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
-            f = open(filename, "w+")
-            f.close()
-            
-            with open("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv", 'w', encoding='UTF8', newline='') as f:
-                writer = csv.writer(f)
-                writer.writerow(session)
-                
-                
-                
-        else:
-            print("CSV FILE WAS NOT CREATED.")
-            session.append(injury_types_selected[-1])
-            session.append(body_parts_selected[-1])
-        
-        # Check config file for sending email
-        # EMAIL ALSO SENT TO THE NURSE
-        if configuration_settings["email_connection"] == True:
-            try:
-                server = smtplib.SMTP('smtp.gmail.com', 587)
-                server.starttls()
-            
-                server.login("coetmedicalcabinet.2022@gmail.com", "bovcsjaynaszeels")
-                server.sendmail("coetmedicalcabinet.2022@gmail.com", configuration_settings["email"], "EMERGENCY RECEIVED FROM THE MEDICAL CABINET!")
-            except:
-                pass    
-        else:
-            pass
-        
-        # Check config file if program will connect to the companion app
-        if configuration_settings["connection_mode"] == True:
-            if responder_notif[0] == 0:
-                print("Will try to connect to to Companion APP")
-                self.responder_threading()
-                responder_notif.clear()
-                responder_notif.append(1)
-            else:
-                pass
-                
-        else:
-            pass
-        
-    def responder_threading(self):   
-        x = threading.Thread(target=self.send_to_companion_responder)
-        x.start()
-        
-    def send_to_companion_responder(self):                           
-        try:
-            print("TRYING TO CHECK INTERNET CONNECTION") 
-            conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
-            conn.close()
-            time.sleep(3)
-            
-            print("TRYING TO SEND DATA")
-            SEPARATOR = "<SEPARATOR>"
-            BUFFER_SIZE = 4096
-            
-            host = configuration_settings["companion_app_IP"]
-            port = configuration_settings["port_1st"]
-            
-            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
-            filesize = os.path.getsize(filename)
-
-            s = socket.socket()
-
-            s.settimeout(5)
-            s.connect((host, port))
-            print("[+] Connected.")
-
-            s.send(f"{filename}{SEPARATOR}{filesize}".encode())
-
-            # start sending the file
-            progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
-            with open(filename, "rb") as f:
-                while True:
-                    
-                    # read the bytes from the file
-                    bytes_read = f.read(BUFFER_SIZE)
-                    if not bytes_read:
-                        # file transmitting is done
-                        break
-
-                    # we use sendall to assure transimission in 
-                    # busy networks
-                    s.sendall(bytes_read)
-                
-                    # update the progress bar
-                    progress.update(len(bytes_read))
-
-            os.remove("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv")
-            
-            # close the socket
-            s.close()
-
-        except:
-            
-            # VERY IMPORTANT TO ADD THE SESSION TIME IN THIS LIST WHEN IT ERRORS... TRUST ME.
-            responder_time.append(session[0])
-            
-            # UPDATING THE CONFIG FILE ASAP
-            with open("config/config.json", "r") as jsonFile:
-                data = json.load(jsonFile)
-
-            data["files_not_sent_responder"].append(responder_time[-1])
-
-            with open("config/config.json", "w") as jsonFile:
-                json.dump(data, jsonFile)
-                print("WRITE TO CONFIG SUCCESS")
-                
-            print("SEND DATA FAILED")
-            print("NO INTERNET CONNECTION")
-            check_connection_companion.clear()
-            check_connection_companion.append(1)
-            #window.setCurrentIndex(41)
-
-            #TKINTER for window if connection to the companion app was failed
-
-            root = Tk()
-            root.geometry('800x600')
-
-            def delete_items():
-                root.destroy()
-
-            frame1 = Frame(root)
-            frame1.configure(bg='gray')
-            frame1.pack()
-
-            title = Label(frame1, text = "FAILED!!! TO SEND\nEMERGENCY\nNOTIFICATION", font=("Unispace", 48))
-            title.grid(row=0, column=0, pady=(20, 0))
-
-            title_2 = Label(frame1, text = "Please check the Clinic manually\nif the Nurse is PRESENT", font=("Unispace", 28))
-            title_2.grid(row=1, column=0, pady=(20, 10))
-
-            button_remove = Button(frame1, text = "CONFIRM", command = delete_items, font=("Unispace", 45, "bold", "underline"))
-            button_remove.config(height=1, width=10)
-            button_remove.grid(row=2, column=0)
-
-            root.title("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
-            root.configure(bg='gray')
-            root.mainloop()
-            
-            return False
-    
     def ingestion_steps(self):
-        if configuration_settings["enable_solenoid"] == True:
-            print("SOLENOID FEATURE IS ON")
-            
-            import RPi.GPIO as GPIO
-            
-            GPIO.setwarnings(False)
-            GPIO.setmode(GPIO.BCM)
-            GPIO.setup(18, GPIO.OUT)
-            GPIO.output(18, 0)
-            #GPIO.output(18, 0)
-            
-            self.cabinet_notif = QtWidgets.QMainWindow()
-            self.ui = Ui_cabinet_notif()
-            self.ui.setupUi(self.cabinet_notif)
-            self.cabinet_notif.show()
-            
-            window.setCurrentIndex(26)
-        
-        else:
-            print("SOLENOID FEATURE IS OFF")
-            self.cabinet_notif = QtWidgets.QMainWindow()
-            self.ui = Ui_cabinet_notif()
-            self.ui.setupUi(self.cabinet_notif)
-            self.cabinet_notif.show()
-            
-        body_parts_selected.append("MOUTH")
+        body_parts_selected.append("MOUTH-SWALLOWED")
         window.setCurrentIndex(23)
         self.save_to_csv()
+        self.solenoid_threading()
         
-    def save_to_csv(self):
-        # Check config file for saving csv (record data)
-        if configuration_settings["allow_saving_csv"] == True:
-            print("SAVING ALL IN A CSV FILE...")
-            session.append(injury_types_selected[-1])
-            session.append(body_parts_selected[-1])
-            
-            print(session)
-            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
-            f = open(filename, "w+")
-            f.close()
-            
-            with open("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv", 'w', encoding='UTF8', newline='') as f:
-                writer = csv.writer(f)
-                writer.writerow(session)
-                
-        else:
-            print("CSV FILE WAS NOT CREATED.")
-            session.append(injury_types_selected[-1])
-            session.append(body_parts_selected[-1])
+    def inhalation_steps(self):
+        body_parts_selected.append("NOSE-INHALED")
+        window.setCurrentIndex(26)
+        self.save_to_csv()
+        self.solenoid_threading()
         
-        # Check config file for sending email
-        # EMAIL ALSO SENT TO THE NURSE
-        if configuration_settings["email_connection"] == True:
-            try:
-                server = smtplib.SMTP('smtp.gmail.com', 587)
-                server.starttls()
-            
-                server.login("coetmedicalcabinet.2022@gmail.com", "bovcsjaynaszeels")
-                server.sendmail("coetmedicalcabinet.2022@gmail.com", configuration_settings["email"], "EMERGENCY RECEIVED FROM THE MEDICAL CABINET!")
-            except:
-                pass    
-        else:
-            pass
-        
-        # Check config file if program will connect to the companion app
-        if configuration_settings["connection_mode"] == True:
-            if responder_notif[0] == 0:
-                print("Will try to connect to to Companion APP")
-                self.responder_threading()
-                responder_notif.clear()
-                responder_notif.append(1)
-            else:
-                pass
-                
-        else:
-            pass
-        
-    def responder_threading(self):   
-        x = threading.Thread(target=self.send_to_companion_responder)
-        x.start()
-        
-    def send_to_companion_responder(self):                           
-        try:
-            print("TRYING TO CHECK INTERNET CONNECTION") 
-            conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
-            conn.close()
-            time.sleep(3)
-            
-            print("TRYING TO SEND DATA")
-            SEPARATOR = "<SEPARATOR>"
-            BUFFER_SIZE = 4096
-            
-            host = configuration_settings["companion_app_IP"]
-            port = configuration_settings["port_1st"]
-            
-            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
-            filesize = os.path.getsize(filename)
-
-            s = socket.socket()
-
-            s.settimeout(5)
-            s.connect((host, port))
-            print("[+] Connected.")
-
-            s.send(f"{filename}{SEPARATOR}{filesize}".encode())
-
-            # start sending the file
-            progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
-            with open(filename, "rb") as f:
-                while True:
-                    
-                    # read the bytes from the file
-                    bytes_read = f.read(BUFFER_SIZE)
-                    if not bytes_read:
-                        # file transmitting is done
-                        break
-
-                    # we use sendall to assure transimission in 
-                    # busy networks
-                    s.sendall(bytes_read)
-                
-                    # update the progress bar
-                    progress.update(len(bytes_read))
-
-            os.remove("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv")
-            
-            # close the socket
-            s.close()
-
-        except:
-            
-            # VERY IMPORTANT TO ADD THE SESSION TIME IN THIS LIST WHEN IT ERRORS... TRUST ME.
-            responder_time.append(session[0])
-            
-            # UPDATING THE CONFIG FILE ASAP
-            with open("config/config.json", "r") as jsonFile:
-                data = json.load(jsonFile)
-
-            data["files_not_sent_responder"].append(responder_time[-1])
-
-            with open("config/config.json", "w") as jsonFile:
-                json.dump(data, jsonFile)
-                print("WRITE TO CONFIG SUCCESS")
-                
-            print("SEND DATA FAILED")
-            print("NO INTERNET CONNECTION")
-            check_connection_companion.clear()
-            check_connection_companion.append(1)
-            #window.setCurrentIndex(41)
-
-            #TKINTER for window if connection to the companion app was failed
-
-            root = Tk()
-            root.geometry('800x600')
-
-            def delete_items():
-                root.destroy()
-
-            frame1 = Frame(root)
-            frame1.configure(bg='gray')
-            frame1.pack()
-
-            title = Label(frame1, text = "FAILED!!! TO SEND\nEMERGENCY\nNOTIFICATION", font=("Unispace", 48))
-            title.grid(row=0, column=0, pady=(20, 0))
-
-            title_2 = Label(frame1, text = "Please check the Clinic manually\nif the Nurse is PRESENT", font=("Unispace", 28))
-            title_2.grid(row=1, column=0, pady=(20, 10))
-
-            button_remove = Button(frame1, text = "CONFIRM", command = delete_items, font=("Unispace", 45, "bold", "underline"))
-            button_remove.config(height=1, width=10)
-            button_remove.grid(row=2, column=0)
-
-            root.title("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
-            root.configure(bg='gray')
-            root.mainloop()
-            
-            return False
-    
     def contact_steps(self):
         window.setCurrentIndex(1)
     
     def go_back(self):
         window.setCurrentIndex(28)
+    
+    def solenoid_threading(self):
+        x = threading.Thread(target=self.open_close_solenoid)
+        x.start()
+            
+    def open_close_solenoid(self):
+        print("CALLED SOLENOID >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+        if configuration_settings["enable_solenoid"] == True:
+            print("SOLENOID FEATURE IS ON (2)")
+            
+            import RPi.GPIO as GPIO
+            
+            GPIO.setwarnings(False)
+            GPIO.setmode(GPIO.BCM)
+            GPIO.setup(18, GPIO.OUT)
+            print("GPIO SOLENOID OPEN")
+            GPIO.output(18, 0)
+            time.sleep(10)
+            print("GPIO SOLENOID CLOSE")
+            GPIO.output(18, 1)
+            #GPIO.output(18, 1)
+            
+        else:
+            print("SOLENOID FEATURE IS OFF (2)")
+            pass 
+        
+    def save_to_csv(self):
+        # Check config file for saving csv (record data)
+        if configuration_settings["allow_saving_csv"] == True:
+            print("SAVING ALL IN A CSV FILE...")
+            session.append(injury_types_selected[-1])
+            session.append(body_parts_selected[-1])
+            
+            print(session)
+            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
+            f = open(filename, "w+")
+            f.close()
+            
+            with open("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv", 'w', encoding='UTF8', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(session)
+                
+        else:
+            print("CSV FILE WAS NOT CREATED.")
+            session.append(injury_types_selected[-1])
+            session.append(body_parts_selected[-1])
+        
+        # Check config file for sending email
+        # EMAIL ALSO SENT TO THE NURSE
+        if configuration_settings["email_connection"] == True:
+            try:
+                server = smtplib.SMTP('smtp.gmail.com', 587)
+                server.starttls()
+            
+                server.login("coetmedicalcabinet.2022@gmail.com", "bovcsjaynaszeels")
+                server.sendmail("coetmedicalcabinet.2022@gmail.com", configuration_settings["email"], "EMERGENCY RECEIVED FROM THE MEDICAL CABINET!")
+            except:
+                pass    
+        else:
+            pass
+        
+        # Check config file if program will connect to the companion app
+        if configuration_settings["connection_mode"] == True:
+            if responder_notif[0] == 0:
+                print("Will try to connect to to Companion APP")
+                self.responder_threading()
+                responder_notif.clear()
+                responder_notif.append(1)
+            else:
+                pass
+                
+        else:
+            pass
+        
+    def responder_threading(self):   
+        x = threading.Thread(target=self.send_to_companion_responder)
+        x.start()
+        
+    def send_to_companion_responder(self):                           
+        try:
+            print("TRYING TO CHECK INTERNET CONNECTION") 
+            conn = http.client.HTTPConnection(configuration_settings["companion_app_IP"], configuration_settings["port_1st"])                     
+            conn.close()
+            time.sleep(3)
+            
+            print("TRYING TO SEND DATA")
+            SEPARATOR = "<SEPARATOR>"
+            BUFFER_SIZE = 4096
+            
+            host = configuration_settings["companion_app_IP"]
+            port = configuration_settings["port_1st"]
+            
+            filename = "cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv"
+            filesize = os.path.getsize(filename)
+
+            s = socket.socket()
+
+            s.settimeout(5)
+            s.connect((host, port))
+            print("[+] Connected.")
+
+            s.send(f"{filename}{SEPARATOR}{filesize}".encode())
+
+            # start sending the file
+            progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
+            with open(filename, "rb") as f:
+                while True:
+                    
+                    # read the bytes from the file
+                    bytes_read = f.read(BUFFER_SIZE)
+                    if not bytes_read:
+                        # file transmitting is done
+                        break
+
+                    # we use sendall to assure transimission in 
+                    # busy networks
+                    s.sendall(bytes_read)
+                
+                    # update the progress bar
+                    progress.update(len(bytes_read))
+
+            #os.remove("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv")
+            
+            # close the socket
+            s.close()
+
+        except:
+            
+            # VERY IMPORTANT TO ADD THE SESSION TIME IN THIS LIST WHEN IT ERRORS... TRUST ME.
+            responder_time.append(session[0])
+            
+            # UPDATING THE CONFIG FILE ASAP
+            with open("config/config.json", "r") as jsonFile:
+                data = json.load(jsonFile)
+
+            data["files_not_sent_responder"].append(responder_time[-1])
+
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+                print("WRITE TO CONFIG SUCCESS")
+                
+            print("SEND DATA FAILED")
+            print("NO INTERNET CONNECTION")
+            check_connection_companion.clear()
+            check_connection_companion.append(1)
+            #window.setCurrentIndex(41)
+
+            #TKINTER for window if connection to the companion app was failed
+
+            root = Tk()
+            root.geometry('800x600')
+
+            def delete_items():
+                root.destroy()
+
+            frame1 = Frame(root)
+            frame1.configure(bg='gray')
+            frame1.pack()
+
+            title = Label(frame1, text = "FAILED!!! TO SEND\nEMERGENCY\nNOTIFICATION", font=("Unispace", 48))
+            title.grid(row=0, column=0, pady=(20, 0))
+
+            title_2 = Label(frame1, text = "Please check the Clinic manually\nif the Nurse is PRESENT", font=("Unispace", 28))
+            title_2.grid(row=1, column=0, pady=(20, 10))
+
+            button_remove = Button(frame1, text = "CONFIRM", command = delete_items, font=("Unispace", 45, "bold", "underline"))
+            button_remove.config(height=1, width=10)
+            button_remove.grid(row=2, column=0)
+
+            root.title("Interactive First Aid Cabinet - BET COET 4A - Build 2022")
+            root.configure(bg='gray')
+            root.mainloop()
+            
+            return False
         
 class Ui_step_1_poison(QMainWindow):
     def __init__(self):
         super(Ui_step_1_poison, self).__init__()
         loadUi("injuries/poison_step_1.ui", self)
-        
         self.next_step_button.clicked.connect(self.next_step)
-        self.go_back_injury_type.clicked.connect(self.go_back)
+        #self.go_back_injury_type.clicked.connect(self.go_back)
         
     def next_step(self):
         window.setCurrentIndex(24)
@@ -2763,7 +2665,7 @@ class Ui_step_poison_inhalation(QMainWindow):
         loadUi("injuries/poison_inhalation.ui", self)
         
         self.next_step_button_4.clicked.connect(self.next_step)
-        self.go_back_injury_type_4.clicked.connect(self.go_back)
+        #self.go_back_injury_type_4.clicked.connect(self.go_back)
         
     def next_step(self):
         window.setCurrentIndex(48)
@@ -2777,7 +2679,7 @@ class Ui_step_poison_contact(QMainWindow):
         super(Ui_step_poison_contact, self).__init__()
         loadUi("injuries/poison_eye.ui", self)
         self.next_step_button.clicked.connect(self.next_step)
-        self.go_back_injury_type.clicked.connect(self.go_back)
+        #self.go_back_injury_type.clicked.connect(self.go_back)
         
         self.gif_player_label = self.findChild(QLabel, "gif_player_label")
         
@@ -3089,7 +2991,7 @@ class Ui_electric_confirmation(QMainWindow):
                     # update the progress bar
                     progress.update(len(bytes_read))
 
-            os.remove("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv")
+            #os.remove("cabinet-history/responder/recorded_accessed_responder" + " " + session[0] + ".csv")
             
             # close the socket
             s.close()
@@ -3171,7 +3073,7 @@ class Ui_poison_confirmation(QMainWindow):
         self.go_back.clicked.connect(self.go_back_button)
         
     def next_step(self):
-        window.setCurrentIndex(22)
+        window.setCurrentIndex(28)
             
     def go_back_button(self):
         injury_types_selected.pop()
@@ -3202,12 +3104,358 @@ class Ui_final_procedure(QMainWindow):
 
     def reset_program(self):
         window.setCurrentIndex(5)
+
+
+# WINDOW DEBUG
+class debug_window_1(QMainWindow):
+    def __init__(self):
+        super(debug_window_1, self).__init__()
+        loadUi("config/debug_tools/debug_window_1.ui", self)
+        self.exit_button.clicked.connect(self.exit_window)
+        self.confirm_button.clicked.connect(self.login_window)
+
+        self.username = self.findChild(QLineEdit, "user_name")
+        self.password = self.findChild(QLineEdit, "pass_word")
+        self.password.setEchoMode(QLineEdit.Password)
+    
+    def login_window(self):
+        with open("config/debug_tools/debug_config.json", "r") as data:
+            debug_configurations = json.load(data)
+
+        if self.username.text() == debug_configurations["username"] and self.password.text() == debug_configurations["password"]:
+            dt = datetime.datetime.now()
+            time_now = dt.strftime("%Y-%m-%d %H-%M-%S")
+
+            with open("config/debug_tools/debug_config.json", "r") as data:
+                debug_configurations = json.load(data)
+
+            debug_configurations["date"].append(time_now)
+
+            with open("config/debug_tools/debug_config.json", "w") as jsonFile:
+                json.dump(debug_configurations, jsonFile)
+            print("WRITE TO CONFIG SUCCESS")
+
+            window.setCurrentIndex(51)
+        else:
+            pass
+
+    def exit_window(self):
+        window.setCurrentIndex(0)
+
+class debug_window_2(QMainWindow):
+    def __init__(self):
+        super(debug_window_2, self).__init__()
+        loadUi("config/debug_tools/debug_window_2.ui", self)
+        self.continue_button.clicked.connect(self.continue_window)
+        self.exit_button.clicked.connect(self.exit_window)
+
+    def continue_window(self):
+
+        window.setCurrentIndex(49)
+
+    def exit_window(self):
+        window.setCurrentIndex(0)
+
+class debug_window_3(QMainWindow):
+    def __init__(self):
+        super(debug_window_3, self).__init__()
+        loadUi("config/debug_tools/debug_window_3.ui", self)
+        self.confirm_settings.clicked.connect(self.change_configs)
+        self.exit_settings.clicked.connect(self.exit_window)
+        self.add_whitelist.clicked.connect(self.add_user)
+        
+        self.scroll_area = self.findChild(QScrollArea, "scrollArea")
+        self.scroll = QScroller.scroller(self.scroll_area.viewport())
+        self.scroll.grabGesture(self.scrollArea.viewport(), QScroller.LeftMouseButtonGesture)
+        self.props = self.scroll.scrollerProperties()
+        #self.props.setScrollMetric(QScrollerProperties.VerticalOvershootPolicy, QScrollerProperties.OvershootAlwaysOff)
+        self.scroll.setScrollerProperties(self.props)
+
+        #
+        self.connection_mode_companion = self.findChild(QComboBox, "settings_connection_mode")
+        if configuration_settings["connection_mode"] == True:
+            self.connection_mode_companion.setCurrentIndex(0)
+        elif configuration_settings["connection_mode"] == False:
+            self.connection_mode_companion.setCurrentIndex(1)
+
+        #
+        self.device_ip = self.findChild(QLineEdit, "settings_device_ip")
+        self.device_ip.setText(configuration_settings["companion_app_IP"])
+
+        #
+        self.first_port = self.findChild(QSpinBox, "settings_1st_port")
+        self.first_port.setValue(configuration_settings["port_1st"])
+
+        #
+        self.second_port = self.findChild(QSpinBox, "settings_2nd_port")
+        self.second_port.setValue(configuration_settings["port_2nd"])
+
+        #
+        self.third_port = self.findChild(QSpinBox, "settings_3rd_port")
+        self.third_port.setValue(configuration_settings["port_3rd"])
+
+        #
+        self.time_send = self.findChild(QSpinBox, "settings_send_wait_time")
+        self.time_send.setValue(configuration_settings["debug_time_send"])
+
+        #
+        self.connection_email = self.findChild(QComboBox, "settings_email_connection")
+        if configuration_settings["email_connection"] == True:
+            self.connection_email.setCurrentIndex(0)
+        elif configuration_settings["email_connection"] == False:
+            self.connection_email.setCurrentIndex(1)
+        
+        #
+        self.email_receiver = self.findChild(QLineEdit, "settings_email_send")
+        self.email_receiver.setText(configuration_settings["email"])
+
+        #
+        self.camera_enable = self.findChild(QComboBox, "settings_enable_camera")
+        if configuration_settings["enable_camera"] == True:
+            self.camera_enable.setCurrentIndex(0)
+        elif configuration_settings["enable_camera"] == False:
+            self.camera_enable.setCurrentIndex(1)
+
+        #
+        self.solenoid_enable = self.findChild(QComboBox, "settings_enable_solenoid")
+        if configuration_settings["enable_solenoid"] == True:
+            self.solenoid_enable.setCurrentIndex(0)
+        elif configuration_settings["enable_solenoid"] == False:
+            self.solenoid_enable.setCurrentIndex(1)
+
+        #
+        self.csv_saving = self.findChild(QComboBox, "settings_csv_saving")
+        if configuration_settings["allow_saving_csv"] == True:
+            self.csv_saving.setCurrentIndex(0)
+        elif configuration_settings["allow_saving_csv"] == False:
+            self.csv_saving.setCurrentIndex(1)
+
+        #
+        self.csv_deleting = self.findChild(QComboBox, "settings_csv_deleting")
+        if configuration_settings["allow_deleting_csv"] == True:
+            self.csv_deleting.setCurrentIndex(0)
+        elif configuration_settings["allow_deleting_csv"] == False:
+            self.csv_deleting.setCurrentIndex(1)
+    
+    def change_configs(self):
+        print("BUTTON CONNECTED")
+        
+        with open("config/config.json", "r") as jsonFile:
+            data = json.load(jsonFile)
+
+        #########################################################
+        if self.connection_mode_companion.currentIndex() == 0:
+            data["connection_mode"] = True
+        
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+
+        elif self.connection_mode_companion.currentIndex() == 1:
+            data["connection_mode"] = False
+        
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+
+        #########################################################
+        if self.device_ip.text() == "":
+            self.device_ip.setFocus()
+        
+        else:
+            data["companion_app_IP"] = str(self.device_ip.text())
+        
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+
+        #########################################################
+        data["port_1st"] = self.first_port.value()
+        
+        with open("config/config.json", "w") as jsonFile:
+            json.dump(data, jsonFile)
+
+        #########################################################
+        data["port_2nd"] = self.second_port.value()
+        
+        with open("config/config.json", "w") as jsonFile:
+            json.dump(data, jsonFile)
+
+        #########################################################
+        data["port_3rd"] = self.third_port.value()
+        
+        with open("config/config.json", "w") as jsonFile:
+            json.dump(data, jsonFile)
+
+        #########################################################
+        data["debug_time_send"] = self.time_send.value()
+        
+        with open("config/config.json", "w") as jsonFile:
+            json.dump(data, jsonFile)
+
+        #########################################################
+        if self.connection_email.currentIndex() == 0:
+            data["email_connection"] = True
+        
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+
+        elif self.connection_email.currentIndex() == 1:
+            data["email_connection"] = False
+        
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+
+        #########################################################
+        if self.email_receiver.text() == "":
+            self.email_receiver.setFocus()
+        
+        else:
+            data["email"] = str(self.email_receiver.text())
+        
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+
+        #########################################################
+        if self.camera_enable.currentIndex() == 0:
+            data["enable_camera"] = True
+        
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+
+        elif self.camera_enable.currentIndex() == 1:
+            data["enable_camera"] = False
+        
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+
+        #########################################################
+        if self.solenoid_enable.currentIndex() == 0:
+            data["enable_solenoid"] = True
+        
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+
+        elif self.solenoid_enable.currentIndex() == 1:
+            data["enable_solenoid"] = False
+        
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+
+        #########################################################
+        if self.csv_saving.currentIndex() == 0:
+            data["allow_saving_csv"] = True
+        
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+
+        elif self.csv_saving.currentIndex() == 1:
+            data["allow_saving_csv"] = False
+        
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+
+        #########################################################
+        if self.csv_deleting.currentIndex() == 0:
+            data["allow_deleting_csv"] = True
+        
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+
+        elif self.csv_deleting.currentIndex() == 1:
+            data["allow_deleting_csv"] = False
+        
+            with open("config/config.json", "w") as jsonFile:
+                json.dump(data, jsonFile)
+
+        window.setCurrentIndex(49)
+    
+    def add_user(self):
+        window.setCurrentIndex(52)
+
+    def exit_window(self):
+        window.setCurrentIndex(0)
+
+class debug_window_4(QMainWindow):
+    def __init__(self):
+        super(debug_window_4, self).__init__()
+        loadUi("config/debug_tools/debug_window_4.ui", self)
+        self.scan_button.clicked.connect(self.scan_now)
+        self.exit_scan.clicked.connect(self.exit_scan_now)
+
+    def scan_now(self):
+
+        if configuration_settings["enable_camera"] == True:
+            print("CAMERA IS CONNECTED")
+            cap = cv2.VideoCapture(0)
+            detector = cv2.QRCodeDetector()
+
+            while True:
+                _, img = cap.read()
+                data, bbox, _ = detector.detectAndDecode(img)
+        
+                if(bbox is not None):
+                    for i in range(len(bbox)):
+                        cv2.line(img, tuple(bbox[i][0]), tuple(bbox[(i+1) % len(bbox)][0]), color=(255, 0, 0), thickness=2)
+                        cv2.putText(img, data, (int(bbox[0][0][0]), int(bbox[0][0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 250, 120), 2)
+                        
+
+                cv2.imshow("Scan QR CODE to CONTINUE", img)
+
+                if data:
+                    try:
+                        regexp=re.compile(r'[a-zA-z0-9_|^&+\-%*/=!>]+')
+                        parsed_text = regexp.findall(data)
+                        fullname = str(parsed_text[0]+" "+ parsed_text[1])
+                        print("WILL BE ADDED TO WHITELIST")
+                        print(fullname)
+                        scanned_data.clear()
+                        scanned_data.append(parsed_text[0])
+                        scanned_data.append(parsed_text[1])
+                        cap.release()
+                        cv2.destroyAllWindows()
+                        self.show_scanned_user()
+                        break
+                        
+                    except:
+                        self.error_qr_code()
+                        
+                        break
+                    
+                if (cv2.waitKey(1) == ord(".")):
+                    scanned_data.append("JR" + " ")
+                    scanned_data.append("ANGELO")
+                    cap.release()
+                    cv2.destroyAllWindows()
+                    self.show_scanned_user()
+                    break
+            
+        else:
+            pass
+        
+    def show_scanned_user(self):
+        self.whitelist_data = QtWidgets.QMainWindow()
+        self.ui = Ui_whitelist_confirm()
+        self.ui.setupUi(self.whitelist_data)
+        self.whitelist_data.show()
+        
+        first_name = scanned_data[0]
+        last_name = scanned_data[1]
+        
+        self.ui.name_whitelist.setText(f"<html><head/><body><p align=\"center\">{first_name}{last_name}</p></body></html>")
+        
+    def error_qr_code(self):
+        self.error_whitelist = QtWidgets.QMainWindow()
+        self.ui = Ui_whitelist_error()
+        self.ui.setupUi(self.error_whitelist)
+        self.error_whitelist.show()
+    
+    def exit_scan_now(self):
+        window.setCurrentIndex(49)
         
 ##################################################################################################################
     
 app = QApplication(sys.argv)
 window = QtWidgets.QStackedWidget()
-
+window.setWindowFlag(QtCore.Qt.WindowCloseButtonHint, False)
+window.setWindowFlag(QtCore.Qt.WindowMinimizeButtonHint, False)
 
 #############################  ADD CLASS HERE  /  ADDING THE WINDOWS IN THE WIDGETS FOR INDEXING  #############################
 
@@ -3271,6 +3519,13 @@ window.addWidget(Ui_poison_confirmation()) # INDEX 46
 window.addWidget(Ui_puncture_confirmation()) # INDEX 47
 
 window.addWidget(Ui_final_procedure()) # INDEX 48
+
+# DEBUG WINDOWS
+window.addWidget(debug_window_1())# INDEX 49
+window.addWidget(debug_window_2())# INDEX 50
+window.addWidget(debug_window_3())# INDEX 51
+window.addWidget(debug_window_4())# INDEX 52
+#window.addWidget(debug_window_5())# INDEX 53
 
 #######################  PARAMETERS FOR THE WINDOW (EXACT FOR THE TOUCH SCREEN DISPLAY)  #######################
 

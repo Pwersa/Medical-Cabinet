@@ -53,7 +53,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Scan QR Code to Continue</string>
+        <string>Entering debug window...</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -68,7 +68,7 @@
       <x>9</x>
       <y>348</y>
       <width>1001</width>
-      <height>218</height>
+      <height>241</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -77,142 +77,58 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="TUPC">
-     <property name="geometry">
-      <rect>
-       <x>116</x>
-       <y>13</y>
-       <width>192</width>
-       <height>192</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>192</width>
-       <height>192</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>192</width>
-       <height>192</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>pictures/program_pictures/tuplogo (1).png</pixmap>
-     </property>
-    </widget>
-    <widget class="QLabel" name="TUPC_2">
-     <property name="geometry">
-      <rect>
-       <x>421</x>
-       <y>12</y>
-       <width>194</width>
-       <height>194</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>194</width>
-       <height>194</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>194</width>
-       <height>194</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>pictures/program_pictures/green_cross.png</pixmap>
-     </property>
-    </widget>
-    <widget class="QLabel" name="rasberry">
-     <property name="geometry">
-      <rect>
-       <x>728</x>
-       <y>9</y>
-       <width>156</width>
-       <height>200</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>156</width>
-       <height>200</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>156</width>
-       <height>200</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>pictures/program_pictures/Raspberry logo.png</pixmap>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="hidden_button">
-     <property name="geometry">
-      <rect>
-       <x>478</x>
-       <y>84</y>
-       <width>80</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton
-{
-  background-color: rgba(255, 255, 255, 0);
-}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="restart_button">
-     <property name="geometry">
-      <rect>
-       <x>767</x>
-       <y>101</y>
-       <width>80</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton
-{
-  background-color: rgba(255, 255, 255, 0);
-}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="0">
+      <widget class="QLabel" name="TITLE_2">
+       <property name="font">
+        <font>
+         <family>PibotoLt</family>
+         <pointsize>28</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>These are intended for configuring the program only.</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="TITLE_3">
+       <property name="font">
+        <font>
+         <family>PibotoLt</family>
+         <pointsize>28</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt; color:#ff0000;&quot;&gt;WARNING!!!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
-   <widget class="QPushButton" name="scan_button">
+   <widget class="QPushButton" name="continue_button">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>150</y>
-      <width>471</width>
-      <height>201</height>
+      <x>560</x>
+      <y>190</y>
+      <width>331</width>
+      <height>131</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Unispace</family>
-      <pointsize>48</pointsize>
+      <family>PibotoLt</family>
+      <pointsize>26</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -234,10 +150,11 @@ border-style: outset;
 border-width: 3px;
 border-radius:10px;
 border-color: black;
-}</string>
+}
+</string>
     </property>
     <property name="text">
-     <string>SCAN NOW</string>
+     <string>Continue</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -271,10 +188,52 @@ border-color: black;
      <pixmap>pictures/program_pictures/main_wallpaper.png</pixmap>
     </property>
    </widget>
+   <widget class="QPushButton" name="exit_button">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>190</y>
+      <width>331</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>PibotoLt</family>
+      <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Exit</string>
+    </property>
+   </widget>
    <zorder>label</zorder>
    <zorder>frame</zorder>
    <zorder>frame_2</zorder>
-   <zorder>scan_button</zorder>
+   <zorder>continue_button</zorder>
+   <zorder>exit_button</zorder>
   </widget>
  </widget>
  <resources/>
