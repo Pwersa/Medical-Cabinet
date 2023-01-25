@@ -1,0 +1,1787 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1024</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1024</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Search Injury</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="TITLE">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1021</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>48</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Enter the type of Injury</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="typed_injury">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>90</y>
+      <width>1001</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>28</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 2px;
+border-radius:20px;
+border-color: black;
+}</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="enter_button">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>175</y>
+      <width>250</width>
+      <height>120</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>250</width>
+      <height>120</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>250</width>
+      <height>120</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>36</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>Enter</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="enter_injury_go_back_button">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>175</y>
+      <width>250</width>
+      <height>120</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>250</width>
+      <height>120</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>250</width>
+      <height>120</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>36</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>Go back</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="text_clear">
+    <property name="geometry">
+     <rect>
+      <x>385</x>
+      <y>175</y>
+      <width>250</width>
+      <height>120</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>250</width>
+      <height>120</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>250</width>
+      <height>120</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>CLEAR
+ALL</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="number_1">
+    <property name="geometry">
+     <rect>
+      <x>37</x>
+      <y>307</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>1</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="number_2">
+    <property name="geometry">
+     <rect>
+      <x>114</x>
+      <y>307</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>2</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="number_3">
+    <property name="geometry">
+     <rect>
+      <x>191</x>
+      <y>307</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>3</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="number_4">
+    <property name="geometry">
+     <rect>
+      <x>268</x>
+      <y>307</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>4</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="number_5">
+    <property name="geometry">
+     <rect>
+      <x>345</x>
+      <y>307</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>5</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="number_6">
+    <property name="geometry">
+     <rect>
+      <x>422</x>
+      <y>307</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>6</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="number_7">
+    <property name="geometry">
+     <rect>
+      <x>499</x>
+      <y>307</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>7</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="number_8">
+    <property name="geometry">
+     <rect>
+      <x>576</x>
+      <y>307</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>8</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="number_9">
+    <property name="geometry">
+     <rect>
+      <x>653</x>
+      <y>307</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>9</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="number_0">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>307</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="hypen_button">
+    <property name="geometry">
+     <rect>
+      <x>825</x>
+      <y>372</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>-</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="q_button">
+    <property name="geometry">
+     <rect>
+      <x>74</x>
+      <y>371</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>Q</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="a_button">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>437</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>A</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="s_button">
+    <property name="geometry">
+     <rect>
+      <x>195</x>
+      <y>437</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>S</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="backspace_button">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>307</y>
+      <width>181</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>22</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>Backspace</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="w_button">
+    <property name="geometry">
+     <rect>
+      <x>149</x>
+      <y>371</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>W</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="e_button">
+    <property name="geometry">
+     <rect>
+      <x>224</x>
+      <y>371</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>E</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="r_button">
+    <property name="geometry">
+     <rect>
+      <x>299</x>
+      <y>371</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>R</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="t_button">
+    <property name="geometry">
+     <rect>
+      <x>374</x>
+      <y>371</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>T</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="y_button">
+    <property name="geometry">
+     <rect>
+      <x>449</x>
+      <y>371</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>Y</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="u_button">
+    <property name="geometry">
+     <rect>
+      <x>525</x>
+      <y>371</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>U</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="i_button">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>372</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>I</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="o_button">
+    <property name="geometry">
+     <rect>
+      <x>675</x>
+      <y>372</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>O</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="p_button">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>372</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>P</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="d_button">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>437</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>D</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="f_button">
+    <property name="geometry">
+     <rect>
+      <x>345</x>
+      <y>437</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>F</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="g_button">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>437</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>G</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="h_button">
+    <property name="geometry">
+     <rect>
+      <x>495</x>
+      <y>437</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>H</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="j_button">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>437</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>J</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="k_button">
+    <property name="geometry">
+     <rect>
+      <x>645</x>
+      <y>437</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>K</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="l_button">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>437</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>L</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="b_button">
+    <property name="geometry">
+     <rect>
+      <x>495</x>
+      <y>502</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>B</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="z_button">
+    <property name="geometry">
+     <rect>
+      <x>195</x>
+      <y>502</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>Z</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="m_button">
+    <property name="geometry">
+     <rect>
+      <x>645</x>
+      <y>502</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>M</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="c_button">
+    <property name="geometry">
+     <rect>
+      <x>345</x>
+      <y>502</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>C</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="n_button">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>502</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>N</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="v_button">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>502</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>V</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="x_button">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>502</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>X</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="spacebar_button">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>440</y>
+      <width>211</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>SPACE
+BAR</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1024</width>
+      <height>600</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>pictures/program_pictures/main_wallpaper.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="close_button">
+    <property name="geometry">
+     <rect>
+      <x>975</x>
+      <y>10</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>22</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+
+color: red;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}
+</string>
+    </property>
+    <property name="text">
+     <string>X</string>
+    </property>
+   </widget>
+   <zorder>label</zorder>
+   <zorder>TITLE</zorder>
+   <zorder>typed_injury</zorder>
+   <zorder>enter_button</zorder>
+   <zorder>enter_injury_go_back_button</zorder>
+   <zorder>text_clear</zorder>
+   <zorder>number_1</zorder>
+   <zorder>number_2</zorder>
+   <zorder>number_3</zorder>
+   <zorder>number_4</zorder>
+   <zorder>number_5</zorder>
+   <zorder>number_6</zorder>
+   <zorder>number_7</zorder>
+   <zorder>number_8</zorder>
+   <zorder>number_9</zorder>
+   <zorder>number_0</zorder>
+   <zorder>hypen_button</zorder>
+   <zorder>q_button</zorder>
+   <zorder>a_button</zorder>
+   <zorder>s_button</zorder>
+   <zorder>backspace_button</zorder>
+   <zorder>w_button</zorder>
+   <zorder>e_button</zorder>
+   <zorder>r_button</zorder>
+   <zorder>t_button</zorder>
+   <zorder>y_button</zorder>
+   <zorder>u_button</zorder>
+   <zorder>i_button</zorder>
+   <zorder>o_button</zorder>
+   <zorder>p_button</zorder>
+   <zorder>d_button</zorder>
+   <zorder>f_button</zorder>
+   <zorder>g_button</zorder>
+   <zorder>h_button</zorder>
+   <zorder>j_button</zorder>
+   <zorder>k_button</zorder>
+   <zorder>l_button</zorder>
+   <zorder>b_button</zorder>
+   <zorder>z_button</zorder>
+   <zorder>m_button</zorder>
+   <zorder>c_button</zorder>
+   <zorder>n_button</zorder>
+   <zorder>v_button</zorder>
+   <zorder>x_button</zorder>
+   <zorder>spacebar_button</zorder>
+   <zorder>close_button</zorder>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

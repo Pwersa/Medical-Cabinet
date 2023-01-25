@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1024</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1024</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Select Type of Injury</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="TITLE">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>1021</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Unispace</family>
+      <pointsize>36</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Select type of Injury</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QScrollArea" name="scrollArea">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>110</y>
+      <width>1001</width>
+      <height>481</height>
+     </rect>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOn</enum>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>986</width>
+       <height>600</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="1">
+       <widget class="QPushButton" name="burn_button">
+        <property name="minimumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Unispace</family>
+          <pointsize>48</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+        </property>
+        <property name="text">
+         <string>BURN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="cut_button">
+        <property name="minimumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Unispace</family>
+          <pointsize>48</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover:!pressed
+
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+        </property>
+        <property name="text">
+         <string>CUT</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="bruises_button">
+        <property name="minimumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Unispace</family>
+          <pointsize>48</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+        </property>
+        <property name="text">
+         <string>BRUISES</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="electric_shock_button">
+        <property name="minimumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Unispace</family>
+          <pointsize>36</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+        </property>
+        <property name="text">
+         <string>ELECTRIC
+SHOCK</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="laceration_button">
+        <property name="minimumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Unispace</family>
+          <pointsize>36</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+        </property>
+        <property name="text">
+         <string>LACE-
+RATION</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="puncture_button">
+        <property name="minimumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Unispace</family>
+          <pointsize>36</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+        </property>
+        <property name="text">
+         <string>PUNCTURE</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="poison_button">
+        <property name="minimumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Unispace</family>
+          <pointsize>48</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+        </property>
+        <property name="text">
+         <string>POISON</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="others_button">
+        <property name="minimumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>310</width>
+          <height>190</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Unispace</family>
+          <pointsize>36</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+  background-color: white;
+color: black;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}</string>
+        </property>
+        <property name="text">
+         <string>OTHERS 
+ (MANUAL 
+ TYPE)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1024</width>
+      <height>600</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1024</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>pictures/program_pictures/main_wallpaper.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="close_button">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>5</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>22</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover:!pressed
+{
+  background-color: rgb(195,30,60);
+}
+
+QPushButton
+{
+
+color: red;
+border-style: outset;
+border-width: 3px;
+border-radius:10px;
+border-color: black;
+}
+</string>
+    </property>
+    <property name="text">
+     <string>X</string>
+    </property>
+   </widget>
+   <zorder>label</zorder>
+   <zorder>scrollArea</zorder>
+   <zorder>TITLE</zorder>
+   <zorder>close_button</zorder>
+  </widget>
+ </widget>
+ <resources>
+  <include location="pictures/button_pictures/injury_types_button_image.qrc"/>
+ </resources>
+ <connections/>
+</ui>
